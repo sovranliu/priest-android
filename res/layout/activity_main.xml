@@ -1,0 +1,67 @@
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_tabhost"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <FrameLayout
+			android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1" >
+            <fragment android:name="com.wehop.priest.view.form.HomeActivity"
+                android:id="@+id/main_fragment_home"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.wehop.priest.view.form.TaskActivity"
+                android:id="@+id/main_fragment_task"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.wehop.priest.view.form.UserActivity"
+                android:id="@+id/main_fragment_user"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+		</FrameLayout>
+		<TabWidget
+		    android:id="@android:id/tabs"
+		    android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_weight="0.0"
+    		android:visibility="gone" />
+		<RadioGroup
+    		android:id="@+id/main_tab"
+    		android:orientation="horizontal"
+    		android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+    		android:gravity="center_vertical"
+    		android:layout_gravity="bottom">
+    		<RadioButton 
+    			android:id="@+id/main_tab_home"
+    			android:text="首页"
+				android:textColor="@color/green"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/tab_main"
+    			android:drawableTop="@drawable/tab_button_home"
+    			style="@style/MainTab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_task"
+				android:text="任务"
+				android:textColor="@color/green"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/tab_main"
+    			android:drawableTop="@drawable/tab_button_task"
+    			style="@style/MainTab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_user"
+				android:text="我的"
+				android:textColor="@color/green"
+    			android:layout_marginTop="0dip"
+    			android:background="@drawable/tab_main"
+    			android:drawableTop="@drawable/tab_button_user"
+    			style="@style/MainTab" />
+    	</RadioGroup>
+    </LinearLayout>
+</TabHost>

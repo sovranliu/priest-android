@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_tab_padding_drawable">3.0dip</dimen>
+    <dimen name="bottom_tab_padding_up">10.0dip</dimen>
+    <dimen name="bottom_tab_font_size">12.0dip</dimen>
+    <dimen name="inquiry_top_tittle_font_size">20dp</dimen>
+    <dimen name="gap_line_length">8dp</dimen>
+</resources>

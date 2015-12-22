@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocols domain="www.wehop.cn" mock="true" storage="priest\image\">
+	<protocol name="image">
+	    <url>
+		<![CDATA[
+[0]
+		]]>
+        </url>
+	    <mock></mock>
+	</protocol>
+	<protocol name="load">
+	    <path>
+		<![CDATA[
+app/ajax/load#version=[1]
+		]]>
+        </path>
+	    <mock>
+        <![CDATA[
+{
+	"code":1
+}
+	    ]]>
+	    </mock>
+	</protocol>
+	<protocol name="file">
+	    <url>
+		<![CDATA[
+[1]
+		]]>
+        </url>
+	    <mock></mock>
+	</protocol>
+	<protocol name="config">
+	    <path>
+		<![CDATA[
+app/ajax/config#version=[1]
+		]]>
+        </path>
+	    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": {
+        "version": "2",
+        "changeList": [
+            {
+                "name": "load.png",
+                "url": "http://attach.bbs.miui.com/forum/201309/30/195608b55816g1e3q4sh3z.jpg"
+            },
+            {
+                "name": "config.xml",
+                "url": "http://attach.bbs.miui.com/forum/201309/30/195608b55816g1e3q4sh3z.jpg"
+            }
+        ]
+    }
+}
+	    ]]>
+	    </mock>
+	</protocol>
+	<protocol name="login">
+	    <path>
+		<![CDATA[
+app/ajax/login#username=[1]&password=[2]
+		]]>
+        </path>
+	    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": {
+        "id": 0,
+        "username": "sl",
+        "password": "123456",
+        "name": "柳君",
+        "photo": "https://www.baidu.com/img/bd_logo1.png",
+        "token": "9527"
+    }
+}
+	    ]]>
+	    </mock>
+	</protocol>
+</protocols>
