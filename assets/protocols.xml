@@ -79,4 +79,39 @@ app/ajax/login#username=[1]&password=[2]
 	    ]]>
 	    </mock>
 	</protocol>
+
+
+    <protocol name="mySession" >
+        <path>
+            <![CDATA[
+user-platform-web-1.0.0/rest/user/mySession?token=[1]
+                ]]>
+        </path>
+        <mock>
+            <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "sessionId": "1",
+            "userGlobalId": "057ad21e-5cff-4adf-9df8-94ae4985ef86",
+            "name": "肖建强",
+            "photo": "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=false&word=%E5%A4%B4%E5%83%8F&pn=0&spn=0&di=0&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&in=3354&cl=2&lm=-1&cs=3167693364%2C2845747024&os=1176583918%2C2281197287&simid=&adpicid=0&fr=ala&sme=&statnum=head&cg=head&bdtype=-1&objurl=http%3A%2F%2Fwww.cssxn.com%2Ffzl%2Ftupian%2F201501%2F2015011412373426.jpg&fromurl=http%3A%2F%2Fwww.cssxn.com%2Ffzl%2FTouXiang%2F21049.html&gsm=0",
+            "lastMessage": "上次给你的药吃了吗，有问题随时找我~",
+            "lastDate": "2015-12-15 18:30",
+        },
+        {
+            "sessionId": "2",
+            "userGlobalId": "b594d0c7-ac96-428b-b955-8368faa2e239",
+            "name": "李跃通",
+            "photo": null,
+            "lastMessage": "天冷注意身体",
+            "lastDate": "2015-12-20 21:30",
+        }
+    ]
+}
+            ]]>
+        </mock>
+    </protocol>
+
 </protocols>

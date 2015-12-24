@@ -16,7 +16,7 @@
                 android:id="@+id/main_fragment_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <fragment android:name="com.wehop.priest.view.form.TaskActivity"
+            <fragment android:name="com.wehop.priest.view.form.SessionActivity"
                 android:id="@+id/main_fragment_task"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -52,7 +52,7 @@
 				android:textColor="@color/green"
     			android:layout_marginTop="0dip"
     			android:background="@drawable/tab_main"
-    			android:drawableTop="@drawable/tab_button_task"
+    			android:drawableTop="@drawable/tab_button_session"
     			style="@style/MainTab" />
     		<RadioButton
     			android:id="@+id/main_tab_user"

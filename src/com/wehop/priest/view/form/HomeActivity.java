@@ -5,6 +5,7 @@ import com.slfuture.pluto.view.component.FragmentEx;
 import com.wehop.priest.R;
 
 import android.net.Uri;
+import android.util.Log;
 import android.content.Intent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -44,6 +45,7 @@ public class HomeActivity extends FragmentEx {
 	@Override
 	public void onStart() {
 		super.onStart();
+		Log.i("gxl", "HomeActivity --- onStart--brower id = " + R.id.home_browser);
 		//
 		prepare();
 		load();

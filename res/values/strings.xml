@@ -1,4 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">聚健康医生</string>
+    <string name="session_title_name">会话</string>
+    <string name="chat_title_name">聊天</string>
+    <string name="search">搜索</string>
+    <string name="search_hint">搜索</string>
 </resources>

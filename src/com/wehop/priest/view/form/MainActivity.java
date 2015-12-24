@@ -1,12 +1,13 @@
 package com.wehop.priest.view.form;
 
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.FragmentActivityEx;
+import com.slfuture.pluto.view.component.ActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,7 +20,7 @@ import android.widget.TextView;
  * 主界面
  */
 @ResourceView(id = R.layout.activity_main)
-public class MainActivity extends FragmentActivityEx {
+public class MainActivity extends ActivityEx {
 	/**
 	 * 选项卡个数
 	 */
@@ -43,6 +44,7 @@ public class MainActivity extends FragmentActivityEx {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	Log.i("gxl", "MainActivity --- R.layout.activity_main = " + R.layout.activity_main);
         super.onCreate(savedInstanceState);
         Logger.i("call MainActivity.onCreate()");
         //
