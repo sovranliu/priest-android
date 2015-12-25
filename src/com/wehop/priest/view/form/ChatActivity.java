@@ -1,6 +1,7 @@
 package com.wehop.priest.view.form;
 
 import java.io.File;
+import java.net.URI;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,8 +38,10 @@ import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInstaller.Session;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -67,14 +70,6 @@ import android.widget.TextView;
  */
 @ResourceView(id = R.layout.activity_message)
 public class ChatActivity extends ActivityEx {
-
-    public static final String NAME = "name";
-
-    public static final String PHOTO = "photo";
-
-    public static final String MESSAGE = "message";
-
-    public static final String DATE = "date";
 
     @ResourceView(id = R.id.return_button)
     public ImageView mReturnButton = null;
@@ -105,8 +100,14 @@ public class ChatActivity extends ActivityEx {
 
     private List<MessageData> mMessageList = new ArrayList<MessageData>();
 
-    private String mCurrentUsername = null;
-    private String mUsername = null;
+    private String mMy_imName = null;
+    private String mMy_name = null;
+    private String mMy_photo = null;
+
+    private String mUser_imName = null;
+    private String mUser_id = null;
+    private String mUser_name = null;
+    private String mUser_photo = null;
 
     private EMChatManager mChatManager = null;
 
@@ -115,8 +116,7 @@ public class ChatActivity extends ActivityEx {
         super.onCreate(savedInstanceState);
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         init();
-        loadData();
-        // fakeData();
+        initData();
     }
 
     private void init() {
@@ -191,13 +191,18 @@ public class ChatActivity extends ActivityEx {
     }
 
     private void initEmchat() {
+        // mChatManager.deleteConversation(mUsername);
         Intent intent = this.getIntent();
-        mUsername = intent.getStringExtra(SessionActivity.GLOBAL_ID);
+        mUser_imName = intent.getStringExtra(SessionActivity.USER_IM_NAME);
+        mUser_id = intent.getStringExtra(SessionActivity.USER_ID);
+        mUser_name = intent.getStringExtra(SessionActivity.NAME);
+        mUser_photo = intent.getStringExtra(SessionActivity.PHOTO);
+
         mChatManager = EMChatManager.getInstance();
-        mCurrentUsername = mChatManager.getCurrentUser();
-        Log.i("gxl", "-------current user = " + mCurrentUsername);
-        Log.i("gxl", "-------mUsername = " + mUsername);
-        mChatManager.deleteConversation(mUsername);
+
+        mMy_imName = mChatManager.getCurrentUser();
+        Log.i("gxl", "-------current user = " + mMy_imName);
+        Log.i("gxl", "-------mUser im name = " + mUser_imName);
 
         mChatManager.registerEventListener(new EMEventListener() {
 
@@ -207,16 +212,12 @@ public class ChatActivity extends ActivityEx {
                 switch (event.getEvent()) {
                     case EventNewMessage:
                         EMMessage message = (EMMessage) event.getData();
-//                        EMConversation conversation = mChatManager.getConversation(mUsername);
-//                        conversation.addMessage(message);
-//                        mChatManager.saveMessage(message);
-                        
-                        Log.i("gxl", "-------message from = " + message.getFrom());
-                        Log.i("gxl", "-------message to = " + message.getTo());
-                        Log.i("gxl", "-------message username = " + message.getUserName());
-                        Log.i("gxl", "-------message = " + ((TextMessageBody)message.getBody()).getMessage());
-                        mChatManager.loadAllConversations();
-                        loadData();
+                        // EMConversation conversation =
+                        // mChatManager.getConversation(mUsername);
+                        // conversation.addMessage(message);
+                        // mChatManager.saveMessage(message);
+                        // mChatManager.loadAllConversations();
+                        refreshData(message);
                         //
                         break;
                     case EventDeliveryAck:
@@ -238,27 +239,14 @@ public class ChatActivity extends ActivityEx {
                 }
             }
         });
-        
-        EMChat.getInstance().setAppInited();
+
+        // EMChat.getInstance().setAppInited();
     }
 
-    private void loadData() {
-        
-        Hashtable<String, EMConversation> cons =  mChatManager.getAllConversations();
-        for(String key: cons.keySet()) {
-            Log.i("gxl", "key = " + key + ", cons.username = " + cons.get(key).getUserName());
-            Log.i("gxl", "msg count = " + cons.get(key).getMsgCount());
-        }
-        
-        EMConversation con = mChatManager.getConversation(mCurrentUsername);
-        List<EMMessage> li = con.getAllMessages();
-        Log.i("gxl", "current:   message.size = " + li.size() + ", msg count = " + con.getMsgCount());
-        
-        
-        EMConversation conversation = mChatManager.getConversation(mUsername);
+    private void initData() {
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
         List<EMMessage> messages = conversation.getAllMessages();
-        Log.i("gxl", "---- messages.size = " + messages.size() + ", ,msg count = " + conversation.getMsgCount()
-                + ", all count " + conversation.getAllMsgCount());
+        Log.i("gxl", "---- messages.size = " + messages.size() + ", ,msg count = " + conversation.getMsgCount());
         mMessageList.clear();
         for (EMMessage message : messages) {
             MessageData data = new MessageData();
@@ -272,165 +260,197 @@ public class ChatActivity extends ActivityEx {
             //
             // }
             String msg = null;
-            if(message.getType() == EMMessage.Type.TXT) {
+            if (message.getType() == EMMessage.Type.TXT) {
                 msg = ((TextMessageBody) message.getBody()).getMessage();
-            } else if(message.getType() == EMMessage.Type.IMAGE) {
+            } else if (message.getType() == EMMessage.Type.IMAGE) {
                 msg = ((ImageMessageBody) message.getBody()).getLocalUrl();
             }
             String date = formatter.format(new Date(message.getMsgTime()));
             EMMessage.Direct direct = message.direct;
 
-            if (direct == EMMessage.Direct.RECEIVE) {
-                data.setName(mUsername);
-            } else {
-                data.setName(mCurrentUsername);
-            }
-            data.setMessage(msg);
+            // if (direct == EMMessage.Direct.RECEIVE) {
+            // data.setName(mUser_imName);
+            // } else {
+            // data.setName(mMy_imName);
+            // }
+            data.setType(message.getType());
+            data.setContent(msg);
             data.setDirection(direct);
             data.setDate(formatter.format(new Date(message.getMsgTime())));
             mMessageList.add(data);
         }
 
         ((MessageAdapter) mListView.getAdapter()).notifyDataSetChanged();
-//        ((MessageAdapter) mListView.getAdapter()).notifyDataSetInvalidated();
-        if(mMessageList.size() > 0) {
-            mListView.setSelection(mMessageList.size()-1);
+        // ((MessageAdapter) mListView.getAdapter()).notifyDataSetInvalidated();
+        if (mMessageList.size() > 0) {
+            mListView.setSelection(mMessageList.size() - 1);
         }
+    }
+
+    private void refreshData(EMMessage message) {
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
+        List<EMMessage> messages = conversation.getAllMessages();
+        Log.i("gxl", "---- refreshData: all message size = " + messages.size() + ", ,msg count = "
+                + conversation.getMsgCount());
+        MessageData data = new MessageData();
+        MessageBody body = message.getBody();
+        String msg = null;
+        switch (message.getType()) {
+            case TXT:
+                msg = ((TextMessageBody) message.getBody()).getMessage();
+                break;
+            case IMAGE:
+                msg = ((ImageMessageBody) message.getBody()).getLocalUrl();
+                break;
+            case VOICE:
+                msg = ((VoiceMessageBody) message.getBody()).getLocalUrl();
+                break;
+            case VIDEO:
+                msg = ((VideoMessageBody) message.getBody()).getLocalUrl();
+                break;
+            default:
+                break;
+        }
+        String date = formatter.format(new Date(message.getMsgTime()));
+        EMMessage.Direct direct = message.direct;
+
+        // if (direct == EMMessage.Direct.RECEIVE) {
+        // data.setName(mUser_imName);
+        // } else {
+        // data.setName(mMy_imName);
+        // }
+        data.setType(message.getType());
+        data.setContent(msg);
+        data.setDirection(direct);
+        data.setDate(formatter.format(new Date(message.getMsgTime())));
+        mMessageList.add(data);
+
+        ((MessageAdapter) mListView.getAdapter()).notifyDataSetChanged();
+        // ((MessageAdapter) mListView.getAdapter()).notifyDataSetInvalidated();
+        if (mMessageList.size() > 0) {
+            mListView.setSelection(mMessageList.size() - 1);
+        }
+
     }
 
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
-    private void fakeData() {
-        MessageData data = new MessageData();
-        data.setDirection(EMMessage.Direct.RECEIVE);
-        data.setName("小王");
-        data.setMessage("昨天的药已经吃完了，什么时候再去拿一些~");
-        data.setDate(formatter.format(new Date()));
-        data.setPhoto(null);
-
-        MessageData data1 = new MessageData();
-        data1.setDirection(EMMessage.Direct.SEND);
-        data1.setName("李医生");
-        data1.setMessage("好的，过来拿吧，记得要交费！");
-        data1.setDate(formatter.format(new Date()));
-        data1.setPhoto(null);
-
-        mMessageList.clear();
-        mMessageList.add(data);
-        mMessageList.add(data1);
-        ((MessageAdapter) mListView.getAdapter()).notifyDataSetChanged();
-    }
-
-    
-    
-    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 Uri uri = data.getData();
-                Cursor cursor = getContentResolver().query(uri, null, null,
-                        null, null);
+                Cursor cursor = getContentResolver().query(uri, null, null, null, null);
                 cursor.moveToFirst();
                 String path = cursor.getString(1); // 图片文件路径
                 cursor.close();
                 sendImageMessage(path);
             }
         } else if (requestCode == 2) {
-            
+
         } else if (requestCode == 3) {
-            
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void send(EMMessage message) {
         mChatManager.sendMessage(message, new EMCallBack() {
-            
+
             @Override
             public void onSuccess() {
                 Log.i("gxl", "send onSuccess");
             }
-            
+
             @Override
             public void onProgress(int arg0, String arg1) {
                 Log.i("gxl", "send onProgress");
             }
-            
+
             @Override
             public void onError(int arg0, String arg1) {
-                Log.i("gxl", "send onError  : "+ arg0 + ", " + arg1);
+                Log.i("gxl", "send onError  : " + arg0 + ", " + arg1);
             }
         });
-        
-        loadData();
+
+        refreshData(message);
     }
+
     private void sendTextMessage(String text) {
         if (text == null || text.equals("")) {
             return;
         }
-        EMConversation conversation = mChatManager.getConversation(mUsername);
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.TXT);
         TextMessageBody body = new TextMessageBody(text);
         message.addBody(body);
-        message.setReceipt(mUsername);
+        message.setReceipt(mUser_imName);
         conversation.addMessage(message);
-        send(message);;
+        send(message);
+        ;
     }
 
     private void sendImageMessage(String path) {
-        EMConversation conversation = mChatManager.getConversation(mUsername);
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.IMAGE);
         File file = new File(path);
-        if(!file.exists()) {
+        if (!file.exists()) {
             Logger.i("file [" + path + "] is not existing.");
         }
         ImageMessageBody body = new ImageMessageBody(new File(path));
         message.addBody(body);
-        message.setReceipt(mUsername);
+        message.setReceipt(mUser_imName);
         conversation.addMessage(message);
-        send(message);;
+        send(message);
+        ;
     }
-    
+
     private void sendVoiceMessage(String path, int len) {
-        EMConversation conversation = mChatManager.getConversation(mUsername);
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.VOICE);
         File file = new File(path);
-        if(!file.exists()) {
+        if (!file.exists()) {
             Logger.i("file [" + path + "] is not existing.");
         }
         VoiceMessageBody body = new VoiceMessageBody(file, len);
         message.addBody(body);
-        message.setReceipt(mUsername);
+        message.setReceipt(mUser_imName);
         conversation.addMessage(message);
-        send(message);;
+        send(message);
+        ;
     }
-    
+
     private void sendVideoMessage(String path) {
-        EMConversation conversation = mChatManager.getConversation(mUsername);
+        EMConversation conversation = mChatManager.getConversation(mUser_imName);
         EMMessage message = EMMessage.createSendMessage(EMMessage.Type.VIDEO);
         File file = new File(path);
-        if(!file.exists()) {
+        if (!file.exists()) {
             Logger.i("file [" + path + "] is not existing.");
         }
         VideoMessageBody body = new VideoMessageBody(file, "", 0, 0);
         message.addBody(body);
-        message.setReceipt(mUsername);
+        message.setReceipt(mUser_imName);
         conversation.addMessage(message);
-        send(message);;
+        send(message);
+        ;
     }
-    
+
     private class MessageData {
+        private EMMessage.Type type;
+
         private EMMessage.Direct direction;
-
-        private String name;
-
-        // URI of photo
-        private Uri photo;
-
-        private String message;
+        // Text message or File Path
+        private String content;
 
         private String date;
+
+        public EMMessage.Type getType() {
+            return type;
+        }
+
+        public void setType(EMMessage.Type type) {
+            this.type = type;
+        }
 
         public EMMessage.Direct getDirection() {
             return direction;
@@ -440,28 +460,12 @@ public class ChatActivity extends ActivityEx {
             this.direction = direct;
         }
 
-        public String getName() {
-            return name;
+        public String getContent() {
+            return content;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public Uri getPhoto() {
-            return photo;
-        }
-
-        public void setPhoto(Uri photo) {
-            this.photo = photo;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
+        public void setContent(String content) {
+            this.content = content;
         }
 
         public String getDate() {
@@ -511,9 +515,10 @@ public class ChatActivity extends ActivityEx {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = mInflater.inflate(R.layout.message_list_item, null);
-            }
+//            if (convertView == null) {
+//                convertView = mInflater.inflate(R.layout.message_list_item, null);
+//            }
+            convertView = mInflater.inflate(R.layout.message_list_item, null);
 
             MessageData data = mData.get(position);
 
@@ -521,27 +526,59 @@ public class ChatActivity extends ActivityEx {
             View sentGroup = convertView.findViewById(R.id.sent_message_item);
             ImageView photoView = null;
             TextView messageView = null;
+            ImageView fileView = null;
             TextView dataView = null;
             if (data.getDirection().equals(EMMessage.Direct.SEND)) {
                 receivedGroup.setVisibility(View.GONE);
                 sentGroup.setVisibility(View.VISIBLE);
                 photoView = (ImageView) convertView.findViewById(R.id.sent_contact_photo);
                 messageView = (TextView) convertView.findViewById(R.id.sent_message);
+                fileView = (ImageView) convertView.findViewById(R.id.sent_file);
                 dataView = (TextView) convertView.findViewById(R.id.sent_time);
+
+                photoView.setImageResource(R.drawable.photo_default);
+//                if (mUser_photo == null) {
+//                    photoView.setImageResource(R.drawable.photo_default);
+//                } else {
+//                    photoView.setImageURI(Uri.fromFile(new File(mMy_photo)));
+//                }
             } else {
                 receivedGroup.setVisibility(View.VISIBLE);
                 sentGroup.setVisibility(View.GONE);
                 photoView = (ImageView) convertView.findViewById(R.id.received_contact_photo);
                 messageView = (TextView) convertView.findViewById(R.id.received_message);
+                fileView = (ImageView) convertView.findViewById(R.id.received_file);
                 dataView = (TextView) convertView.findViewById(R.id.received_time);
-            }
 
-            if (data.getPhoto() == null) {
                 photoView.setImageResource(R.drawable.photo_default);
-            } else {
-                photoView.setImageURI(data.getPhoto());
+//                if (mUser_photo == null) {
+//                    photoView.setImageResource(R.drawable.photo_default);
+//                } else {
+//                    photoView.setImageURI(Uri.fromFile(new File(mUser_photo)));
+//                }
             }
-            messageView.setText(data.getMessage());
+            
+            if(data.getType() == EMMessage.Type.TXT) {
+                messageView.setVisibility(View.VISIBLE);
+                fileView.setVisibility(View.GONE);
+                messageView.setText(data.getContent());
+            } else {
+                messageView.setVisibility(View.GONE);
+                fileView.setVisibility(View.VISIBLE);
+                if(data.getType() == EMMessage.Type.IMAGE) {
+                    File file = new File(data.getContent());
+                    Log.i("gxl", "file path = " + data.getContent());
+                    if(file.exists()) {
+                       Log.i("gxl", "file exists"); 
+                    } else {
+                        Log.i("gxl", "file not exist");
+                    }
+                    Bitmap bitmap = BitmapFactory.decodeFile(data.getContent());
+                    fileView.setImageBitmap(bitmap);
+                } else {
+                    messageView.setText(data.getContent());
+                }
+            }
             dataView.setText(data.getDate());
             return convertView;
         }

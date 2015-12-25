@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 
@@ -60,10 +61,9 @@ import android.widget.Toast;
  */
 @ResourceView(id = R.layout.activity_session)
 public class SessionActivity extends FragmentEx {
+    public static final String USER_ID = "userGlobalId";
 
-    public static final String SESSION_ID = "sessionId";
-
-    public static final String GLOBAL_ID = "userGlobalId";
+    public static final String USER_IM_NAME = "user_im_name";
 
     public static final String NAME = "name";
 
@@ -71,7 +71,7 @@ public class SessionActivity extends FragmentEx {
 
     public static final String DATE = "date";
 
-    public static final String MESSAGE_PREVIEW = "message_preview";
+    public static final String LAST_MESSAGE = "last_message";
 
     public static final int LOAD_SUCCESS = 1;
 
@@ -120,7 +120,7 @@ public class SessionActivity extends FragmentEx {
     public void prepare() {
 
         SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), mSessionList, R.layout.session_list_item,
-                new String[] { PHOTO, NAME, DATE, MESSAGE_PREVIEW },
+                new String[] { PHOTO, NAME, DATE, LAST_MESSAGE },
                 new int[] { R.id.contact_photo, R.id.contact_name, R.id.session_time, R.id.session_msg_view });
         listItemAdapter.setViewBinder(new ViewBinder() {
             public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -144,7 +144,10 @@ public class SessionActivity extends FragmentEx {
                 Map data = mSessionList.get(position);
                 Intent intent = new Intent(SessionActivity.this.getActivity(), ChatActivity.class);
                 // intent.putExtra(GLOBAL_ID, (String) data.get(GLOBAL_ID));
-                intent.putExtra(GLOBAL_ID, "efg");
+                intent.putExtra(USER_ID, (String)data.get(USER_ID));
+                intent.putExtra(NAME, (String)data.get(NAME));
+                //intent.putExtra(PHOTO, (String)data.get(PHOTO));
+                intent.putExtra(USER_IM_NAME, "efg");
                 startActivity(intent);
             }
         });
@@ -174,7 +177,6 @@ public class SessionActivity extends FragmentEx {
                 for (IJSON newJSON : result) {
                     JSONObject jsonObject = (JSONObject) newJSON;
                     HashMap<String, Object> map = new HashMap<String, Object>();
-                    String session_id = ((JSONString) (jsonObject.get("sessionId"))).getValue();
                     String user_global_id = ((JSONString) (jsonObject.get("userGlobalId"))).getValue();
                     String contact_name = ((JSONString) (jsonObject.get("name"))).getValue();
                     Object contact_photo = null;
@@ -186,11 +188,10 @@ public class SessionActivity extends FragmentEx {
                     String message = ((JSONString) (jsonObject.get("lastMessage"))).getValue();
                     String date = ((JSONString) (jsonObject.get("lastDate"))).getValue();
 
-                    map.put(SESSION_ID, session_id);
-                    map.put(GLOBAL_ID, user_global_id);
+                    map.put(USER_ID, user_global_id);
                     map.put(NAME, contact_name);
                     map.put(PHOTO, contact_photo);
-                    map.put(MESSAGE_PREVIEW, message);
+                    map.put(LAST_MESSAGE, message);
                     map.put(DATE, date);
                     mSessionList.add(map);
                 }
@@ -208,7 +209,7 @@ public class SessionActivity extends FragmentEx {
         mSessionList.clear();
         for (EMConversation conversation : conversations.values()) {
             String imUsername = conversation.getUserName();
-            User user = getUserInfo(imUsername);
+            UserInfo user = getUserInfo(imUsername);
 
             String name = user.name;
             String photo = user.photo;
@@ -217,10 +218,10 @@ public class SessionActivity extends FragmentEx {
             long time = message.getMsgTime();
 
             HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put(GLOBAL_ID, imUsername);
+            map.put(USER_ID, imUsername);
             map.put(NAME, name);
             map.put(PHOTO, photo);
-            map.put(MESSAGE_PREVIEW, lastMsg);
+            map.put(LAST_MESSAGE, lastMsg);
             map.put(DATE, formatter.format(new Date(time)));
             mSessionList.add(map);
         }
@@ -228,20 +229,26 @@ public class SessionActivity extends FragmentEx {
     }
 
     // get user info
-    private User getUserInfo(String imUsername) {
-        return new User();
+    private UserInfo getUserInfo(String imUsername) {
+        //
+        return new UserInfo();
+    }
+    
+    private List<UserInfo> userList(String ... userIds) {
+        List<UserInfo> list = new ArrayList<UserInfo>();
+        //
+        return list;
     }
 
-    class User {
-        /**
-         * 用户名
-         */
-        public String username;
+    class UserInfo {
         /**
          * IM用户名
          */
         public String imUsername;
-
+        /**
+         * 用户名
+         */
+        public String userId;
         /**
          * 姓名
          */
