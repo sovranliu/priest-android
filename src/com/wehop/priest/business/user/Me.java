@@ -9,13 +9,22 @@ public class Me extends User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * 手机号码
+	 * 用户名
 	 */
 	public String username;
 	/**
 	 * 登录密码
 	 */
 	public String password;
+	/**
+     * IM用户名
+     */
+    public String imUsername;
+    /**
+     * IM登录密码
+     */
+    public String imPassword;
+
 	/**
 	 * 姓名
 	 */

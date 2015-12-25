@@ -17,6 +17,7 @@ public class Logic {
 	 */
 	public static Me user = null;
 
+	public static boolean imLogin = false;
 
 	/**
 	 * 初始化

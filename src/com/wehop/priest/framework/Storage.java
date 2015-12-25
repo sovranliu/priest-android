@@ -72,6 +72,10 @@ public class Storage {
 	 * @return 数据文件对象
 	 */
 	public static File getDataFile(String fileName) {
+	    File dir = new File(DATA_ROOT);
+	    if(!dir.exists()) {
+	        dir.mkdirs();
+	    }
 		return new File(DATA_ROOT + fileName);
 	}
 

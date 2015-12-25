@@ -5,9 +5,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Map;
 import java.util.Timer;
 
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.TextMessageBody;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -21,6 +26,7 @@ import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.wehop.priest.R;
+import com.wehop.priest.business.Logic;
 
 import android.net.Uri;
 import android.os.Handler;
@@ -86,15 +92,15 @@ public class SessionActivity extends FragmentEx {
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
-            case LOAD_SUCCESS:
+                case LOAD_SUCCESS:
 
-                break;
+                    break;
 
-            case LOAD_FAILED:
-                break;
+                case LOAD_FAILED:
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
@@ -105,6 +111,7 @@ public class SessionActivity extends FragmentEx {
         super.onStart();
         prepare();
         load();
+        // loadConversations();
     }
 
     /**
@@ -135,9 +142,9 @@ public class SessionActivity extends FragmentEx {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
                 Map data = mSessionList.get(position);
-                Intent intent = new Intent(SessionActivity.this.getActivity(), MessageActivity.class);
-                intent.putExtra(SESSION_ID, (String) data.get(SESSION_ID));
-                intent.putExtra(GLOBAL_ID, (String) data.get(GLOBAL_ID));
+                Intent intent = new Intent(SessionActivity.this.getActivity(), ChatActivity.class);
+                // intent.putExtra(GLOBAL_ID, (String) data.get(GLOBAL_ID));
+                intent.putExtra(GLOBAL_ID, "efg");
                 startActivity(intent);
             }
         });
@@ -193,5 +200,57 @@ public class SessionActivity extends FragmentEx {
 
     }
 
-    // SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+    private void loadConversations() {
+        Hashtable<String, EMConversation> conversations = EMChatManager.getInstance().getAllConversations();
+
+        mSessionList.clear();
+        for (EMConversation conversation : conversations.values()) {
+            String imUsername = conversation.getUserName();
+            User user = getUserInfo(imUsername);
+
+            String name = user.name;
+            String photo = user.photo;
+            EMMessage message = conversation.getLastMessage();
+            String lastMsg = ((TextMessageBody) message.getBody()).getMessage();
+            long time = message.getMsgTime();
+
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put(GLOBAL_ID, imUsername);
+            map.put(NAME, name);
+            map.put(PHOTO, photo);
+            map.put(MESSAGE_PREVIEW, lastMsg);
+            map.put(DATE, formatter.format(new Date(time)));
+            mSessionList.add(map);
+        }
+        ((SimpleAdapter) mListView.getAdapter()).notifyDataSetChanged();
+    }
+
+    // get user info
+    private User getUserInfo(String imUsername) {
+        return new User();
+    }
+
+    class User {
+        /**
+         * 用户名
+         */
+        public String username;
+        /**
+         * IM用户名
+         */
+        public String imUsername;
+
+        /**
+         * 姓名
+         */
+        public String name;
+        /**
+         * 头像URL
+         */
+        public String photo;
+
+    }
+
 }

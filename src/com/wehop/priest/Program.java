@@ -1,5 +1,6 @@
 package com.wehop.priest;
 
+import com.easemob.chat.EMChat;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 import com.wehop.priest.framework.Environment;
@@ -26,8 +27,12 @@ public class Program extends Application {
 	@Override
     public void onCreate() {
 		Logger.i("Program.onCreate() start");
-		Program.application = this;
 		super.onCreate();
+		
+	    EMChat.getInstance().init(this);
+	    EMChat.getInstance().setDebugMode(true);
+
+		Program.application = this;
 		// 初始化框架
 		Environment.initialize();
 		// 初始化逻辑

@@ -1,14 +1,20 @@
 package com.wehop.priest.view.form;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChat;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
+import com.wehop.priest.business.Logic;
 
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.WindowManager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
@@ -44,10 +50,10 @@ public class MainActivity extends ActivityEx {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    	Log.i("gxl", "MainActivity --- R.layout.activity_main = " + R.layout.activity_main);
         super.onCreate(savedInstanceState);
         Logger.i("call MainActivity.onCreate()");
-        //
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        // 
         tabhost.setup();
         tabhost.addTab(tabhost.newTabSpec("main_tab_home").setIndicator("").setContent(R.id.main_fragment_home));
         tabhost.addTab(tabhost.newTabSpec("main_tab_task").setIndicator("").setContent(R.id.main_fragment_task));
@@ -92,6 +98,31 @@ public class MainActivity extends ActivityEx {
 		        }
 			}
         });
+        Log.i("gxl1", "----login start--- ");
+        EMChatManager.getInstance().login("abc", "1qaz2wsx", new EMCallBack() {
+            
+            @Override
+            public void onSuccess() {
+                // TODO Auto-generated method stub
+                Log.i("gxl1", "----login success --- ");
+                EMChatManager.getInstance().loadAllConversations();
+                EMGroupManager.getInstance().loadAllGroups();
+                Logic.imLogin = true;
+            }
+            
+            @Override
+            public void onProgress(int arg0, String arg1) {
+                // TODO Auto-generated method stub
+                Log.i("gxl1", "----login onProgress --- ");
+            }
+            
+            @Override
+            public void onError(int arg0, String arg1) {
+                // TODO Auto-generated method stub
+                Log.i("gxl1", "----login onError --- " + arg0 + " ,  " + arg1);
+            }
+        });
+        
     }
 
     @Override
