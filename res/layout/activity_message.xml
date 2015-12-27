@@ -28,15 +28,15 @@
             android:textColor="@color/white"
             android:textSize="16sp" />
     </RelativeLayout>
-    
+
     <ListView
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_bar"
         android:layout_above="@+id/bottom_bar"
-        android:background="@color/white" />
-
+        android:layout_below="@id/title_bar"
+        android:background="@color/white"
+        android:divider="@null" />
 
     <LinearLayout
         android:id="@+id/bottom_bar"
@@ -48,20 +48,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp" >
+            android:layout_height="48dp"
+            android:background="@color/docgrey" >
 
             <ImageButton
                 android:id="@+id/more_options_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/more_options_icon" />
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/more_options_button" />
 
             <EditText
                 android:id="@+id/input_frame"
-                android:layout_width="260dp"
+                android:layout_width="270dp"
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/bg_input"
@@ -69,44 +70,51 @@
 
             <ImageButton
                 android:id="@+id/send_message_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:background="@drawable/send_message_icon" />
+                android:layout_marginRight="5dp"
+                android:background="@drawable/send_message_button" />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/more_options_holder"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
+            android:background="@color/lightgrey"
             android:orientation="horizontal"
             android:visibility="gone" >
 
             <ImageButton
                 android:id="@+id/send_image"
-                android:layout_width="100dp"
-                android:layout_height="110dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/send_image_icon" />
+                android:background="@color/lightgrey"
+                android:src="@drawable/image_button_selector" />
 
             <ImageButton
-                android:id="@+id/send_audio"
-                android:layout_width="100dp"
-                android:layout_height="110dp"
+                android:id="@+id/send_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/send_audio_icon" />
+                android:background="@color/lightgrey"
+                android:src="@drawable/voice_button_selector" />
 
             <ImageButton
                 android:id="@+id/send_video"
-                android:layout_width="100dp"
-                android:layout_height="110dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/send_video_icon" />
+                android:background="@color/lightgrey"
+                android:src="@drawable/video_button_selector" />
         </LinearLayout>
     </LinearLayout>
 

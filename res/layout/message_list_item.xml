@@ -12,31 +12,28 @@
         android:orientation="horizontal"
         android:visibility="visible"
         android:clickable="false" >
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/received_contact_photo"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" >
-            <ImageView
-                android:id="@+id/received_contact_photo"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/photo_default" />
-        </RelativeLayout>
-
+            android:layout_height="80dp"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/photo_default" />
         <LinearLayout
-            android:layout_width="220dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
             android:orientation="vertical" >
             <RelativeLayout 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_horizontal">
 	            <TextView
 	                android:id="@+id/received_message"
-	                android:layout_width="match_parent"
+	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:background="@color/docgrey"
+	                android:background="@drawable/msg_received_bg"
 	                android:padding="15dp"
 	                android:textColor="@color/black"
 	                android:textSize="16sp" />
@@ -52,34 +49,35 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/lightgrey"
+                android:textColor="@color/midgrey"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/sent_message_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:clickable="false"
         android:visibility="gone" >
 
         <LinearLayout
-            android:layout_width="220dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@+id/sent_contact_photo"
             android:orientation="vertical" >
             <RelativeLayout 
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center_horizontal">
 	            <TextView
 	                android:id="@+id/sent_message"
-	                android:layout_width="match_parent"
+	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_gravity="center_horizontal"
-	                android:background="@color/green"
+	                android:background="@drawable/msg_sent_bg"
 	                android:padding="15dp"
 	                android:textColor="@color/white"
 	                android:textSize="16sp" />
@@ -95,21 +93,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/lightgrey"
+                android:textColor="@color/midgrey"
                 android:textSize="16sp" />
         </LinearLayout>
-
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/sent_contact_photo"
             android:layout_width="80dp"
-            android:layout_height="wrap_content" >
-            <ImageView
-                android:id="@+id/sent_contact_photo"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/photo_default" />
-        </RelativeLayout>
-    </LinearLayout>
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:background="@drawable/photo_default" />
+    </RelativeLayout>
 
 </LinearLayout>

@@ -99,7 +99,7 @@ public class MainActivity extends ActivityEx {
 			}
         });
         Log.i("gxl1", "----login start--- ");
-        EMChatManager.getInstance().login("abc", "1qaz2wsx", new EMCallBack() {
+        EMChatManager.getInstance().login("priest_01", "1qaz2wsx", new EMCallBack() {
             
             @Override
             public void onSuccess() {

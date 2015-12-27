@@ -2,8 +2,7 @@
 <resources>
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
-    <color name="grey">#ff4c4c4c</color>
-    <color name="green">#ff0097AA</color>
+    <color name="green">#ff00cf59</color>
     
     <color name="main_tab_normal">#fff6f6f6</color>
     <color name="main_tab_selected">#ffffffff</color>
@@ -13,8 +12,9 @@
     <color name="listview_on">#ffffffff</color>
     <color name="listview_down">#fff7f7f7</color>
     <color name="red">#ffff0000</color>
+    <color name="grey">#ff9c9c9c</color>
     <color name="midgrey">#ff999999</color>
-    <color name="lightgrey">#ff6b5f5f</color>
+    <color name="lightgrey">#fff3f3f3</color>
     <color name="docgrey">#ececec</color>
     <color name="transprant">#00000000</color>
     <color name="blue">#ff4278a7</color>

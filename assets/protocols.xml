@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="www.wehop.cn" mock="true" storage="priest/image/">
-	<protocol name="image">
-	    <url>
-		<![CDATA[
+<protocols
+    domain="www.wehop.cn"
+    mock="true"
+    storage="priest/image/" >
+
+    <protocol name="image" >
+
+        <url>
+
+<![CDATA[
 [0]
 		]]>
         </url>
-	    <mock></mock>
-	</protocol>
-	<protocol name="load">
-	    <path>
-		<![CDATA[
+
+        <mock>
+        </mock>
+    </protocol>
+
+    <protocol name="load" >
+
+        <path>
+
+<![CDATA[
 app/ajax/load#version=[1]
 		]]>
         </path>
-	    <mock>
-        <![CDATA[
+
+        <mock>
+
+<![CDATA[
 {
 	"code":1
 }
 	    ]]>
-	    </mock>
-	</protocol>
-	<protocol name="file">
-	    <url>
-		<![CDATA[
+        </mock>
+    </protocol>
+
+    <protocol name="file" >
+
+        <url>
+
+<![CDATA[
 [1]
 		]]>
         </url>
-	    <mock></mock>
-	</protocol>
-	<protocol name="config">
-	    <path>
-		<![CDATA[
+
+        <mock>
+        </mock>
+    </protocol>
+
+    <protocol name="config" >
+
+        <path>
+
+<![CDATA[
 app/ajax/config#version=[1]
 		]]>
         </path>
-	    <mock>
-        <![CDATA[
+
+        <mock>
+
+<![CDATA[
 {
     "code": 1,
     "data": {
@@ -55,16 +78,21 @@ app/ajax/config#version=[1]
     }
 }
 	    ]]>
-	    </mock>
-	</protocol>
-	<protocol name="login">
-	    <path>
-		<![CDATA[
+        </mock>
+    </protocol>
+
+    <protocol name="login" >
+
+        <path>
+
+<![CDATA[
 app/ajax/login#username=[1]&password=[2]
 		]]>
         </path>
-	    <mock>
-        <![CDATA[
+
+        <mock>
+
+<![CDATA[
 {
     "code": 1,
     "data": {
@@ -77,36 +105,55 @@ app/ajax/login#username=[1]&password=[2]
     }
 }
 	    ]]>
-	    </mock>
-	</protocol>
+        </mock>
+    </protocol>
 
+    <protocol name="sessions" >
 
-    <protocol name="mySession" >
         <path>
-            <![CDATA[
+
+<![CDATA[
 user-platform-web-1.0.0/rest/user/mySession?token=[1]
                 ]]>
         </path>
+
         <mock>
-            <![CDATA[
+
+<![CDATA[
 {
     "code": 1,
     "data": [
         {
-            "sessionId": "1",
-            "userGlobalId": "057ad21e-5cff-4adf-9df8-94ae4985ef86",
-            "name": "肖建强",
-            "photo": "http://image.baidu.com/search/detail?ct=503316480&z=0&ipn=false&word=%E5%A4%B4%E5%83%8F&pn=0&spn=0&di=0&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&ie=utf-8&oe=utf-8&in=3354&cl=2&lm=-1&cs=3167693364%2C2845747024&os=1176583918%2C2281197287&simid=&adpicid=0&fr=ala&sme=&statnum=head&cg=head&bdtype=-1&objurl=http%3A%2F%2Fwww.cssxn.com%2Ffzl%2Ftupian%2F201501%2F2015011412373426.jpg&fromurl=http%3A%2F%2Fwww.cssxn.com%2Ffzl%2FTouXiang%2F21049.html&gsm=0",
+            "chatType": 1,
+            "groupId": "144618765244432828",
+            "client_user_imName": "tower_01",
+            "last_user_id": "057ad21e-5cff-4adf-9df8-94ae4985ef86",
+            "last_user_name": "大强",
+            "last_user_imName": "priest_01",
+            "last_user_photo": "http://img.woyaogexing.com/2014/08/15/0e0875831a1790e3!200x200.jpg",
             "lastMessage": "上次给你的药吃了吗，有问题随时找我~",
             "lastDate": "2015-12-15 18:30",
         },
         {
-            "sessionId": "2",
-            "userGlobalId": "b594d0c7-ac96-428b-b955-8368faa2e239",
-            "name": "李跃通",
-            "photo": null,
+            "chatType": 1,
+            "groupId": "144618891472011796",
+            "client_user_imName": "tower_02",
+            "last_user_id": "b594d0c7-ac96-428b-b955-8368faa2e239",
+            "last_user_name": "李跃通",
+            "last_user_imName": "priest_02",
+            "last_user_photo": null,
             "lastMessage": "天冷注意身体",
             "lastDate": "2015-12-20 21:30",
+        },
+        {
+            "chatType": 0,
+            "remote_user_imName": "xxx",
+            "last_user_id": "b594d0c7-ac96-428b-b955-8368faa2e239",
+            "last_user_name": "韩美美",
+            "last_user_imName": "im_user3",
+            "last_user_photo": null,
+            "lastMessage": "天冷注意身体",
+            "lastDate": "2015-12-25 14:09",
         }
     ]
 }
