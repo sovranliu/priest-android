@@ -1,11 +1,10 @@
 package com.wehop.priest.view.form;
 
 import com.easemob.EMCallBack;
-import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMGroupManager;
 import com.slfuture.pluto.view.annotation.ResourceView;
-import com.slfuture.pluto.view.component.ActivityEx;
+import com.slfuture.pluto.view.component.FragmentActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
@@ -26,7 +25,7 @@ import android.widget.TextView;
  * 主界面
  */
 @ResourceView(id = R.layout.activity_main)
-public class MainActivity extends ActivityEx {
+public class MainActivity extends FragmentActivityEx {
 	/**
 	 * 选项卡个数
 	 */
