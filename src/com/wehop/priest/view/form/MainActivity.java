@@ -77,21 +77,12 @@ public class MainActivity extends FragmentActivityEx {
                 switch(checkedId) {
                     case R.id.main_tab_home:
                         tabhost.setCurrentTabByTag("main_tab_home");
-                        btnHome.setTextColor(getResources().getColor(R.color.white));
-                        btnTask.setTextColor(getResources().getColor(R.color.green));
-                        btnUser.setTextColor(getResources().getColor(R.color.green));
                         break;
                     case R.id.main_tab_task:
                         tabhost.setCurrentTabByTag("main_tab_task");
-                        btnHome.setTextColor(getResources().getColor(R.color.green));
-                        btnTask.setTextColor(getResources().getColor(R.color.white));
-                        btnUser.setTextColor(getResources().getColor(R.color.green));
                         break;
                     case R.id.main_tab_user:
                         tabhost.setCurrentTabByTag("main_tab_user");
-                        btnHome.setTextColor(getResources().getColor(R.color.green));
-                        btnTask.setTextColor(getResources().getColor(R.color.green));
-                        btnUser.setTextColor(getResources().getColor(R.color.white));
                         break;
                 }
             }
