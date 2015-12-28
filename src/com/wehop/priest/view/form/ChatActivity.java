@@ -6,8 +6,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 
@@ -39,15 +41,17 @@ import com.wehop.priest.framework.Storage;
 import com.wehop.priest.view.form.SessionActivity.UserInfo;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInstaller.Session;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -73,6 +77,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import com.wehop.priest.utils.FileUtils;
 
 /**
  * 浏览器页
@@ -120,6 +125,9 @@ public class ChatActivity extends ActivityEx {
     private EMGroupManager mGroupManager = null;
     private EMConversation mConversation = null;
 
+    public static final int NEW_MESSAGE_COMING = 1;
+    public static final int REFRESH_MESSAGE_LIST = 2;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,10 +172,14 @@ public class ChatActivity extends ActivityEx {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                    intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                } else {
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                }
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(intent, 1);
-
             }
         });
 
@@ -175,10 +187,6 @@ public class ChatActivity extends ActivityEx {
 
             @Override
             public void onClick(View v) {
-                // Intent intent = new Intent();
-                // intent.setType("audio/*");
-                // intent.setAction(Intent.ACTION_GET_CONTENT);
-                // startActivityForResult(intent, 2);
                 voiceCall();
             }
         });
@@ -187,10 +195,6 @@ public class ChatActivity extends ActivityEx {
 
             @Override
             public void onClick(View v) {
-                // Intent intent = new Intent();
-                // intent.setType("video/*");
-                // intent.setAction(Intent.ACTION_GET_CONTENT);
-                // startActivityForResult(intent, 3);
                 videoCall();
             }
         });
@@ -222,27 +226,17 @@ public class ChatActivity extends ActivityEx {
                 switch (event.getEvent()) {
                     case EventNewMessage:
                         EMMessage message = (EMMessage) event.getData();
-                        // EMConversation conversation =
-                        // mChatManager.getConversation(mUsername);
-                        // conversation.addMessage(message);
-                        // mChatManager.saveMessage(message);
-                        // mChatManager.loadAllConversations();
-//                        refreshData(message);
-                        Message msg = new Message();
-                        msg.what = 1;
+                        Message msg = Message.obtain(mHander, NEW_MESSAGE_COMING);
                         Bundle bundle = new Bundle();
                         bundle.putParcelable("msg", message);
                         msg.setData(bundle);
-                        mHander.sendMessage(msg);
-                        //
+                        msg.sendToTarget();
                         break;
                     case EventDeliveryAck:
                         break;
                     case EventNewCMDMessage:
-                        //
                         break;
                     case EventReadAck:
-
                         break;
                     case EventOfflineMessage:
                         List<EMMessage> messages = (List<EMMessage>) event.getData();
@@ -264,12 +258,13 @@ public class ChatActivity extends ActivityEx {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case 1:
+                case NEW_MESSAGE_COMING:
                     
                     EMMessage message = (EMMessage)msg.getData().getParcelable("msg");
-                    onMessageAdd(message);
+                    onNewMessage(message);
                     break;
-
+                case REFRESH_MESSAGE_LIST:
+                    refreshList();
                 default:
                     break;
             }
@@ -314,18 +309,11 @@ public class ChatActivity extends ActivityEx {
             mListView.setSelection(mMessageList.size() - 1);
         }
     }
-    public static String getImagePath(String remoteUrl)
-    {
-        String imageName= remoteUrl.substring(remoteUrl.lastIndexOf("/") + 1, remoteUrl.length());
-        String path =PathUtil.getInstance().getImagePath()+"/"+ imageName;
-        Log.d("gxl", "image path:" + path);
-        return path;
-        
-    }
 
-    private void onMessageAdd(EMMessage message) {
+    private void onNewMessage(EMMessage message) {
         MessageData data = new MessageData();
         MessageBody body = message.getBody();
+        EMMessage.Direct direct = message.direct;
         String msg = null;
         switch (message.getType()) {
             case TXT:
@@ -333,16 +321,33 @@ public class ChatActivity extends ActivityEx {
                 break;
             case IMAGE:
                 ImageMessageBody imgBody= ((ImageMessageBody) message.getBody());
-                
-                String path = imgBody.getLocalUrl();
-                msg = path;
+                if(direct == EMMessage.Direct.SEND) {
+                    msg = imgBody.getLocalUrl();
+                } else {
+                    String remotePath = imgBody.getRemoteUrl();
+                    String filePath = FileUtils.getImagePath(remotePath);
+                    File file = new File(filePath);
+                    if(!file.exists()) {
+                        Map<String, String> headers = new HashMap<String, String>();
+                        if (!TextUtils.isEmpty(imgBody.getSecret())) {
+                            headers.put("share-secret", imgBody.getSecret());
+                        }
+                        downloadImage(filePath, remotePath, headers);
+                    }
+                    //String thumbRemoteUrl = imgBody.getThumbnailUrl();
+                    //if(TextUtils.isEmpty(thumbRemoteUrl)&&!TextUtils.isEmpty(remotePath)){
+                    //    thumbRemoteUrl = remotePath;
+                    //}
+                    //String thumbnailPath = FileUtils.getThumbnailImagePath(thumbRemoteUrl);
+                    msg = filePath;
+                }
                 break;
             default:
                 break;
         }
         Log.i("gxl", "From = " + message.getFrom() + ", To = " + message.getTo() + ", userName = " + message.getUserName());
         String date = formatter.format(new Date(message.getMsgTime()));
-        EMMessage.Direct direct = message.direct;
+        
 
         data.setType(message.getType());
         data.setImName(message.getFrom());
@@ -357,6 +362,37 @@ public class ChatActivity extends ActivityEx {
         }
     }
 
+    private void refreshList() {
+        ((MessageAdapter) mListView.getAdapter()).notifyDataSetChanged();
+        if (mMessageList.size() > 0) {
+            mListView.setSelection(mMessageList.size() - 1);
+        }
+    }
+
+    private void downloadImage(final String localFilePath, final String remoteFilePath,
+            final Map<String, String> headers) {
+        mChatManager.downloadFile(remoteFilePath, localFilePath, headers, new EMCallBack() {
+            public void onSuccess() {
+                Log.i("gxl", "download complete!  localPath = " + localFilePath);
+                mHander.sendEmptyMessage(REFRESH_MESSAGE_LIST);
+            }
+
+            public void onError(int error, String msg) {
+                Log.e("gxl", "offline file transfer error:" + msg);
+                File file = new File(localFilePath);
+                if (file.exists() && file.isFile()) {
+                    file.delete();
+                }
+            }
+
+            public void onProgress(final int progress, String status) {
+                Log.d("gxl", "Progress: " + progress);
+            }
+
+        });
+    }
+
+    
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     @Override
@@ -366,7 +402,7 @@ public class ChatActivity extends ActivityEx {
                 Uri uri = data.getData();
                 Cursor cursor = getContentResolver().query(uri, null, null, null, null);
                 cursor.moveToFirst();
-                String path = cursor.getString(1); // 图片文件路径
+                String path = FileUtils.getPath(this, uri);
                 cursor.close();
                 sendImageMessage(path);
             }
@@ -397,7 +433,7 @@ public class ChatActivity extends ActivityEx {
             }
         });
 
-        onMessageAdd(message);
+        onNewMessage(message);
     }
 
     private void sendTextMessage(String text) {
@@ -430,9 +466,20 @@ public class ChatActivity extends ActivityEx {
     }
 
     private void voiceCall() {
+        Intent intent = new Intent(ChatActivity.this, VoiceActivity.class);
+        intent.putExtra("userId", mClientUser_imName);
+        intent.putExtra("userName", mClientUser_imName);
+        intent.putExtra("mode", true);
+        ChatActivity.this.startActivity(intent);
     }
 
     private void videoCall() {
+        Intent intent = new Intent(ChatActivity.this, VideoActivity.class);
+        intent.putExtra("userId", mClientUser_imName);
+        intent.putExtra("userName", mClientUser_imName);
+        intent.putExtra("mode", true);
+        ChatActivity.this.startActivity(intent);
+
     }
 
     private class MessageData {

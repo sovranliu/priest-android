@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/video_layout_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+	android:background="@color/black" >
+	<RelativeLayout
+		android:id="@+id/video_layout_head"
+		android:layout_width="match_parent"
+		android:layout_height="48dp"
+		android:layout_alignParentTop="true" 
+		android:background="@color/green" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<TextView
+            android:id="@+id/video_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="视频通话"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+	<SurfaceView
+        android:id="@+id/video_surface_opposite"
+        android:layout_gravity="center"
+	    android:layout_below="@+id/video_layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+	<SurfaceView
+        android:id="@+id/video_surface_local"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:layout_alignParentRight="true"
+	    android:layout_below="@+id/video_layout_head" />
+	<Button
+	    android:id="@+id/video_button_handup"
+	    android:layout_width="match_parent"
+	    android:layout_height="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:background="@color/blue"
+	    android:textColor="@color/white"
+	    android:text="挂断" />
+	<RelativeLayout
+	    android:id="@+id/video_layout_operation"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/video_button_handup"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginBottom="40dp"
+	    android:orientation="horizontal" >
+		<ImageButton
+		    android:id="@+id/video_button_mute"
+		    android:layout_width="60dp"
+		    android:layout_height="60dp"
+		    android:layout_alignParentLeft="true"
+		    android:layout_gravity="center"
+		    android:scaleType="fitXY"
+		    android:src="@drawable/icon_mute_normal"
+		    android:background="#00000000" />
+		<ImageButton
+		    android:id="@+id/video_button_speaker"
+		    android:layout_width="60dp"
+		    android:layout_height="60dp"
+		    android:layout_gravity="center"
+		    android:scaleType="fitXY"
+		    android:layout_toRightOf="@id/video_button_mute"
+	    	android:layout_marginLeft="60dp"
+		    android:src="@drawable/icon_speaker_normal"
+		    android:background="#00000000" />
+	</RelativeLayout>
+</RelativeLayout>

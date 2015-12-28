@@ -1,14 +1,22 @@
 package com.wehop.priest.view.form;
 
 import com.easemob.EMCallBack;
+import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMGroupManager;
+import com.easemob.chat.EMMessage;
+import com.easemob.chat.OnNotificationClickListener;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,7 +39,10 @@ public class MainActivity extends FragmentActivityEx {
 	 */
     public final static int TAB_COUNT = 3;
 	
-    
+    /**
+     * 拨号接收器
+     */
+    private BroadcastReceiver dialReceiver = null;
 	/**
      * 选项卡对象
      */
@@ -97,13 +108,12 @@ public class MainActivity extends FragmentActivityEx {
 		        }
 			}
         });
-        Log.i("gxl1", "----login start--- ");
         EMChatManager.getInstance().login("priest_01", "1qaz2wsx", new EMCallBack() {
             
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
-                Log.i("gxl1", "----login success --- ");
+                Log.i("gxl", "----login success --- ");
                 EMChatManager.getInstance().loadAllConversations();
                 EMGroupManager.getInstance().loadAllGroups();
                 Logic.imLogin = true;
@@ -112,16 +122,46 @@ public class MainActivity extends FragmentActivityEx {
             @Override
             public void onProgress(int arg0, String arg1) {
                 // TODO Auto-generated method stub
-                Log.i("gxl1", "----login onProgress --- ");
             }
             
             @Override
             public void onError(int arg0, String arg1) {
                 // TODO Auto-generated method stub
-                Log.i("gxl1", "----login onError --- " + arg0 + " ,  " + arg1);
+                Log.i("gxl", "----login onError --- " + arg0 + " ,  " + arg1);
             }
         });
         
+        
+        dialReceiver = new BroadcastReceiver() {
+            
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // TODO Auto-generated method stub
+                String from = intent.getStringExtra("from");
+                String type = intent.getStringExtra("type");
+                Log.i("gxl", "intent = " + intent.getAction());
+                Log.i("gxl", "from = " + from + ", type = " + type);
+                Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
+                ringIntent.putExtra("userId", from);
+                ringIntent.putExtra("userName", from);
+                ringIntent.putExtra("type", type);
+                MainActivity.this.startActivity(ringIntent);
+            }
+        };
+        registerReceiver(dialReceiver, new IntentFilter(EMChatManager.getInstance().getIncomingCallBroadcastAction()));
+        EMChat.getInstance().setAppInited();
+        EMChatOptions option = new EMChatOptions();
+        option.setNotificationEnable(true);
+        option.setOnNotificationClickListener(new OnNotificationClickListener() {
+            
+            @Override
+            public Intent onNotificationClick(EMMessage msg) {
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                
+                return null;
+            }
+        });
+        EMChatManager.getInstance().setChatOptions(option);
     }
 
     @Override
@@ -131,6 +171,7 @@ public class MainActivity extends FragmentActivityEx {
 
     @Override
     protected void onDestroy() {
+        unregisterReceiver(dialReceiver);
         super.onDestroy();
     }
 }
