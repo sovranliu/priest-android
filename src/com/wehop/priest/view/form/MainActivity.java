@@ -99,12 +99,12 @@ public class MainActivity extends FragmentActivityEx {
 		        }
 			}
         });
-        EMChatManager.getInstance().login("priest_01", "1qaz2wsx", new EMCallBack() {
+        EMChatManager.getInstance().login(Logic.user.imUsername, Logic.user.imPassword, new EMCallBack() {
             
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub
-                Log.i("gxl", "----login success --- ");
+                Log.i("gxl", "----im login success --- ");
                 EMChatManager.getInstance().loadAllConversations();
                 EMGroupManager.getInstance().loadAllGroups();
                 Logic.imLogin = true;
@@ -118,7 +118,7 @@ public class MainActivity extends FragmentActivityEx {
             @Override
             public void onError(int arg0, String arg1) {
                 // TODO Auto-generated method stub
-                Log.i("gxl", "----login onError --- " + arg0 + " ,  " + arg1);
+                Log.i("gxl", "----im login onError --- " + arg0 + " ,  " + arg1);
             }
         });
         

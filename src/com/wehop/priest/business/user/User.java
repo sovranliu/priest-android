@@ -11,7 +11,7 @@ public class User implements Serializable {
 	/**
 	 * 用户ID
 	 */
-	public int id;
+	public String id;
 
 
 	/**
@@ -20,7 +20,7 @@ public class User implements Serializable {
      * @param id 用户ID
 	 */
 	public User() { }
-	public User(int id) {
+	public User(String id) {
 		this.id = id;
 	}
 }

@@ -28,7 +28,7 @@ public class VoiceActivity extends Activity {
 	/**
 	 * 环信用户名
 	 */
-	private String userId = null;
+	private String userImName = null;
 	/**
 	 * 用户名
 	 */
@@ -85,8 +85,9 @@ public class VoiceActivity extends Activity {
 	public void prepareData() {
 		handler = new Handler();
 		//
-		userId = this.getIntent().getStringExtra("userId");
+		userImName = this.getIntent().getStringExtra("userImName");
 		userName = this.getIntent().getStringExtra("userName");
+		Log.i("gxl", "voice call: user IM name = " + userImName);
 		mode = this.getIntent().getBooleanExtra("mode", false);
 		//
 		EMChatManager.getInstance().addVoiceCallStateChangeListener(new EMCallStateChangeListener() {
@@ -121,7 +122,7 @@ public class VoiceActivity extends Activity {
 		//
 		if(mode) {
 			try {
-				EMChatManager.getInstance().makeVoiceCall(userId);
+				EMChatManager.getInstance().makeVoiceCall(userImName);
 			}
 			catch (EMServiceNotReadyException e) {
 				Log.e("gxl", "prepareData failed", e);

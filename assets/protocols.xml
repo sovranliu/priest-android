@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols
-    domain="www.wehop.cn"
-    mock="true"
-    storage="priest/image/" >
+<protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/" >
 
     <protocol name="image" >
-
         <url>
-
 <![CDATA[
 [0]
 		]]>
@@ -18,16 +13,13 @@
     </protocol>
 
     <protocol name="load" >
-
         <path>
-
 <![CDATA[
 app/ajax/load#version=[1]
 		]]>
         </path>
 
         <mock>
-
 <![CDATA[
 {
 	"code":1
@@ -37,9 +29,7 @@ app/ajax/load#version=[1]
     </protocol>
 
     <protocol name="file" >
-
         <url>
-
 <![CDATA[
 [1]
 		]]>
@@ -50,16 +40,13 @@ app/ajax/load#version=[1]
     </protocol>
 
     <protocol name="config" >
-
         <path>
-
 <![CDATA[
 app/ajax/config#version=[1]
 		]]>
         </path>
 
         <mock>
-
 <![CDATA[
 {
     "code": 1,
@@ -82,80 +69,82 @@ app/ajax/config#version=[1]
     </protocol>
 
     <protocol name="login" >
-
         <path>
-
 <![CDATA[
-app/ajax/login#username=[1]&password=[2]
+doctor-platform-web-1.0.0/rest/login#username=[1]&password=[2]
 		]]>
         </path>
 
         <mock>
-
 <![CDATA[
 {
-    "code": 1,
+    "code": 1.0,
+    "msg": null,
     "data": {
-        "id": 0,
-        "username": "sl",
-        "password": "123456",
-        "name": "柳君",
-        "photo": "https://www.baidu.com/img/bd_logo1.png",
-        "token": "9527"
-    }
+        "username":"13829711984",
+        "imUsername":"appdoctor_1",
+        "userGlobalId":"b197e518-fdd9-4c8e-b386-ecc4925ca6f3",
+        "photo":"http://cdn.make.oss.wehop-resources.wehop.cnportrait/170460f5-77bf-4357-be83-f423f594584c@50h_50w_0e",
+        "token":"17a0323c-fb87-4efe-8d9b-7d132d34741b",
+        "name":"黄新"
+    },
 }
+
 	    ]]>
         </mock>
     </protocol>
 
     <protocol name="sessions" >
-
         <path>
-
 <![CDATA[
-user-platform-web-1.0.0/rest/user/mySession?token=[1]
+doctor-platform-web-1.0.0/rest/doctor/queryTopic?page=[1]&pageSize=[2]&status=[3]&token=[4]
                 ]]>
         </path>
 
         <mock>
-
 <![CDATA[
-{
-    "code": 1,
-    "data": [
-        {
-            "chatType": 1,
-            "groupId": "144618765244432828",
-            "client_user_imName": "tower_01",
-            "last_user_id": "057ad21e-5cff-4adf-9df8-94ae4985ef86",
-            "last_user_name": "大强",
-            "last_user_imName": "priest_01",
-            "last_user_photo": "http://img.woyaogexing.com/2014/08/15/0e0875831a1790e3!200x200.jpg",
-            "lastMessage": "上次给你的药吃了吗，有问题随时找我~",
-            "lastDate": "2015-12-15 18:30",
-        },
-        {
-            "chatType": 1,
-            "groupId": "144618891472011796",
-            "client_user_imName": "tower_02",
-            "last_user_id": "b594d0c7-ac96-428b-b955-8368faa2e239",
-            "last_user_name": "李跃通",
-            "last_user_imName": "priest_02",
-            "last_user_photo": null,
-            "lastMessage": "天冷注意身体",
-            "lastDate": "2015-12-20 21:30",
-        },
-        {
-            "chatType": 0,
-            "remote_user_imName": "xxx",
-            "last_user_id": "b594d0c7-ac96-428b-b955-8368faa2e239",
-            "last_user_name": "韩美美",
-            "last_user_imName": "im_user3",
-            "last_user_photo": null,
-            "lastMessage": "天冷注意身体",
-            "lastDate": "2015-12-25 14:09",
-        }
-    ]
+{ 
+	"code": 1, 
+	"msg": null, 
+	"data": { 
+		"recordCount": 11, 
+        "pageCount": 1, 
+		"pageSize": 20, 
+		"page": 1, 
+        "sortField": null, 
+        "sortAsc": true, 
+        "nextStart": 12 ,
+		"records": [ 
+			{ 
+				"id": 6458, 
+				"topic": "每天全线涨停2", 
+				"groupId": "140369198034452992",
+				"user": "f6ca022a-48c3-4731-a5aa-265b50e71481", 
+				"userName": "曹羽墨",
+                                "userImUsername":"test",
+				"userPortrait": null, 
+				"doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3", 
+				"doctorName": "黄新", 
+				"isLastSpeakerDoctor": false, 
+				"status": 2, 
+				"time": 1450247050000 
+			},
+			{ 
+				"id": 6457, 
+				"topic": "每天全线涨停1", 
+				"groupId": "140368589411582504", 
+				"user": "3609adda-2a59-4ed2-8284-d2737fe552ac", 
+				"doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3", 
+				"userName": "秦岭", 
+                                "userImUsername":"test",
+				"doctorName": "黄新", 
+				"userPortrait": null, 
+				"isLastSpeakerDoctor": false, 
+				"status": 2, 
+				"time": 1450246909000 
+			} 
+		], 
+	}
 }
             ]]>
         </mock>

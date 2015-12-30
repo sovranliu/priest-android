@@ -39,23 +39,26 @@ public class Me extends User implements Serializable {
 	public String token;
 
 
+	public Me() { }
 	/**
 	 * 构造函数
 	 * 
-     * @param id 用户ID
-	 * @param phone 手机号码
-	 * @param password 密码
+	 * @param id 用户ID
+	 * @param username 用户名
+	 * @param imUsername im用户名
 	 * @param name 姓名
 	 * @param photo 头像URL
 	 * @param token 口令
 	 */
-	public Me() { }
-	public Me(int id, String username, String password, String name, String photo, String token) {
+	public Me(String id, String username, String password, String imUsername, String name, String photo, String token) {
 		super(id);
 		this.username = username;
 		this.password = password;
+		this.imUsername = imUsername;
 		this.name = name;
 		this.photo = photo;
 		this.token = token;
+		
+		this.imPassword = this.username;
 	}
 }

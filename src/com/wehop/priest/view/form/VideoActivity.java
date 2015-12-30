@@ -81,7 +81,7 @@ public class VideoActivity extends Activity {
 	/**
 	 * 环信用户名
 	 */
-	private String userId = null;
+	private String userImName = null;
 	/**
 	 * 用户名
 	 */
@@ -144,8 +144,9 @@ public class VideoActivity extends Activity {
 	public void prepareData() {
 		handler = new Handler();
 		//
-		userId = this.getIntent().getStringExtra("userId");
-		userName = this.getIntent().getStringExtra("userName");
+		userImName = this.getIntent().getStringExtra("userImName");
+        userName = this.getIntent().getStringExtra("userName");
+        Log.i("gxl", "video call: user IM name = " + userImName);
 		mode = this.getIntent().getBooleanExtra("mode", false);
 		//
 		EMChatManager.getInstance().addVoiceCallStateChangeListener(new EMCallStateChangeListener() {
@@ -195,7 +196,7 @@ public class VideoActivity extends Activity {
 	 */
 	public void call() {
 		try {
-			EMChatManager.getInstance().makeVideoCall(userId);
+			EMChatManager.getInstance().makeVideoCall(userImName);
 		}
 		catch (EMServiceNotReadyException e) {
 			Log.e("TOWER", "call failed", e);

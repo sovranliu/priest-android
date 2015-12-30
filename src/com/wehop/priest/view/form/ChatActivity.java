@@ -119,7 +119,8 @@ public class ChatActivity extends ActivityEx {
 
     private String mGroupId = null;
     // Group中唯一的client用户的 IM 名
-    private String mClientUser_imName = null;
+    private String mUser_imName = null;
+    private String mUsername = null;
 
     private EMChatManager mChatManager = null;
     private EMGroupManager mGroupManager = null;
@@ -209,14 +210,16 @@ public class ChatActivity extends ActivityEx {
         // mChatManager.deleteConversation(mUsername);
         Intent intent = this.getIntent();
         mGroupId = intent.getStringExtra(SessionActivity.GROUP_ID);
-        mClientUser_imName = intent.getStringExtra(SessionActivity.CLIENT_IM_NAME);
+        mUser_imName = intent.getStringExtra(SessionActivity.USER_IM_NAME);
+        mUsername = intent.getStringExtra(SessionActivity.USER_NAME);
 
         mGroupManager = EMGroupManager.getInstance();
         mChatManager = EMChatManager.getInstance();
 
         mMe = SessionActivity.getUserInfo(mChatManager.getCurrentUser());
-        Log.i("gxl", "-------current user = " + mMe.imUsername);
-        Log.i("gxl", "-------mClient im name = " + mClientUser_imName);
+        Log.i("gxl", "-------my IM name = " + mMe.imUsername);
+        Log.i("gxl", "-------user im name = " + mUser_imName);
+        Log.i("gxl", "-------user name " + mUsername);
 
         mChatManager.registerEventListener(new EMEventListener() {
 
@@ -467,16 +470,16 @@ public class ChatActivity extends ActivityEx {
 
     private void voiceCall() {
         Intent intent = new Intent(ChatActivity.this, VoiceActivity.class);
-        intent.putExtra("userId", mClientUser_imName);
-        intent.putExtra("userName", mClientUser_imName);
+        intent.putExtra("userImName", mUser_imName);
+        intent.putExtra("userName", mUsername);
         intent.putExtra("mode", true);
         ChatActivity.this.startActivity(intent);
     }
 
     private void videoCall() {
         Intent intent = new Intent(ChatActivity.this, VideoActivity.class);
-        intent.putExtra("userId", mClientUser_imName);
-        intent.putExtra("userName", mClientUser_imName);
+        intent.putExtra("userImName", mUser_imName);
+        intent.putExtra("userName", mUsername);
         intent.putExtra("mode", true);
         ChatActivity.this.startActivity(intent);
 

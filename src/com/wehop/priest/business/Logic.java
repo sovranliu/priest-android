@@ -49,13 +49,13 @@ public class Logic {
 	 * 
 	 * @param id 用户ID
 	 * @param username 用户名
-	 * @param password 密码
+	 * @param imUsername im用户名
 	 * @param name 用户姓名
 	 * @param photo 头像
 	 * @param token 访问口令
 	 */
-	public static void login(int id, String username, String password, String name, String photo, String token) {
-		user = new Me(id, username, password, name, photo, token);
+	public static void login(String id, String username, String password, String imUsername, String name, String photo, String token) {
+		user = new Me(id, username, password, imUsername, name, photo, token);
 		save();
 	}
 
