@@ -17,15 +17,12 @@ import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.MessageBody;
 import com.easemob.chat.TextMessageBody;
-import com.slfuture.pluto.communication.Host;
-import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.view.form.SessionActivity.UserInfo;
 
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
