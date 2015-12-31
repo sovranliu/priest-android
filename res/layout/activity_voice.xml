@@ -32,7 +32,7 @@
         android:layout_marginBottom="20dp"
 	    android:layout_alignParentBottom="true"
 	    android:layout_centerHorizontal="true"
-	    android:background="@color/blue"
+	    android:background="@color/red"
 	    android:textColor="@color/white"
 	    android:text="挂断" />
 	<RelativeLayout

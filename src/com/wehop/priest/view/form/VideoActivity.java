@@ -144,7 +144,7 @@ public class VideoActivity extends Activity {
 	public void prepareData() {
 		handler = new Handler();
 		//
-		userImName = this.getIntent().getStringExtra("userImName");
+		userImName = this.getIntent().getStringExtra("userId");
         userName = this.getIntent().getStringExtra("userName");
         Log.i("gxl", "video call: user IM name = " + userImName);
 		mode = this.getIntent().getBooleanExtra("mode", false);

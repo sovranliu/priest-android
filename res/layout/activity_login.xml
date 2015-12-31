@@ -43,7 +43,7 @@
 		    android:layout_toRightOf="@+id/login_label_username"
 		    android:ems="10"
 		    android:hint=""
-		    android:textColor="@color/black"
+		    android:textColor="@color/white"
 			android:background="@android:color/transparent">
 		</EditText>
 	</RelativeLayout>
@@ -68,6 +68,7 @@
 		    android:textColor="@color/white"
 		    android:text="密码" >
 		</TextView>
+
 		<EditText
 		    android:id="@+id/login_text_password"
 		    android:layout_width="match_parent"
@@ -76,10 +77,12 @@
 		    android:layout_marginLeft="10dp"
 		    android:layout_marginRight="10dp"
 		    android:layout_toRightOf="@+id/login_label_password"
+		    android:background="@android:color/transparent"
 		    android:ems="10"
 		    android:hint=""
-		    android:textColor="@color/black"
-			android:background="@android:color/transparent">
+		    android:inputType="textPassword"
+		    android:textColor="@color/white" >
+
 		</EditText>
 	</RelativeLayout>
 	<Button

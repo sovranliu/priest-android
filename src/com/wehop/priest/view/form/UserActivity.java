@@ -25,11 +25,11 @@ public class UserActivity extends FragmentEx {
 	/**
 	 * 关于我们URL
 	 */
-	public final static String URL_ABOUT = "http://www.baidu.com";
+	public final static String URL_ABOUT = "http://cdn.oss.wehop-resources.wehop.cn/sales/app/sites/v-1/about_us.html";
 	/**
 	 * 热线电话
 	 */
-	public final static String TELEPHONE_US = "15021819287";
+	public final static String TELEPHONE_US = "13816202676";
 
 
 	@ResourceView(id = R.id.user_image_photo)
@@ -69,6 +69,9 @@ public class UserActivity extends FragmentEx {
 				Host.doImage("image", new ImageResponse(Logic.user.photo, null) {
 					@Override
 					public void onFinished(Bitmap content) {
+						if(null == content) {
+							return;
+						}
 						imgPhoto.setImageBitmap(Utility.makeImageRing(Utility.makeCycleImage(content, 200, 200), 4));
 					}
 				}, Logic.user.photo);
@@ -94,7 +97,7 @@ public class UserActivity extends FragmentEx {
 			@Override
 			public void onClick(View v) {
 				Logic.user = null;
-				Storage.save();
+				Storage.clear();
 				// 切入登录页
 				UserActivity.this.getActivity().startActivity(new Intent(UserActivity.this.getActivity(), LoginActivity.class));
 				UserActivity.this.getActivity().finish();

@@ -48,7 +48,7 @@
 	    	android:layout_margin="20dp"
             android:text="接听"
 	    	android:textColor="@color/white"
-		    android:background="@color/blue" />
+		    android:background="@color/green" />
 	</LinearLayout>
 	<TextView
 	    android:id="@+id/ring_label_caller"

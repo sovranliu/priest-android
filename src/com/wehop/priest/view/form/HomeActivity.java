@@ -25,7 +25,7 @@ public class HomeActivity extends FragmentEx {
 	/**
 	 * 入口URL
 	 */
-	public final static String URL = "http://www.baidu.com";
+	public final static String URL = "http://cdn.oss.wehop-resources.wehop.cn/banner%2Fsites%2Fv-1%2Fh5-doctor-index.html";
 	/**
 	 * 引导对象
 	 */
@@ -45,7 +45,6 @@ public class HomeActivity extends FragmentEx {
 	@Override
 	public void onStart() {
 		super.onStart();
-		Log.i("gxl", "HomeActivity --- onStart--brower id = " + R.id.home_browser);
 		//
 		prepare();
 		load();

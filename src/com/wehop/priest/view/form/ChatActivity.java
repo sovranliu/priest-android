@@ -4,7 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +16,8 @@ import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.MessageBody;
 import com.easemob.chat.TextMessageBody;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.wehop.priest.R;
@@ -36,7 +37,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -112,6 +112,14 @@ public class ChatActivity extends ActivityEx {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         init();
         initData();
+    }
+    
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //
+        unregisterReceiver(chatReceiver);
     }
 
     private void init() {
@@ -256,23 +264,23 @@ public class ChatActivity extends ActivityEx {
         for (EMMessage message : messages) {
             MessageData data = new MessageData();
             MessageBody body = message.getBody();
-            String msg = null;
             switch (message.getType()) {
-                case TXT:
-                    msg = ((TextMessageBody) message.getBody()).getMessage();
-                    break;
-                case IMAGE:
-                    msg = ((ImageMessageBody) message.getBody()).getLocalUrl();
-                    break;
-                default:
-                    break;
-            }
+	            case TXT:
+	            	data.setText(((TextMessageBody) message.getBody()).getMessage());
+	                break;
+	            case IMAGE:
+	                ImageMessageBody imgBody= ((ImageMessageBody) message.getBody());
+	                data.setThumbnailName(imgBody.getFileName());
+	                data.setThumbnailUrl(imgBody.getThumbnailUrl());
+	                break;
+	            default:
+	                break;
+	        }
             String date = formatter.format(new Date(message.getMsgTime()));
             EMMessage.Direct direct = message.direct;
 
             data.setType(message.getType());
             data.setImName(message.getFrom());
-            data.setContent(msg);
             data.setDirection(direct);
             data.setDate(formatter.format(new Date(message.getMsgTime())));
             mMessageList.add(data);
@@ -289,48 +297,24 @@ public class ChatActivity extends ActivityEx {
         MessageData data = new MessageData();
         MessageBody body = message.getBody();
         EMMessage.Direct direct = message.direct;
-        String msg = null;
         switch (message.getType()) {
             case TXT:
-                msg = ((TextMessageBody) message.getBody()).getMessage();
+            	data.setText(((TextMessageBody) message.getBody()).getMessage());
                 break;
             case IMAGE:
                 ImageMessageBody imgBody= ((ImageMessageBody) message.getBody());
-                if(direct == EMMessage.Direct.SEND) {
-                    msg = imgBody.getLocalUrl();
-                } else {
-                    String remotePath = imgBody.getRemoteUrl();
-                    String filePath = FileUtils.getImagePath(remotePath);
-                    File file = new File(filePath);
-                    if(!file.exists()) {
-                        Map<String, String> headers = new HashMap<String, String>();
-                        if (!TextUtils.isEmpty(imgBody.getSecret())) {
-                            headers.put("share-secret", imgBody.getSecret());
-                        }
-                        downloadImage(filePath, remotePath, headers);
-                    }
-                    //String thumbRemoteUrl = imgBody.getThumbnailUrl();
-                    //if(TextUtils.isEmpty(thumbRemoteUrl)&&!TextUtils.isEmpty(remotePath)){
-                    //    thumbRemoteUrl = remotePath;
-                    //}
-                    //String thumbnailPath = FileUtils.getThumbnailImagePath(thumbRemoteUrl);
-                    msg = filePath;
-                }
+                data.setThumbnailName(imgBody.getFileName());
+                data.setThumbnailUrl(imgBody.getThumbnailUrl());
                 break;
             default:
                 break;
         }
-        Log.i("gxl", "From = " + message.getFrom() + ", To = " + message.getTo() + ", userName = " + message.getUserName());
         String date = formatter.format(new Date(message.getMsgTime()));
-        
-
         data.setType(message.getType());
         data.setImName(message.getFrom());
-        data.setContent(msg);
         data.setDirection(direct);
         data.setDate(formatter.format(new Date(message.getMsgTime())));
         mMessageList.add(data);
-
         ((MessageAdapter) mListView.getAdapter()).notifyDataSetChanged();
         if (mMessageList.size() > 0) {
             mListView.setSelection(mMessageList.size() - 1);
@@ -344,8 +328,7 @@ public class ChatActivity extends ActivityEx {
         }
     }
 
-    private void downloadImage(final String localFilePath, final String remoteFilePath,
-            final Map<String, String> headers) {
+    private void downloadImage(final String localFilePath, final String remoteFilePath, final Map<String, String> headers) {
         mChatManager.downloadFile(remoteFilePath, localFilePath, headers, new EMCallBack() {
             public void onSuccess() {
                 Log.i("gxl", "download complete!  localPath = " + localFilePath);
@@ -464,8 +447,28 @@ public class ChatActivity extends ActivityEx {
         private EMMessage.Type type;
 
         private EMMessage.Direct direction;
-        // Text message or File Path
-        private String content;
+        // 文字内容
+        private String text;
+        // 缩略图文件名
+        private String thumbnailName;
+        public String getThumbnailName() {
+			return thumbnailName;
+		}
+
+		public void setThumbnailName(String thumbnailName) {
+			this.thumbnailName = thumbnailName;
+		}
+
+		public String getThumbnailUrl() {
+			return thumbnailUrl;
+		}
+
+		public void setThumbnailUrl(String thumbnailUrl) {
+			this.thumbnailUrl = thumbnailUrl;
+		}
+
+		// 缩略图URL
+        private String thumbnailUrl;
 
         private String date;
 
@@ -487,12 +490,12 @@ public class ChatActivity extends ActivityEx {
             this.direction = direct;
         }
 
-        public String getContent() {
-            return content;
+        public String getText() {
+            return text;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public void setText(String text) {
+            this.text = text;
         }
 
         public String getDate() {
@@ -575,7 +578,8 @@ public class ChatActivity extends ActivityEx {
                 // } else {
                 // photoView.setImageURI(Uri.fromFile(new File(mMy_photo)));
                 // }
-            } else {
+            }
+            else {
                 receivedGroup.setVisibility(View.VISIBLE);
                 sentGroup.setVisibility(View.GONE);
                 photoView = (ImageView) convertView.findViewById(R.id.received_contact_photo);
@@ -590,30 +594,34 @@ public class ChatActivity extends ActivityEx {
                 // photoView.setImageURI(Uri.fromFile(new File(mUser_photo)));
                 // }
             }
-
             if (data.getType() == EMMessage.Type.TXT) {
                 messageView.setVisibility(View.VISIBLE);
                 fileView.setVisibility(View.GONE);
-                messageView.setText(data.getContent());
-            } else {
+                messageView.setText(data.getText());
+            }
+            else {
                 messageView.setVisibility(View.GONE);
                 fileView.setVisibility(View.VISIBLE);
-                if (data.getType() == EMMessage.Type.IMAGE) {
-                    File file = new File(data.getContent());
-                    Log.i("gxl", "file path = " + data.getContent());
-                    if (file.exists()) {
-                        Log.i("gxl", "file exists");
-                    } else {
-                        Log.i("gxl", "file not exist");
-                    }
-                    Bitmap bitmap = BitmapFactory.decodeFile(data.getContent());
-                    fileView.setImageBitmap(bitmap);
-                } else {
-                    messageView.setText(data.getContent());
-                }
             }
             dataView.setText(data.getDate());
             return convertView;
         }
+    }
+
+    /**
+     * 绘制接收或发送的图片信息
+     */
+    public void drawImage(ImageView view, Bitmap image, String fileName, String fileURL) {
+    	if(null != image) {
+    		view.setImageBitmap(image);
+    		return;
+    	}
+    	Host.doImage("image", new ImageResponse(fileName, view) {
+			@Override
+			public void onFinished(Bitmap content) {
+				ImageView target = (ImageView) tag;
+				target.setImageBitmap(content);
+			}
+    	}, fileURL);
     }
 }

@@ -20,10 +20,11 @@ import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 import com.wehop.priest.framework.Storage;
-import com.wehop.priest.framework.Utility;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -69,8 +71,10 @@ public class SessionActivity extends FragmentEx {
 
     private static final int REFRESH_LIST = 3;
 
-    // private final static String URL = "http://www.baidu.com";
-
+    
+    @ResourceView(id = R.id.search)
+    public EditText txtSearch = null;
+    
     @ResourceView(id = R.id.title)
     public TextView mSessionTitleView = null;
 
@@ -78,7 +82,15 @@ public class SessionActivity extends FragmentEx {
     public ListView mListView = null;
     private BroadcastReceiver chatReceiver = null;
 
-    protected ArrayList<HashMap<String, Object>> mSessionList = new ArrayList<HashMap<String, Object>>();
+    /**
+     * 当前展示会话列表
+     */
+    protected ArrayList<HashMap<String, Object>> currentSessionList = new ArrayList<HashMap<String, Object>>();
+    /**
+     * 会话列表
+     */
+    protected ArrayList<HashMap<String, Object>> sessionList = new ArrayList<HashMap<String, Object>>();
+
 
     /**
      * 未读消息映射
@@ -120,8 +132,26 @@ public class SessionActivity extends FragmentEx {
      * 准备
      */
     public void prepare() {
+    	txtSearch.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				// TODO Auto-generated method stub
+				
+			}
 
-        SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), mSessionList, R.layout.session_list_item,
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				refreshByFilter();
+			}
+    	});
+
+        SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), currentSessionList, R.layout.session_list_item,
                 new String[] { PHOTO, NAME, DATE, TOPIC },
                 new int[] { R.id.remote_photo, R.id.remote_name, R.id.last_time, R.id.last_message });
         listItemAdapter.setViewBinder(new ViewBinder() {
@@ -143,18 +173,26 @@ public class SessionActivity extends FragmentEx {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // TODO Auto-generated method stub
-                Map data = mSessionList.get(position);
-                Intent intent = new Intent(SessionActivity.this.getActivity(), ChatActivity.class);
+                Map data = currentSessionList.get(position);
+                Intent intent = new Intent(SessionActivity.this.getActivity(), GroupChatActivity.class);
+                // Intent intent = new Intent(SessionActivity.this.getActivity(), ChatActivity.class);
                 // intent.putExtra(GLOBAL_ID, (String) data.get(GLOBAL_ID));
                 // intent.putExtra(USER_ID, (String)data.get(USER_ID));
                 // intent.putExtra(USER_NAME, (String)data.get(USER_NAME));
                 // intent.putExtra(PHOTO, (String)data.get(PHOTO));
                 // intent.putExtra(USER_IM_NAME, "efg");
-                intent.putExtra(GROUP_ID, (String) data.get(GROUP_ID));
-                
+//                
+//                intent.putExtra(GROUP_ID, (String) data.get(GROUP_ID));
+//                messageMap.delete((String) data.get(USER_IM_NAME));
+//                intent.putExtra(USER_NAME, (String) data.get(USER_NAME));
+//                intent.putExtra(USER_IM_NAME, (String) data.get(USER_IM_NAME));
+
+                intent.putExtra("localId", Logic.user.imUsername);
+                intent.putExtra("groupId", (String) data.get(GROUP_ID));
                 messageMap.delete((String) data.get(USER_IM_NAME));
-                intent.putExtra(USER_NAME, (String) data.get(USER_NAME));
-                intent.putExtra(USER_IM_NAME, (String) data.get(USER_IM_NAME));
+                intent.putExtra("remoteName", (String) data.get(USER_NAME));
+                intent.putExtra("remoteId", (String) data.get(USER_IM_NAME));
+                intent.putExtra("localPhoto", Logic.user.photo);
                 startActivity(intent);
             }
         });
@@ -170,7 +208,7 @@ public class SessionActivity extends FragmentEx {
            			count++;
            		}
            		messageMap.put(from, count);
-           		refresh();
+           		refreshByMessageCome();
     	        abortBroadcast();
            	}
         };
@@ -222,7 +260,7 @@ public class SessionActivity extends FragmentEx {
 
                 ICollection<JSONVisitor> records = data.getVisitors("records");
 
-                mSessionList.clear();
+                sessionList.clear();
                 for (JSONVisitor record : records) {
                     HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -265,18 +303,17 @@ public class SessionActivity extends FragmentEx {
                     map.put(DATE, formatter.format(new Date(time)));
                     map.put(TOPIC, topic);
 
-                    mSessionList.add(map);
+                    sessionList.add(map);
 
                     if (userPortrait != null) {
                         String imageURL = userPortrait;
                         Log.i("gxl", "try to download: " + imageURL);
                         // load photo
-                        Host.doImage("image",
-                                new ImageResponse(Storage.getImageName(imageURL), mSessionList.size() - 1) {
+                        Host.doImage("image", new ImageResponse(Storage.getImageName(imageURL), sessionList.size() - 1) {
                             @Override
                             public void onFinished(Bitmap content) {
                                 Log.i("gxl", "download succeed ...");
-                                HashMap<String, Object> map = mSessionList.get((Integer) tag);
+                                HashMap<String, Object> map = sessionList.get((Integer) tag);
                                 map.put(PHOTO, content);
                                 // refresh
                                 mHandler.removeMessages(REFRESH_LIST);
@@ -285,7 +322,7 @@ public class SessionActivity extends FragmentEx {
                         }, imageURL);
                     }
                 }
-                mHandler.sendEmptyMessage(LOAD_SUCCESS);
+                refreshByFilter();
             }
 
         }, params);
@@ -351,29 +388,37 @@ public class SessionActivity extends FragmentEx {
         }
 
     }
-    
+
     /**
-     * 刷新列表
+     * 因为新消息到来而刷新列表
      */
-    public void refresh() {
-    	for(HashMap<String, Object> sessionItem : mSessionList) {
-    		String groupId = (String) sessionItem.get(USER_IM_NAME);
-    		if(null == messageMap.get(groupId)) {
+    public void refreshByMessageCome() {
+    	for(HashMap<String, Object> sessionItem : sessionList) {
+    		String userIMName = (String) sessionItem.get(USER_IM_NAME);
+    		if(null == messageMap.get(userIMName)) {
         		sessionItem.put(PHOTO, BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_default));
     		}
     		else {
-        		sessionItem.put(PHOTO, getHasMsgPhoto());
+        		sessionItem.put(PHOTO, BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_hasmessage));
     		}
     	}
     	((SimpleAdapter) mListView.getAdapter()).notifyDataSetChanged();
     }
 
     /**
-     * 获取有消息的用户头像
-     * 
-     * @return 用户头像
+     * 因为过滤而刷新列表
      */
-    public Bitmap getHasMsgPhoto() {
-    	return BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_hasmsg);
+    public void refreshByFilter() {
+    	currentSessionList.clear();
+    	for(HashMap<String, Object> sessionItem : sessionList) {
+    		String userName = (String) sessionItem.get(USER_NAME);
+    		if(null == userName) {
+    			continue;
+    		}
+    		if("".equals(txtSearch.getText().toString()) || userName.contains(txtSearch.getText().toString())) {
+    			currentSessionList.add(sessionItem);
+    		}
+    	}
+    	((SimpleAdapter) mListView.getAdapter()).notifyDataSetChanged();
     }
 }

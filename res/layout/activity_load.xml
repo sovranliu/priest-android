@@ -18,6 +18,7 @@
         android:layout_width="fill_parent" 
         android:layout_alignParentTop="true"
         android:layout_above="@id/load_image_logo"
+        android:src="@drawable/load_poster"
         android:scaleType="centerInside">
 	</ImageView>
 </RelativeLayout>

@@ -19,4 +19,5 @@
     <color name="transprant">#00000000</color>
     <color name="blue">#ff4278a7</color>
     
+    <color name="grey_text">#ff999999</color>
 </resources>

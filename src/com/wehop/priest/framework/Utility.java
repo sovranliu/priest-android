@@ -89,7 +89,7 @@ public class Utility {
 		if(radius > bitmap.getHeight()) {
 			radius = bitmap.getHeight();
 		}
-		radius = radius / 2 - strokeWidth + 1;
+		radius = (radius - strokeWidth) / 2; //  - strokeWidth + 1;
 		Bitmap result = bitmap;
 		Canvas canvas = new Canvas(result);
 		Paint paint = new Paint();

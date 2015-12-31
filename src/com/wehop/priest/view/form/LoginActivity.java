@@ -70,7 +70,7 @@ public class LoginActivity extends ActivityEx {
                         }
                         JSONVisitor dataVisitor = content.getVisitor("data");
 
-                        //String username = dataVisitor.getString("username");
+                        String username = dataVisitor.getString("username");
                         String imUsername = dataVisitor.getString("imUsername");
                         String userGlobalId = dataVisitor.getString("userGlobalId");
                         String photo = dataVisitor.getString("photo");

@@ -3,10 +3,9 @@
     <protocol name="image" >
         <url>
 <![CDATA[
-[0]
-		]]>
+[1]
+]]>
         </url>
-
         <mock>
         </mock>
     </protocol>

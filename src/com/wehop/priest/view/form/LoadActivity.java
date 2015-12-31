@@ -22,6 +22,8 @@ import android.widget.ImageView;
  */
 @ResourceView(id = R.layout.activity_load)
 public class LoadActivity extends ActivityEx {
+	@ResourceView(id = R.id.load_image_poster)
+	public ImageView imagePoster;
 	@ResourceView(id = R.id.load_image_logo)
 	public ImageView imageLogo;
 
@@ -43,7 +45,7 @@ public class LoadActivity extends ActivityEx {
 	public void prepare() {
 		// 启动动画
 		Animation animation = AnimationUtils.loadAnimation(this, R.anim.gradually);
-		imageLogo.startAnimation(animation);
+		imagePoster.startAnimation(animation);
 	}
 
 	/**

@@ -14,7 +14,7 @@ public class Program extends Application {
 	/**
 	 * 程序ID
 	 */
-	public final static String ID = "Priest";
+	public final static String ID = "priest";
 	/**
 	 * 程序引用
 	 */
