@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/" >
-
+<protocols domain="service.wehop.cn" mock="false" storage="priest/image/" >
     <protocol name="image" >
         <url>
 <![CDATA[
@@ -71,7 +70,7 @@ app/ajax/config#version=[1]
     <protocol name="login" >
         <path>
 <![CDATA[
-doctor-platform-web-1.0.0/rest/login#username=[1]&password=[2]
+doctor-platform-web/rest/login#username=[1]&password=[2]
 		]]>
         </path>
 
@@ -97,7 +96,7 @@ doctor-platform-web-1.0.0/rest/login#username=[1]&password=[2]
     <protocol name="sessions" >
         <path>
 <![CDATA[
-doctor-platform-web-1.0.0/rest/doctor/queryTopic?page=[1]&pageSize=[2]&status=[3]&token=[4]
+doctor-platform-web/rest/doctor/queryTopic?page=[1]&pageSize=[2]&status=[3]&token=[4]
                 ]]>
         </path>
 

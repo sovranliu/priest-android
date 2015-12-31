@@ -7,30 +7,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.slfuture.carrie.base.json.JSONArray;
-import com.slfuture.carrie.base.json.JSONBoolean;
-import com.slfuture.carrie.base.json.JSONNumber;
-import com.slfuture.carrie.base.json.JSONObject;
-import com.slfuture.carrie.base.json.JSONString;
+import com.easemob.chat.EMChatManager;
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.carrie.base.json.core.IJSON;
+import com.slfuture.carrie.base.type.Table;
 import com.slfuture.carrie.base.type.core.ICollection;
 import com.slfuture.pluto.communication.Host;
-import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
-import com.slfuture.pluto.communication.response.Response;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.wehop.priest.R;
+import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 import com.wehop.priest.framework.Storage;
+import com.wehop.priest.framework.Utility;
 
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -76,9 +76,15 @@ public class SessionActivity extends FragmentEx {
 
     @ResourceView(id = R.id.session_list)
     public ListView mListView = null;
+    private BroadcastReceiver chatReceiver = null;
 
     protected ArrayList<HashMap<String, Object>> mSessionList = new ArrayList<HashMap<String, Object>>();
 
+    /**
+     * 未读消息映射
+     */
+    protected Table<String, Integer> messageMap = new Table<String, Integer>();
+    
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             Log.i("gxl", "handle message : " + msg.what);
@@ -102,6 +108,12 @@ public class SessionActivity extends FragmentEx {
         super.onStart();
         prepare();
         load();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.getActivity().unregisterReceiver(chatReceiver);
     }
 
     /**
@@ -139,12 +151,32 @@ public class SessionActivity extends FragmentEx {
                 // intent.putExtra(PHOTO, (String)data.get(PHOTO));
                 // intent.putExtra(USER_IM_NAME, "efg");
                 intent.putExtra(GROUP_ID, (String) data.get(GROUP_ID));
+                
+                messageMap.delete((String) data.get(USER_IM_NAME));
                 intent.putExtra(USER_NAME, (String) data.get(USER_NAME));
                 intent.putExtra(USER_IM_NAME, (String) data.get(USER_IM_NAME));
                 startActivity(intent);
             }
         });
-
+        chatReceiver = new BroadcastReceiver() {
+           	@Override
+           	public void onReceive(Context context, Intent intent) {
+           		String from = intent.getStringExtra("from");
+           		Integer count = messageMap.get(from);
+           		if(null == count) {
+           			count = 1;
+           		}
+           		else {
+           			count++;
+           		}
+           		messageMap.put(from, count);
+           		refresh();
+    	        abortBroadcast();
+           	}
+        };
+        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+    	intentFilter.setPriority(2);
+    	SessionActivity.this.getActivity().registerReceiver(chatReceiver, intentFilter);
     }
 
     /**
@@ -161,11 +193,10 @@ public class SessionActivity extends FragmentEx {
         params[3] = Logic.user.token; // token
 
         Host.doCommand("sessions", new JSONResponse(SessionActivity.this.getActivity()) {
-
             @Override
             public void onFinished(JSONVisitor content) {
                 // TODO Auto-generated method stub
-                Log.i("gxl", "JSONVisitor, sessions: user = " + Logic.user.imUsername + " , content = " + content);
+                Logger.d("JSONVisitor, sessions: user = " + Logic.user.imUsername + " , content = " + content);
                 if (content == null) {
                     Toast.makeText(SessionActivity.this.getActivity(), "网络错误", Toast.LENGTH_LONG).show();
                     // login and take new token
@@ -177,9 +208,10 @@ public class SessionActivity extends FragmentEx {
                             .show();
                     return;
                 }
-
                 JSONVisitor data = content.getVisitor("data");
-
+                if(null == data) {
+                	return;
+                }
                 int recordCount = data.getInteger("recordCount");
                 int pageCount = data.getInteger("pageCount");
                 int pageSize = data.getInteger("pageSize");
@@ -319,5 +351,29 @@ public class SessionActivity extends FragmentEx {
         }
 
     }
+    
+    /**
+     * 刷新列表
+     */
+    public void refresh() {
+    	for(HashMap<String, Object> sessionItem : mSessionList) {
+    		String groupId = (String) sessionItem.get(USER_IM_NAME);
+    		if(null == messageMap.get(groupId)) {
+        		sessionItem.put(PHOTO, BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_default));
+    		}
+    		else {
+        		sessionItem.put(PHOTO, getHasMsgPhoto());
+    		}
+    	}
+    	((SimpleAdapter) mListView.getAdapter()).notifyDataSetChanged();
+    }
 
+    /**
+     * 获取有消息的用户头像
+     * 
+     * @return 用户头像
+     */
+    public Bitmap getHasMsgPhoto() {
+    	return BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_hasmsg);
+    }
 }

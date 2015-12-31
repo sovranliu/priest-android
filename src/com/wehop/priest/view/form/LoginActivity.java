@@ -6,7 +6,6 @@ import com.wehop.priest.business.Logic;
 import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.pluto.communication.Host;
-import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;

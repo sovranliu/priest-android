@@ -1,81 +1,56 @@
 package com.wehop.priest.view.form;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import javax.net.ssl.SSLEngineResult.HandshakeStatus;
-
 import com.easemob.EMCallBack;
-import com.easemob.EMEventListener;
-import com.easemob.EMNotifierEvent;
-import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
-import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.chat.ImageMessageBody;
 import com.easemob.chat.MessageBody;
 import com.easemob.chat.TextMessageBody;
-import com.easemob.chat.VideoMessageBody;
-import com.easemob.chat.VoiceMessageBody;
-import com.easemob.chat.core.s;
-import com.easemob.chat.EMChatConfig.EMEnvMode;
-import com.easemob.exceptions.EaseMobException;
-import com.easemob.util.EMLog;
-import com.easemob.util.PathUtil;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
-import com.wehop.priest.framework.Storage;
 import com.wehop.priest.view.form.SessionActivity.UserInfo;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.inputmethod.InputMethod;
-import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
-import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.wehop.priest.utils.FileUtils;
 
@@ -129,6 +104,11 @@ public class ChatActivity extends ActivityEx {
     public static final int NEW_MESSAGE_COMING = 1;
     public static final int REFRESH_MESSAGE_LIST = 2;
     
+    /**
+     */
+    protected BroadcastReceiver chatReceiver = null;
+    
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,7 +149,6 @@ public class ChatActivity extends ActivityEx {
         });
 
         mSendImageButton.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -221,38 +200,34 @@ public class ChatActivity extends ActivityEx {
         Log.i("gxl", "-------user im name = " + mUser_imName);
         Log.i("gxl", "-------user name " + mUsername);
 
-        mChatManager.registerEventListener(new EMEventListener() {
 
-            @Override
-            public void onEvent(EMNotifierEvent event) {
-                Log.i("gxl", "-------event = " + event);
-                switch (event.getEvent()) {
-                    case EventNewMessage:
-                        EMMessage message = (EMMessage) event.getData();
-                        Message msg = Message.obtain(mHander, NEW_MESSAGE_COMING);
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable("msg", message);
-                        msg.setData(bundle);
-                        msg.sendToTarget();
-                        break;
-                    case EventDeliveryAck:
-                        break;
-                    case EventNewCMDMessage:
-                        break;
-                    case EventReadAck:
-                        break;
-                    case EventOfflineMessage:
-                        List<EMMessage> messages = (List<EMMessage>) event.getData();
-                        //
-                        break;
-                    case EventConversationListChanged:
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-
+    	chatReceiver = new BroadcastReceiver() {
+           	@Override
+           	public void onReceive(Context context, Intent intent) {
+           		EMMessage emMessage = EMChatManager.getInstance().getMessage(intent.getStringExtra("msgid"));
+    	        switch(emMessage.getType()) {
+    	        case TXT:
+    	        case IMAGE:
+    	        	EMMessage message = emMessage;
+                    Message msg = Message.obtain(mHander, NEW_MESSAGE_COMING);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable("msg", message);
+                    msg.setData(bundle);
+                    msg.sendToTarget();
+    	        	break;
+    	        case VOICE:
+    	        	break;
+    	        case VIDEO:
+    	        	break;
+    	        default:
+    	        	break;
+    	        }
+    	        abortBroadcast();
+           	}
+        };
+        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+    	intentFilter.setPriority(5);
+    	registerReceiver(chatReceiver, intentFilter);
         // EMChat.getInstance().setAppInited();
     }
     
@@ -396,7 +371,7 @@ public class ChatActivity extends ActivityEx {
     }
 
     
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat formatter = new SimpleDateFormat("MM-dd HH:mm");
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -418,6 +393,9 @@ public class ChatActivity extends ActivityEx {
     }
 
     private void send(EMMessage message) {
+    	InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(mInputView.getWindowToken(), 0) ;
+        
         mChatManager.sendMessage(message, new EMCallBack() {
 
             @Override
@@ -640,6 +618,5 @@ public class ChatActivity extends ActivityEx {
             dataView.setText(data.getDate());
             return convertView;
         }
-
     }
 }

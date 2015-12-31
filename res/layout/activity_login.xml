@@ -30,7 +30,7 @@
 		    android:layout_alignParentLeft="true"
 		    android:layout_centerVertical="true"
 		    android:gravity="center"
-		    android:textColor="@color/black"
+		    android:textColor="@color/white"
 		    android:text="账号" >
 		</TextView>
 		<EditText
@@ -65,7 +65,7 @@
 		    android:layout_alignParentLeft="true"
 		    android:layout_centerVertical="true"
 		    android:gravity="center"
-		    android:textColor="@color/black"
+		    android:textColor="@color/white"
 		    android:text="密码" >
 		</TextView>
 		<EditText

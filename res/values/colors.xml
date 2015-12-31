@@ -12,7 +12,7 @@
     <color name="listview_on">#ffffffff</color>
     <color name="listview_down">#fff7f7f7</color>
     <color name="red">#ffff0000</color>
-    <color name="grey">#ff9c9c9c</color>
+    <color name="grey">#fff3f3f3</color>
     <color name="midgrey">#ff999999</color>
     <color name="lightgrey">#fff3f3f3</color>
     <color name="docgrey">#ececec</color>
