@@ -18,7 +18,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -101,7 +100,6 @@ public class MainActivity extends FragmentActivityEx {
 			}
         });
         EMChatManager.getInstance().login(Logic.user.imUsername, Logic.user.imPassword, new EMCallBack() {
-            
             @Override
             public void onSuccess() {
                 // TODO Auto-generated method stub

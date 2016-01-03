@@ -103,7 +103,7 @@ public class RingActivity extends Activity {
 			public void run() {
 				soundPool.play(soundId, 1, 1, 0, -1, 1);
 			}
-		}, 20);
+		}, 1000);
 	}
 
 	/**

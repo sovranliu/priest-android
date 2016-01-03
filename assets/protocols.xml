@@ -147,5 +147,4 @@ doctor-platform-web/rest/doctor/queryTopic?page=[1]&pageSize=[2]&status=[3]&toke
             ]]>
         </mock>
     </protocol>
-
 </protocols>

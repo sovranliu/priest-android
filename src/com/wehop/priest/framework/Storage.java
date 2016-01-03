@@ -220,7 +220,7 @@ public class Storage {
 		if(null != data) {
 			data.clear();
 		}
-		File file = new File(DATA_ROOT + "data.dat");
+		File file = new File(DATA_ROOT + "me.dat");
 		if(file.exists()) {
 			file.delete();
 		}

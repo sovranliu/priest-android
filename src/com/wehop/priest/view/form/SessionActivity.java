@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMConversation;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.type.Table;
 import com.slfuture.carrie.base.type.core.ICollection;
@@ -120,6 +121,12 @@ public class SessionActivity extends FragmentEx {
         super.onStart();
         prepare();
         load();
+    }
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	refreshByMessageCome();
     }
 
     @Override
@@ -394,8 +401,10 @@ public class SessionActivity extends FragmentEx {
      */
     public void refreshByMessageCome() {
     	for(HashMap<String, Object> sessionItem : sessionList) {
-    		String userIMName = (String) sessionItem.get(USER_IM_NAME);
-    		if(null == messageMap.get(userIMName)) {
+    		String groupId = (String) sessionItem.get(GROUP_ID);
+    		EMConversation conversation = EMChatManager.getInstance().getConversation(groupId);
+            int msgCount = conversation.getUnreadMsgCount();
+    		if(msgCount <= 0) {
         		sessionItem.put(PHOTO, BitmapFactory.decodeResource(this.getResources(), R.drawable.photo_default));
     		}
     		else {
@@ -419,6 +428,6 @@ public class SessionActivity extends FragmentEx {
     			currentSessionList.add(sessionItem);
     		}
     	}
-    	((SimpleAdapter) mListView.getAdapter()).notifyDataSetChanged();
+    	refreshByMessageCome();
     }
 }
