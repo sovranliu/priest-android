@@ -5,6 +5,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMVideoCallHelper;
 import com.easemob.chat.EMVideoCallHelper.EMVideoOrientation;
 import com.easemob.exceptions.EMServiceNotReadyException;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.utils.CameraHelper;
 
@@ -111,6 +112,8 @@ public class VideoActivity extends Activity {
 		setContentView(R.layout.activity_video);
 		// 界面处理
 		prepare();
+        //
+        Program.register(this);
 	}
 	
     @Override
@@ -122,6 +125,8 @@ public class VideoActivity extends Activity {
 			cameraHelper.stopCapture();
     	}
 		cameraHelper = null;
+        //
+        Program.unregister(this);
     }
 
 	/**

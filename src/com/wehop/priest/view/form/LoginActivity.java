@@ -1,5 +1,6 @@
 package com.wehop.priest.view.form;
 
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
@@ -40,6 +41,11 @@ public class LoginActivity extends ActivityEx {
         //
         prepare();
         load();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     /**

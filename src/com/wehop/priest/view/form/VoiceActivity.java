@@ -3,6 +3,7 @@ package com.wehop.priest.view.form;
 import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EMServiceNotReadyException;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 
 import android.app.Activity;
@@ -58,6 +59,8 @@ public class VoiceActivity extends Activity {
 		setContentView(R.layout.activity_voice);
 		// 界面处理
 		prepare();
+        //
+        Program.register(this);
 	}
 	
 	/**
@@ -69,6 +72,8 @@ public class VoiceActivity extends Activity {
 		prepareSpeaker();
 		prepareHandUp();
 		prepareCaller();
+        //
+        Program.unregister(this);
 	}
 	
 	/**

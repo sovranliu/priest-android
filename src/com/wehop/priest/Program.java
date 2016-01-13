@@ -1,10 +1,14 @@
 package com.wehop.priest;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.easemob.chat.EMChat;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 import com.wehop.priest.framework.Environment;
 
+import android.app.Activity;
 import android.app.Application;
 
 /**
@@ -19,6 +23,10 @@ public class Program extends Application {
 	 * 程序引用
 	 */
 	public static Application application = null;
+    /**
+     * 系统Activity列表
+     */
+	public static List<Activity> systemActivities = new LinkedList<Activity>();  
 
 
 	/**
@@ -53,5 +61,40 @@ public class Program extends Application {
 		Environment.terminate();
 		Program.application = null;
 		Logger.i("Program.onTerminate() end");
+	}
+
+	/**
+	 * 注册窗口
+	 * 
+	 * @param activity 窗口
+	 */
+	public static void register(Activity activity) {
+		systemActivities.add(activity);
+	}
+
+	/**
+	 * 解除注册窗口
+	 * 
+	 * @param activity 窗口
+	 */
+	public static void unregister(Activity activity) {
+		for(int i = systemActivities.size() - 1; i >= 0; i--) {
+			Activity item = systemActivities.get(i);
+			if(item == activity) {
+				systemActivities.remove(systemActivities);
+				break;
+			}
+		}
+	}
+	
+	/**
+	 * 清理所有窗口
+	 */
+	public static void exit() {
+		for(int i = systemActivities.size() - 1; i >= 0; i--) {
+			Activity item = systemActivities.get(i);
+			systemActivities.remove(i);
+			item.finish();
+		}
 	}
 }

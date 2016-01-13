@@ -20,6 +20,7 @@ import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.view.form.SessionActivity.UserInfo;
@@ -112,6 +113,8 @@ public class ChatActivity extends ActivityEx {
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         init();
         initData();
+        //
+        Program.register(this);
     }
     
 
@@ -120,6 +123,8 @@ public class ChatActivity extends ActivityEx {
         super.onDestroy();
         //
         unregisterReceiver(chatReceiver);
+        //
+        Program.unregister(this);
     }
 
     private void init() {

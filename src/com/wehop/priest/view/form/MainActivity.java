@@ -1,17 +1,22 @@
 package com.wehop.priest.view.form;
 
 import com.easemob.EMCallBack;
+import com.easemob.EMConnectionListener;
+import com.easemob.EMError;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.OnNotificationClickListener;
+import com.easemob.util.NetUtils;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
+import com.wehop.priest.framework.Storage;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -34,6 +39,47 @@ import android.widget.TextView;
  */
 @ResourceView(id = R.layout.activity_main)
 public class MainActivity extends FragmentActivityEx {
+	/**
+	 * 实现ConnectionListener接口
+	 */
+	private class ConnectionListener implements EMConnectionListener {
+	    @Override
+		public void onConnected() {
+	    	Logger.d("已连接到服务器");
+		}
+
+		@Override
+		public void onDisconnected(final int error) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if(error == EMError.USER_REMOVED) {
+						Logger.e("显示帐号已经被移除");
+					}
+					else if (error == EMError.CONNECTION_CONFLICT) {
+						Logger.e("显示帐号在其他设备登陆");
+						//
+						Logic.user = null;
+						Storage.clear();
+						// 切入登录页
+						MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
+						MainActivity.this.finish();
+						Program.exit();
+					}
+					else {
+						if (NetUtils.hasNetwork(MainActivity.this)) {
+							Logger.e("连接不到聊天服务器");
+						}
+						else {
+							Logger.e("当前网络不可用，请检查网络设置");
+						}
+					}
+				}
+			});
+		}
+	}
+	
+	
 	/**
 	 * 选项卡个数
 	 */
@@ -107,6 +153,8 @@ public class MainActivity extends FragmentActivityEx {
                 EMChatManager.getInstance().loadAllConversations();
                 EMGroupManager.getInstance().loadAllGroups();
                 Logic.imLogin = true;
+                //
+                EMChatManager.getInstance().addConnectionListener(new ConnectionListener());
             }
             
             @Override

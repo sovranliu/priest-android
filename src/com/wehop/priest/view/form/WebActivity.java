@@ -2,6 +2,7 @@ package com.wehop.priest.view.form;
 
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 
 import android.net.Uri;
@@ -44,8 +45,17 @@ public class WebActivity extends ActivityEx {
 		//
 		prepare();
 		load();
+        //
+        Program.register(this);
 	}
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //
+        Program.unregister(this);
+    }
+    
 	/**
 	 * 准备
 	 */

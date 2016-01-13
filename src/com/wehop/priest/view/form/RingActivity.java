@@ -4,6 +4,7 @@ import com.easemob.chat.EMCallStateChangeListener;
 import com.easemob.chat.EMChatManager;
 import com.easemob.exceptions.EMNetworkUnconnectedException;
 import com.easemob.exceptions.EMNoActiveCallException;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 
 import android.app.Activity;
@@ -59,6 +60,8 @@ public class RingActivity extends Activity {
 		setContentView(R.layout.activity_ring);
 		// 界面处理
 		prepare();
+        //
+        Program.register(this);
 	}
 	
 	@Override
@@ -75,6 +78,8 @@ public class RingActivity extends Activity {
 		catch (EMNoActiveCallException e) {
 			Log.e("TOWER", "rejectCall execute failed", e);
 		}
+        //
+        Program.unregister(this);
     }
 	
 	/**

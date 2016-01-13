@@ -44,8 +44,10 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.utils.GraphicHelper;
 
@@ -70,6 +72,10 @@ public class GroupChatActivity extends ActivityEx {
 		 * 消息文字内容
 		 */
 		private String text = null;
+		/**
+		 * 消息图片下载地址
+		 */
+		private String url = null;
 		/**
 		 * 消息图片内容
 		 */
@@ -181,6 +187,25 @@ public class GroupChatActivity extends ActivityEx {
 				messageText.setVisibility(View.GONE);
 				messageImage.setImageBitmap(message.image);
 				messageImage.setVisibility(View.VISIBLE);
+				messageImage.setTag(position);
+				messageImage.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						int p = (Integer) v.getTag();
+						if(p >= messages.size()) {
+							return;
+						}
+						Message m = messages.get(p);
+						Intent intent = new Intent(GroupChatActivity.this, ImageActivity.class);
+						if(null != m.file) {
+							intent.putExtra("path", m.file.getAbsolutePath());
+						}
+						else {
+							intent.putExtra("url", m.url);
+						}
+						GroupChatActivity.this.startActivity(intent);
+					}
+				});
 			}
 			return convertView;
 		}
@@ -268,6 +293,8 @@ public class GroupChatActivity extends ActivityEx {
     	super.onCreate(savedInstanceState);
     	//
     	prepare();
+        //
+        Program.register(this);
     }
 
     @Override
@@ -277,6 +304,8 @@ public class GroupChatActivity extends ActivityEx {
 			GroupChatActivity.this.unregisterReceiver(receiver);
 		}
 		receiver = null;
+        //
+        Program.unregister(this);
     }
 
     @Override
@@ -301,7 +330,7 @@ public class GroupChatActivity extends ActivityEx {
 				Message message = new Message();
 				message.sender = localId;
 				message.photo = localPhoto;
-				message.image = BitmapFactory.decodeFile(imagePath);
+				message.image = GraphicsHelper.decodeFile(new File(imagePath), 200, 200);
 				message.file = imageFile;
 				send(message);
 				break;
@@ -481,18 +510,6 @@ public class GroupChatActivity extends ActivityEx {
 			public void onClick(View v) {
 				GroupChatActivity.this.finish();
 			}
-
-			/**
-			 * 准备关闭按钮
-			 */
-			private void prepareClose() {
-				btnClose.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						GroupChatActivity.this.finish();
-					}
-			    });
-			}
         });
     }
     
@@ -662,34 +679,35 @@ public class GroupChatActivity extends ActivityEx {
 	        	if(null == imageBody.getFileName() || null == imageBody.getThumbnailUrl()) {
 	        		return;
 	        	}
+	        	Message imgMessage = new Message();
 	        	if(null != imageBody.getLocalUrl() && (new File(imageBody.getLocalUrl())).exists()) {
-	        		Message imgMessage = new Message();
-					imgMessage.sender = emMessage.getFrom();
+	        		imgMessage.sender = emMessage.getFrom();
 		        	if(imgMessage.sender.endsWith(localId)) {
 		        		imgMessage.photo = localPhoto;
 		        	}
 		        	else {
 		        		imgMessage.photo = remotePhoto;
 		        	}
-		        	imgMessage.image = BitmapFactory.decodeFile(imageBody.getLocalUrl());
+		        	imgMessage.file = new File(imageBody.getLocalUrl());
+		        	imgMessage.image = GraphicsHelper.decodeFile(new File(imageBody.getLocalUrl()), 200, 200);
 		        	drawMessage(imgMessage);
 		        	continue;
 	        	}
 	        	if(null == imageBody.getThumbnailUrl() || "null".equals(imageBody.getThumbnailUrl())) {
 	        		continue;
 	        	}
-	        	Host.doImage("image", new ImageResponse(imageBody.getFileName(), emMessage) {
+	        	imgMessage.sender = emMessage.getFrom();
+	        	if(imgMessage.sender.endsWith(localId)) {
+	        		imgMessage.photo = localPhoto;
+	        	}
+	        	else {
+	        		imgMessage.photo = remotePhoto;
+	        	}
+	        	imgMessage.url = imageBody.getThumbnailUrl();
+	        	Host.doImage("image", new ImageResponse(imageBody.getFileName(), imgMessage) {
 					@Override
 					public void onFinished(Bitmap content) {
-						EMMessage emMessage = (EMMessage) tag;
-						Message imgMessage = new Message();
-						imgMessage.sender = emMessage.getFrom();
-			        	if(imgMessage.sender.endsWith(localId)) {
-			        		imgMessage.photo = localPhoto;
-			        	}
-			        	else {
-			        		imgMessage.photo = remotePhoto;
-			        	}
+						Message imgMessage = (Message) tag;
 			        	imgMessage.image = content;
 			        	drawMessage(imgMessage);
 					}
