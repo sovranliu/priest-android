@@ -10,6 +10,9 @@ import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.OnNotificationClickListener;
 import com.easemob.util.NetUtils;
+import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
 import com.wehop.priest.Program;
@@ -195,6 +198,7 @@ public class MainActivity extends FragmentActivityEx {
             }
         });
         EMChatManager.getInstance().setChatOptions(option);
+        check();
     }
 
     @Override
@@ -206,5 +210,27 @@ public class MainActivity extends FragmentActivityEx {
     protected void onDestroy() {
         unregisterReceiver(dialReceiver);
         super.onDestroy();
+    }
+    
+    /**
+     * 检查用户合法性
+     */
+    public void check() {
+    	Host.doCommand("check", new JSONResponse(MainActivity.this) {
+			@Override
+			public void onFinished(JSONVisitor content) {
+				if(null == content) {
+					return;
+				}
+				if(1 == content.getInteger("code", 0)) {
+					return;
+				}
+				Logic.user = null;
+				Logic.save();
+				// 切入登录页
+				MainActivity.this.finish();
+				MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
+			}
+    	}, Logic.user.username, Logic.user.token);
     }
 }
