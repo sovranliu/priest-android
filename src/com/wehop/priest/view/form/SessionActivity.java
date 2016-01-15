@@ -130,9 +130,14 @@ public class SessionActivity extends FragmentEx {
     }
 
     @Override
+    public void onStop() {
+        super.onStop();
+        this.getActivity().unregisterReceiver(chatReceiver);
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
-        this.getActivity().unregisterReceiver(chatReceiver);
     }
 
     /**

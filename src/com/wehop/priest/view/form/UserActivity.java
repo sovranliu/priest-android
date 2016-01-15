@@ -2,6 +2,7 @@ package com.wehop.priest.view.form;
 
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.wehop.priest.R;
@@ -10,8 +11,11 @@ import com.wehop.priest.framework.Storage;
 import com.wehop.priest.framework.Utility;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -72,7 +76,7 @@ public class UserActivity extends FragmentEx {
 						if(null == content) {
 							return;
 						}
-						imgPhoto.setImageBitmap(Utility.makeImageRing(Utility.makeCycleImage(content, 200, 200), 4));
+						imgPhoto.setImageBitmap(Utility.makeImageRing(Utility.makeCycleImage(content, 300, 300), 4));
 					}
 				}, Logic.user.photo);
 			}
@@ -82,7 +86,7 @@ public class UserActivity extends FragmentEx {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(UserActivity.this.getActivity(), WebActivity.class);
-				intent.putExtra("url", URL_ABOUT);
+				intent.putExtra("url", URL_ABOUT + "?version=" + Version.fetchVersion(UserActivity.this.getActivity()));
 				startActivity(intent);
 			}
 		});

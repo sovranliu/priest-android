@@ -330,7 +330,7 @@ public class GroupChatActivity extends ActivityEx {
 				Message message = new Message();
 				message.sender = localId;
 				message.photo = localPhoto;
-				message.image = GraphicsHelper.decodeFile(new File(imagePath), 200, 200);
+				message.image = GraphicsHelper.decodeFile(new File(imagePath), 400, 400);
 				message.file = imageFile;
 				send(message);
 				break;
