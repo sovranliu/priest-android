@@ -220,6 +220,16 @@ public class SessionActivity extends FragmentEx {
            			count++;
            		}
            		messageMap.put(from, count);
+           		boolean sentry = false;
+           		for(HashMap<String, Object> session : sessionList) {
+           			if(from.equals(session.get(USER_IM_NAME))) {
+           				sentry = true;
+           				break;
+           			}
+           		}
+           		if(!sentry) {
+           			load();
+           		}
            		refreshByMessageCome();
     	        abortBroadcast();
            	}

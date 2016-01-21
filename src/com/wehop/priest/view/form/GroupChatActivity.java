@@ -223,34 +223,37 @@ public class GroupChatActivity extends ActivityEx {
 	        if(localId.equals(sender)) {
 	        	return;
 	        }
-	        Message message = new Message();
-	        message.sender = sender;
-	        message.photo = remotePhoto;
-	        switch(emMessage.getType()) {
-	        case TXT:
-	        	TextMessageBody textBody = (TextMessageBody) emMessage.getBody();
-	        	message.text = textBody.getMessage();
-	        	drawMessage(message);
-	        	break;
-	        case IMAGE:
-	        	ImageMessageBody imageBody = (ImageMessageBody) emMessage.getBody();
-	        	Host.doImage("image", new ImageResponse(imageBody.getFileName(), message) {
-					@Override
-					public void onFinished(Bitmap content) {
-						Message message = (Message) tag;
-						message.image = content;
-						drawMessage(message);
-					}
-				}, imageBody.getThumbnailUrl());
-	        	break;
-	        case VOICE:
-	        	break;
-	        case VIDEO:
-	        	break;
-	        default:
-	        	break;
+	        if((null != remoteId && sender.equals(remoteId)) || (null != groupId && sender.equals(groupId))) {
+		        Message message = new Message();
+		        message.sender = sender;
+		        message.photo = remotePhoto;
+		        switch(emMessage.getType()) {
+		        case TXT:
+		        	TextMessageBody textBody = (TextMessageBody) emMessage.getBody();
+		        	message.text = textBody.getMessage();
+		        	drawMessage(message);
+		        	break;
+		        case IMAGE:
+		        	ImageMessageBody imageBody = (ImageMessageBody) emMessage.getBody();
+		        	// imageBody.getFileName()
+		        	Host.doImage("image", new ImageResponse(imageBody.getThumbnailUrl(), message) {
+						@Override
+						public void onFinished(Bitmap content) {
+							Message message = (Message) tag;
+							message.image = content;
+							drawMessage(message);
+						}
+					}, imageBody.getThumbnailUrl());
+		        	break;
+		        case VOICE:
+		        	break;
+		        case VIDEO:
+		        	break;
+		        default:
+		        	break;
+		        }
+		        abortBroadcast();
 	        }
-	        abortBroadcast();
 		}
 	}
 
@@ -330,7 +333,7 @@ public class GroupChatActivity extends ActivityEx {
 				Message message = new Message();
 				message.sender = localId;
 				message.photo = localPhoto;
-				message.image = GraphicsHelper.decodeFile(new File(imagePath), 400, 400);
+				message.image = getSmallBitmap(imagePath);
 				message.file = imageFile;
 				send(message);
 				break;
@@ -753,5 +756,29 @@ public class GroupChatActivity extends ActivityEx {
         messages.add(message);
         adapter.notifyDataSetChanged();
         listMessages.setSelection(listMessages.getCount() - 1);
+	}
+	
+	public static Bitmap getSmallBitmap(String filePath) {
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, options);
+        // Calculate inSampleSize
+	    options.inSampleSize = calculateInSampleSize(options, 480, 800);
+	    // Decode bitmap with inSampleSize set
+	    options.inJustDecodeBounds = false;
+	    return BitmapFactory.decodeFile(filePath, options);
+    }
+	
+	public static int calculateInSampleSize(BitmapFactory.Options options,int reqWidth, int reqHeight) {
+	    final int height = options.outHeight;
+	    final int width = options.outWidth;
+	    int inSampleSize = 1;
+
+	    if (height > reqHeight || width > reqWidth) {
+	             final int heightRatio = Math.round((float) height/ (float) reqHeight);
+	             final int widthRatio = Math.round((float) width / (float) reqWidth);
+	             inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+	    }
+	    return inSampleSize;
 	}
 }

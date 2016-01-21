@@ -91,7 +91,7 @@ public final class R {
         public static final int tab_button_user=0x7f02002e;
         public static final int tab_main=0x7f02002f;
         public static final int title_return=0x7f020030;
-        public static final int transparent=0x7f020039;
+        public static final int transparent=0x7f02003a;
         public static final int user_photo_default=0x7f020031;
         public static final int video_button_normal=0x7f020032;
         public static final int video_button_pressed=0x7f020033;
@@ -99,16 +99,17 @@ public final class R {
         public static final int voice_button_normal=0x7f020035;
         public static final int voice_button_pressed=0x7f020036;
         public static final int voice_button_selector=0x7f020037;
-        public static final int yes=0x7f020038;
+        public static final int waiting=0x7f020038;
+        public static final int yes=0x7f020039;
     }
     public static final class id {
         public static final int bottom_bar=0x7f0a0021;
-        public static final int chat_left_image_message=0x7f0a005b;
-        public static final int chat_left_image_photo=0x7f0a0059;
-        public static final int chat_left_label_message=0x7f0a005a;
-        public static final int chat_right_image_message=0x7f0a005e;
-        public static final int chat_right_image_photo=0x7f0a005c;
-        public static final int chat_right_label_message=0x7f0a005d;
+        public static final int chat_left_image_message=0x7f0a005d;
+        public static final int chat_left_image_photo=0x7f0a005b;
+        public static final int chat_left_label_message=0x7f0a005c;
+        public static final int chat_right_image_message=0x7f0a0060;
+        public static final int chat_right_image_photo=0x7f0a005e;
+        public static final int chat_right_label_message=0x7f0a005f;
         public static final int chatmore_label_audio=0x7f0a0053;
         public static final int chatmore_label_cancel=0x7f0a0055;
         public static final int chatmore_label_image=0x7f0a0052;
@@ -123,13 +124,13 @@ public final class R {
         public static final int groupchat_text_message=0x7f0a0006;
         public static final int home_browser=0x7f0a0009;
         public static final int home_image_load=0x7f0a0008;
-        public static final int image_image_main=0x7f0a000b;
+        public static final int image_image_image=0x7f0a000b;
         public static final int imageselect_camera=0x7f0a0056;
         public static final int imageselect_cancel=0x7f0a0058;
         public static final int imageselect_phone=0x7f0a0057;
         public static final int input_frame=0x7f0a0023;
-        public static final int last_message=0x7f0a006c;
-        public static final int last_time=0x7f0a006b;
+        public static final int last_message=0x7f0a006e;
+        public static final int last_time=0x7f0a006d;
         public static final int load_image_logo=0x7f0a000c;
         public static final int load_image_poster=0x7f0a000d;
         public static final int login_button_login=0x7f0a0014;
@@ -150,13 +151,13 @@ public final class R {
         public static final int message_list=0x7f0a0020;
         public static final int more_options_button=0x7f0a0022;
         public static final int more_options_holder=0x7f0a0025;
-        public static final int received_contact_photo=0x7f0a0060;
-        public static final int received_file=0x7f0a0062;
-        public static final int received_message=0x7f0a0061;
-        public static final int received_message_item=0x7f0a005f;
-        public static final int received_time=0x7f0a0063;
-        public static final int remote_name=0x7f0a006a;
-        public static final int remote_photo=0x7f0a0069;
+        public static final int received_contact_photo=0x7f0a0062;
+        public static final int received_file=0x7f0a0064;
+        public static final int received_message=0x7f0a0063;
+        public static final int received_message_item=0x7f0a0061;
+        public static final int received_time=0x7f0a0065;
+        public static final int remote_name=0x7f0a006c;
+        public static final int remote_photo=0x7f0a006b;
         public static final int return_button=0x7f0a001e;
         public static final int ring_button_answer=0x7f0a002d;
         public static final int ring_button_handup=0x7f0a002c;
@@ -169,11 +170,11 @@ public final class R {
         public static final int send_message_button=0x7f0a0024;
         public static final int send_video=0x7f0a0028;
         public static final int send_voice=0x7f0a0027;
-        public static final int sent_contact_photo=0x7f0a0065;
-        public static final int sent_file=0x7f0a0067;
-        public static final int sent_message=0x7f0a0066;
-        public static final int sent_message_item=0x7f0a0064;
-        public static final int sent_time=0x7f0a0068;
+        public static final int sent_contact_photo=0x7f0a0067;
+        public static final int sent_file=0x7f0a0069;
+        public static final int sent_message=0x7f0a0068;
+        public static final int sent_message_item=0x7f0a0066;
+        public static final int sent_time=0x7f0a006a;
         public static final int session_list=0x7f0a0030;
         public static final int task_browser=0x7f0a0032;
         public static final int task_image_load=0x7f0a0031;
@@ -209,6 +210,8 @@ public final class R {
         public static final int voice_layout_head=0x7f0a0049;
         public static final int voice_layout_operation=0x7f0a004c;
         public static final int voice_text_title=0x7f0a004a;
+        public static final int waiting_image_icon=0x7f0a005a;
+        public static final int waiting_layout_background=0x7f0a0059;
         public static final int web_browser=0x7f0a0051;
         public static final int web_image_load=0x7f0a0050;
     }
@@ -229,10 +232,11 @@ public final class R {
         public static final int activity_web=0x7f03000d;
         public static final int dialog_chat_more=0x7f03000e;
         public static final int dialog_imageselect=0x7f03000f;
-        public static final int div_chat_left=0x7f030010;
-        public static final int div_chat_right=0x7f030011;
-        public static final int message_list_item=0x7f030012;
-        public static final int session_list_item=0x7f030013;
+        public static final int dialog_waiting=0x7f030010;
+        public static final int div_chat_left=0x7f030011;
+        public static final int div_chat_right=0x7f030012;
+        public static final int message_list_item=0x7f030013;
+        public static final int session_list_item=0x7f030014;
     }
     public static final class raw {
         public static final int business=0x7f050000;

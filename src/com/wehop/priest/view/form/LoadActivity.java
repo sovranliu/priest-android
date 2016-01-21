@@ -7,7 +7,7 @@ import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Logic;
 import com.wehop.priest.framework.DynamicConfig;
 import com.wehop.priest.framework.Storage;
-import com.slfuture.pluto.etc.Control;
+import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 
@@ -56,7 +56,7 @@ public class LoadActivity extends ActivityEx {
 		if(null != loadImage) {
 			imageLogo.setImageBitmap(Storage.getImage(loadImage));
 		}
-		Control.doDelay(new Runnable() {
+		Controller.doDelay(new Runnable() {
 			@Override
 			public void run() {
 		        if(null == Logic.user) {
