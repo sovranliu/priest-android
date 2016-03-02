@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent" 
+	android:orientation="vertical"
+	android:background="@color/white">
+    <com.wehop.priest.view.control.ScrollWebView
+        android:id="@+id/home_browser"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+		android:scrollbars="none" />
+	<View 
+        android:id="@+id/home_line_1"
+	    android:layout_height="1dp"
+	    android:layout_width="match_parent"
+	    android:background="@color/grey_line"
+	    android:layout_below="@id/home_browser" />
+	<LinearLayout
+		android:id="@+id/home_layout_activity"
+		android:layout_width="match_parent"
+		android:layout_height="90dp"
+		android:orientation="horizontal">
+		<RelativeLayout
+			android:id="@+id/home_layout_left"
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:gravity="center"
+    		android:layout_weight="1">
+			<ImageView
+				android:id="@+id/home_image_left"
+				android:layout_width="60dp"
+				android:layout_height="60dp"
+				android:layout_alignParentLeft="true"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/icon_mypatient" />			
+			<TextView
+				android:id="@+id/home_label_left"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/home_image_left"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:textColor="@color/black"
+				android:text="我的患者" />
+    	</RelativeLayout>
+    	<View 
+	    	android:layout_height="match_parent"
+	    	android:layout_width="1dp"
+	    	android:background="@color/grey_line"/>
+		<RelativeLayout
+			android:id="@+id/home_layout_right"
+		    android:layout_width="match_parent"
+    		android:layout_height="match_parent"
+    		android:gravity="center"
+    		android:layout_weight="1">
+			<ImageView
+				android:id="@+id/home_image_right"
+				android:layout_width="60dp"
+				android:layout_height="60dp"
+				android:layout_alignParentLeft="true"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:scaleType="fitXY"
+				android:src="@drawable/icon_myschedule" />			
+			<TextView
+				android:id="@+id/home_label_right"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/home_image_right"
+				android:layout_marginLeft="10dp"
+				android:layout_centerVertical="true"
+				android:textColor="@color/black"
+				android:text="我的日程" />
+    	</RelativeLayout>
+	</LinearLayout>
+	<TextView
+		android:id="@+id/home_lable_news"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="6dp"
+		android:paddingTop="2dp"
+		android:paddingBottom="2dp"
+		android:text="精彩推荐"
+		android:background="@color/grey_bg"
+		android:textColor="@color/grey_text"
+		android:textSize="15sp" />
+</LinearLayout>

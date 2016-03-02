@@ -1,108 +1,40 @@
 package com.wehop.priest.view.form;
 
-import com.easemob.EMCallBack;
-import com.easemob.EMConnectionListener;
-import com.easemob.EMError;
-import com.easemob.chat.EMChat;
-import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMChatOptions;
-import com.easemob.chat.EMGroupManager;
-import com.easemob.chat.EMMessage;
-import com.easemob.chat.OnNotificationClickListener;
-import com.easemob.util.NetUtils;
-import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.pluto.communication.Host;
-import com.slfuture.pluto.communication.response.JSONResponse;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnLongClickListener;
+import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TabHost;
+
+import com.wehop.priest.R;
+import com.wehop.priest.business.Me;
+import com.wehop.priest.business.core.IMeListener;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
-import com.wehop.priest.Program;
-import com.wehop.priest.R;
-import com.wehop.priest.base.Logger;
-import com.wehop.priest.business.Logic;
-import com.wehop.priest.framework.Storage;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.WindowManager;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.TabHost;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.TabHost.OnTabChangeListener;
-import android.widget.TextView;
 
 /**
  * 主界面
  */
 @ResourceView(id = R.layout.activity_main)
-public class MainActivity extends FragmentActivityEx {
-	/**
-	 * 实现ConnectionListener接口
-	 */
-	private class ConnectionListener implements EMConnectionListener {
-	    @Override
-		public void onConnected() {
-	    	Logger.d("已连接到服务器");
-		}
-
-		@Override
-		public void onDisconnected(final int error) {
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					if(error == EMError.USER_REMOVED) {
-						Logger.e("显示帐号已经被移除");
-					}
-					else if (error == EMError.CONNECTION_CONFLICT) {
-						Logger.e("显示帐号在其他设备登陆");
-						//
-						Logic.user = null;
-						Storage.clear();
-						// 切入登录页
-						MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
-						MainActivity.this.finish();
-						Program.exit();
-					}
-					else {
-						if (NetUtils.hasNetwork(MainActivity.this)) {
-							Logger.e("连接不到聊天服务器");
-						}
-						else {
-							Logger.e("当前网络不可用，请检查网络设置");
-						}
-					}
-				}
-			});
-		}
-	}
-	
-	
-	/**
-	 * 选项卡个数
-	 */
-    public final static int TAB_COUNT = 3;
-	
+public class MainActivity extends FragmentActivityEx implements IMeListener {
     /**
-     * 拨号接收器
-     */
-    private BroadcastReceiver dialReceiver = null;
-	/**
      * 选项卡对象
      */
-    @ResourceView(id = R.id.main_tabhost)
+	@ResourceView(id = R.id.main_tabhost)
     public TabHost tabhost = null;
-    @ResourceView(id = R.id.main_tab_home)
-    public RadioButton btnHome = null;
-    @ResourceView(id = R.id.main_tab_task)
-    public RadioButton btnTask = null;
-    @ResourceView(id = R.id.main_tab_user)
-    public RadioButton btnUser = null;
+    /**
+     * 切换按钮集合对象
+     */
+	@ResourceView(id = R.id.main_tab)
+	public RadioGroup group;
+
 
     /**
      * 界面创建
@@ -110,14 +42,13 @@ public class MainActivity extends FragmentActivityEx {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Logger.i("call MainActivity.onCreate()");
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        // 
+        //
+        tabhost = (TabHost)findViewById(R.id.main_tabhost);
         tabhost.setup();
         tabhost.addTab(tabhost.newTabSpec("main_tab_home").setIndicator("").setContent(R.id.main_fragment_home));
-        tabhost.addTab(tabhost.newTabSpec("main_tab_task").setIndicator("").setContent(R.id.main_fragment_task));
+        tabhost.addTab(tabhost.newTabSpec("main_tab_conversation").setIndicator("").setContent(R.id.main_fragment_conversation));
+        tabhost.addTab(tabhost.newTabSpec("main_tab_blog").setIndicator("").setContent(R.id.main_fragment_blog));
         tabhost.addTab(tabhost.newTabSpec("main_tab_user").setIndicator("").setContent(R.id.main_fragment_user));
-        RadioGroup group = (RadioGroup)findViewById(R.id.main_tab);
         group.check(R.id.main_tab_home);
         group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
@@ -126,111 +57,40 @@ public class MainActivity extends FragmentActivityEx {
                 switch(checkedId) {
                     case R.id.main_tab_home:
                         tabhost.setCurrentTabByTag("main_tab_home");
+        				break;
+                    case R.id.main_tab_conversation:
+                        tabhost.setCurrentTabByTag("main_tab_conversation");
                         break;
-                    case R.id.main_tab_task:
-                        tabhost.setCurrentTabByTag("main_tab_task");
+                    case R.id.main_tab_blog:
+                        tabhost.setCurrentTabByTag("main_tab_blog");
                         break;
                     case R.id.main_tab_user:
                         tabhost.setCurrentTabByTag("main_tab_user");
-                        break;
+        				break;
                 }
             }
         });
-        tabhost.setOnTabChangedListener(new OnTabChangeListener() {
-			@Override
-			public void onTabChanged(String tabId) {
-		        for(int i = 0; i < TAB_COUNT; i++) {
-					if("main_tab_home".equals(tabId)) {
-			        	final TextView txtTitle = (TextView) tabhost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-			        	txtTitle.setText("ceshi");
-			        	txtTitle.setTextColor(Color.GREEN);
-					}
-		        }
-			}
-        });
-        EMChatManager.getInstance().login(Logic.user.imUsername, Logic.user.imPassword, new EMCallBack() {
-            @Override
-            public void onSuccess() {
-                // TODO Auto-generated method stub
-                Log.i("gxl", "----im login success --- ");
-                EMChatManager.getInstance().loadAllConversations();
-                EMGroupManager.getInstance().loadAllGroups();
-                Logic.imLogin = true;
-                //
-                EMChatManager.getInstance().addConnectionListener(new ConnectionListener());
-            }
-            
-            @Override
-            public void onProgress(int arg0, String arg1) {
-                // TODO Auto-generated method stub
-            }
-            
-            @Override
-            public void onError(int arg0, String arg1) {
-                // TODO Auto-generated method stub
-                Log.i("gxl", "----im login onError --- " + arg0 + " ,  " + arg1);
-            }
-        });
-        dialReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                // TODO Auto-generated method stub
-                String from = intent.getStringExtra("from");
-                String type = intent.getStringExtra("type");
-                Log.i("gxl", "intent = " + intent.getAction());
-                Log.i("gxl", "from = " + from + ", type = " + type);
-                Intent ringIntent = new Intent(MainActivity.this, RingActivity.class);
-                ringIntent.putExtra("userId", from);
-                ringIntent.putExtra("userName", from);
-                ringIntent.putExtra("type", type);
-                MainActivity.this.startActivity(ringIntent);
-            }
-        };
-        registerReceiver(dialReceiver, new IntentFilter(EMChatManager.getInstance().getIncomingCallBroadcastAction()));
-        EMChat.getInstance().setAppInited();
-        EMChatOptions option = new EMChatOptions();
-        option.setNotificationEnable(true);
-        option.setOnNotificationClickListener(new OnNotificationClickListener() {
-            @Override
-            public Intent onNotificationClick(EMMessage msg) {
-                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
-                return null;
-            }
-        });
-        EMChatManager.getInstance().setChatOptions(option);
-        check();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(dialReceiver);
-        super.onDestroy();
-    }
-    
-    /**
-     * 检查用户合法性
-     */
-    public void check() {
-    	Host.doCommand("check", new JSONResponse(MainActivity.this) {
+	@Override
+	public void onConflict() {
+		AlertDialog.Builder builder = new Builder(MainActivity.this);
+		builder.setMessage("帐号在其他设备登录");
+		builder.setTitle("提示");
+		builder.setPositiveButton("确认", new OnClickListener() {
 			@Override
-			public void onFinished(JSONVisitor content) {
-				if(null == content) {
-					return;
-				}
-				if(1 == content.getInteger("code", 0)) {
-					return;
-				}
-				Logic.user = null;
-				Logic.save();
-				// 切入登录页
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.cancel();
 				MainActivity.this.finish();
-				MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
-			}
-    	}, Logic.user.username, Logic.user.token);
-    }
+				android.os.Process.killProcess(android.os.Process.myPid());
+				System.exit(0);
+		   }
+		});
+		builder.show();
+	}
+
+	@Override
+	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
+		
+	}
 }

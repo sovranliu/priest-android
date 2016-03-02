@@ -3,22 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/white">
-	<ImageView 
-        android:id="@+id/load_image_logo" 
-		android:layout_height="80dp" 
-        android:layout_width="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/load_logo">
-	</ImageView>
-    <ImageView
-        android:id="@+id/load_image_poster" 
-		android:layout_height="fill_parent" 
-        android:layout_width="fill_parent" 
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/load_image_logo"
-        android:src="@drawable/load_poster"
-        android:scaleType="centerInside">
-	</ImageView>
+    android:background="@color/white"
+    tools:context=".LoadActivity" >
+	<ImageView
+	    android:id="@+id/load_image_ad"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true"
+	    android:scaleType="centerInside"
+	    android:src="@drawable/load_logo" />
 </RelativeLayout>

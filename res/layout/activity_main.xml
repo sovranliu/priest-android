@@ -12,15 +12,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dip"
             android:layout_weight="1" >
-            <fragment android:name="com.wehop.priest.view.form.HomeActivity"
+            <fragment android:name="com.qcast.tower.view.form.HomeActivity"
                 android:id="@+id/main_fragment_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <fragment android:name="com.wehop.priest.view.form.SessionActivity"
-                android:id="@+id/main_fragment_task"
+            <fragment android:name="com.qcast.tower.view.form.ConversationActivity"
+                android:id="@+id/main_fragment_conversation"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <fragment android:name="com.wehop.priest.view.form.UserActivity"
+            <fragment android:name="com.qcast.tower.view.form.BlogActivity"
+                android:id="@+id/main_fragment_blog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <fragment android:name="com.qcast.tower.view.form.UserActivity"
                 android:id="@+id/main_fragment_user"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -36,33 +40,41 @@
     		android:orientation="horizontal"
     		android:layout_width="fill_parent"
     		android:layout_height="wrap_content"
-    		android:gravity="center_vertical"
-    		android:background="@drawable/tab_main"
-    		android:layout_gravity="bottom">
+    		android:gravity="bottom"
+    		android:layout_gravity="bottom"
+    		android:background="@color/grey_bg">
     		<RadioButton 
     			android:id="@+id/main_tab_home"
-				android:textColor="@color/green"
-				android:textSize="0sp"
+    			android:text="主页"
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:drawablePadding="0dp"
-    			android:drawableTop="@drawable/tab_button_home"
-    			style="@style/MainTab" />
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_home"
+    			style="@style/main_tab" />
     		<RadioButton
-    			android:id="@+id/main_tab_task"
-				android:textColor="@color/green"
+    			android:id="@+id/main_tab_conversation"
+				android:text="通信录"
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:drawablePadding="0dp"
-    			android:textSize="0sp"
-    			android:drawableTop="@drawable/tab_button_session"
-    			style="@style/MainTab" />
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_conversation"
+    			style="@style/main_tab" />
+    		<RadioButton
+    			android:id="@+id/main_tab_blog"
+				android:text="圈子"
+				android:textColor="@color/grey_text"
+    			android:layout_marginTop="0dip"
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_blog"
+    			style="@style/main_tab" />
     		<RadioButton
     			android:id="@+id/main_tab_user"
-				android:textColor="@color/green"
+				android:text="我的"
+				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
-    			android:drawablePadding="0dp"
-    			android:textSize="0sp"
-    			android:drawableTop="@drawable/tab_button_user"
-    			style="@style/MainTab" />
+    			android:background="@color/grey_bg"
+    			android:drawableTop="@drawable/selector_main_user"
+    			style="@style/main_tab" />
     	</RadioGroup>
     </LinearLayout>
 </TabHost>
