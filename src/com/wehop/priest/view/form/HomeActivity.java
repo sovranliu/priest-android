@@ -5,12 +5,8 @@ import java.util.HashMap;
 
 import com.wehop.priest.Program;
 import com.wehop.priest.R;
-import com.wehop.priest.business.Logic;
-import com.wehop.priest.business.Me;
-import com.wehop.priest.business.Profile;
 import com.wehop.priest.business.core.IMeListener;
 import com.wehop.priest.framework.Storage;
-import com.wehop.priest.view.control.HorizontalScrollViewEx;
 import com.wehop.priest.view.control.ScrollWebView;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
@@ -27,17 +23,13 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.core.IJSON;
 import com.slfuture.carrie.base.text.Text;
 
-import android.R.color;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Animation.AnimationListener;
@@ -46,17 +38,13 @@ import android.webkit.WebViewClient;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.SimpleAdapter.ViewBinder;
 
 /**
@@ -64,82 +52,6 @@ import android.widget.SimpleAdapter.ViewBinder;
  */
 @ResourceView(id = R.layout.activity_home)
 public class HomeActivity extends FragmentEx implements IMeListener {
-	public class GridViewAdapter extends BaseAdapter {
-		public class ViewHolder {
-			ImageView image;
-			TextView text;
-		}
-
-		/**
-		 * 上下文
-		 */
-		private Context context = null;
-
-		public GridViewAdapter(Context context) {
-			this.context = context;
-		}
-		@Override
-		public int getCount() {
-			return 6;
-		}
-		@Override
-		public Object getItem(int position) {
-			return null;
-		}
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ViewHolder holder = null;
-			if(null == convertView) {
-				holder = new ViewHolder();
-				convertView = LayoutInflater.from(context).inflate(R.layout.listitem_entry, null);
-				holder.image = (ImageView) convertView.findViewById(R.id.entry_image_icon);
-				holder.text = (TextView) convertView.findViewById(R.id.entry_label_title);
-				convertView.setTag(holder);
-			}
-			else {
-				holder = (ViewHolder) convertView.getTag();
-			}
-			switch(position) {
-			case 0:
-				holder.image.setImageResource(R.drawable.icon_entry_1);
-				holder.text.setText("私人医生");
-				break;
-			case 1:
-				holder.image.setImageResource(R.drawable.icon_entry_2);
-				holder.text.setText("预约体检");
-				break;
-			case 2:
-				holder.image.setImageResource(R.drawable.icon_entry_3);
-				holder.text.setText("预约理疗");
-				break;
-			case 3:
-				holder.image.setImageResource(R.drawable.icon_entry_4);
-				holder.text.setText("健康档案");
-				break;
-			case 4:
-				holder.image.setImageResource(R.drawable.icon_entry_5);
-				holder.text.setText("预约挂号");
-				break;
-			case 5:
-				holder.image.setImageResource(R.drawable.icon_entry_6);
-				holder.text.setText("自我诊断");
-				break;
-			}
-			convertView.setBackgroundColor(color.white);
-			return convertView;
-		}
-	}
-
-
-	/**
-	 * 消息ID
-	 */
-	public final static int MESSAGE_REGION = 1;
-
 	/**
 	 * 当前资讯列表
 	 */
@@ -151,11 +63,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	@ResourceView(id = R.id.home_browser)
 	public ScrollWebView browser;
 	/**
-	 * 小区选择按钮
-	 */
-	@ResourceView(id = R.id.home_button_region)
-	public Button btnRegion;
-	/**
 	 * 铃铛
 	 */
 	@ResourceView(id = R.id.home_button_notify)
@@ -165,26 +72,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	@ResourceView(id = R.id.home_button_search)
 	public Button btnSearch;
-	/**
-	 * 入口滚动条
-	 */
-	@ResourceView(id = R.id.home_scroll_entry)
-	public HorizontalScrollViewEx scrollEntry;
-	/**
-	 * 入口表格
-	 */
-	@ResourceView(id = R.id.home_grid_entry)
-	public GridView gridEntry;
-	/**
-	 * 铃铛
-	 */
-	@ResourceView(id = R.id.home_image_dot1)
-	public ImageView imgDot1;
-	/**
-	 * 铃铛
-	 */
-	@ResourceView(id = R.id.home_image_dot2)
-	public ImageView imgDot2;
 	/**
 	 * 新闻列表
 	 */
@@ -225,15 +112,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	protected RotateAnimation animRight = null; 
 	protected RotateAnimation animLeft = null; 
 
-
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		prepare();
 		dealNews();
-		dealRegion();
 		dealSearch();
-		dealEntry();
 		//
 		loadVersion();
 		loadNews();
@@ -242,11 +126,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	@Override
 	public void onResume() {
 		super.onResume();
-		final Button regionButton = (Button) this.getActivity().findViewById(R.id.home_button_region);
-		if(null != Logic.regionName) {
-			regionButton.setText(fetchRegionName());
-		}
-		if(Logic.hasUnreadMessage) {
+		if(com.wehop.priest.business.Runtime.hasUnreadMessage) {
 			Controller.doDelay(new Runnable() {
 				@Override
 				public void run() {
@@ -356,84 +236,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	}
 
 	/**
-	 * 处理区域按钮
-	 */
-	public void dealRegion() {
-		btnRegion.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
-				HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
-			}
-		});
-		btnBell.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(null == Me.instance) {
-					return;
-				}
-				Intent intent = new Intent();
-				intent.setClass(HomeActivity.this.getActivity(), MyMessagesActivity.class);
-				HomeActivity.this.getActivity().startActivity(intent);
-			}
-		});
-		if(null == Profile.instance().region) {
-			Intent intent = new Intent(HomeActivity.this.getActivity(), RegionActivity.class);
-			HomeActivity.this.startActivityForResult(intent, MESSAGE_REGION);
-		}
-		else {
-			btnRegion.setText(fetchRegionName());
-		}
-	}
-
-	/**
-	 * 处理入口按钮
-	 */
-	public void dealEntry() {
-		if(null == Me.instance) {
-			browser.loadUrl(Host.fetchURL("home", ""));
-		}
-		else {
-			browser.loadUrl(Host.fetchURL("home", Me.instance.token));
-		}
-		scrollEntry.setHorizontalScrollBarEnabled(false);
-		DisplayMetrics metrics = new DisplayMetrics();
-		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
-		GridViewAdapter adapter = new GridViewAdapter(this.getActivity());
-		gridEntry.setAdapter(adapter);
-		LayoutParams params = new LayoutParams(adapter.getCount() * metrics.widthPixels / 4, LayoutParams.WRAP_CONTENT);
-		gridEntry.setLayoutParams(params);
-		gridEntry.setColumnWidth(metrics.widthPixels / 4);
-		gridEntry.setStretchMode(GridView.NO_STRETCH);
-		gridEntry.setNumColumns(adapter.getCount());
-		gridEntry.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				switch(position) {
-				case 0:
-					Intent intent0 = new Intent(HomeActivity.this.getActivity(), SelectDoctorActivity.class);
-					HomeActivity.this.startActivity(intent0);
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					Intent intent3 = new Intent(HomeActivity.this.getActivity(), ArchiveActivity.class);
-					HomeActivity.this.startActivity(intent3);
-					break;
-				case 4:
-					break;
-				case 5:
-					Intent intent5 = new Intent(HomeActivity.this.getActivity(), SelfDiagnosticActivity.class);
-					HomeActivity.this.startActivity(intent5);
-					break;
-				}
-			}
-		});
-	}
-
-	/**
 	 * 处理搜索按钮
 	 */
 	public void dealSearch() {
@@ -453,34 +255,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		if(listNews.getHeaderViewsCount() > 0) {
 			return;
 		}
-		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
-		animRight.setDuration(1000);
-        animRight.setAnimationListener(listener);
-		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
-		animLeft.setDuration(1000);
-		animLeft.setAnimationListener(listener);
 		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
 		listNews.addHeaderView(viewHead);
-		scrollEntry = (HorizontalScrollViewEx) viewHead.findViewById(R.id.home_scroll_entry);
-		scrollEntry.setHorizontalScrollViewListenner(new HorizontalScrollViewEx.HorizontalScrollViewListenner() {
-			@Override
-			public void onScrollChanged(int x, int y, int oldx, int oldy) {
-				if(x > oldx && x > 50) {
-					imgDot1.setImageResource(R.drawable.icon_dot_unselected);
-					imgDot2.setImageResource(R.drawable.icon_dot_selected);
-				}
-				else if(x < oldx && x < 50) {
-					imgDot1.setImageResource(R.drawable.icon_dot_selected);
-					imgDot2.setImageResource(R.drawable.icon_dot_unselected);
-				}
-			}
-		});
-		gridEntry = (GridView) viewHead.findViewById(R.id.home_grid_entry);
-		btnRegion.getBackground().setAlpha(200);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
-		imgDot1 = (ImageView) viewHead.findViewById(R.id.home_image_dot1);
-		imgDot2 = (ImageView) viewHead.findViewById(R.id.home_image_dot2);
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -507,7 +285,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 处理资讯
 	 */
 	private void dealNews() {
-		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listview_news,
+		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), newsList, R.layout.listitem_news,
 			new String[]{"photo", "title", "publisher", "date"}, 
 	        new int[]{R.id.news_image_photo, R.id.news_label_title, R.id.news_label_publisher, R.id.news_label_date});
 		listItemAdapter.setViewBinder(new ViewBinder() {
@@ -549,36 +327,6 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	            }
 			}
 		});
-	}
-
-	/**
-	 * 回调
-	 */
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode == RadioActivity.RESULT_CANCEL) {
-			return;
-		}
-		if(MESSAGE_REGION == requestCode) {
-			int regionId = data.getIntExtra("regionId", 0);
-			if(0 == regionId) {
-				return;
-			}
-			btnRegion.setText(fetchRegionName());
-		}
-	}
-
-	/**
-	 * 获取处理后的区域名称
-	 * 
-	 * @return 处理后的区域名称
-	 */
-	public String fetchRegionName() {
-		if(null == Profile.instance().region) {
-			return "选择小区";
-		}
-		return Profile.instance().region.getShortName();
 	}
 
 	/**

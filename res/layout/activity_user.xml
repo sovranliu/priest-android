@@ -1,16 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-	android:background="@color/grey">
+    android:layout_height="match_parent" >
     <RelativeLayout
-		android:id="@+id/user_layout_bar"
+		android:id="@+id/user_layout_header"
 		android:layout_width="match_parent"
 		android:layout_height="160dp"
 		android:layout_alignParentTop="true" 
-		android:background="@color/green">
-		<ImageView
-		    android:id="@+id/user_image_photo"
+		android:background="@drawable/user_bg" >
+		<ImageButton
+		    android:id="@+id/user_button_photo"
 		    android:layout_width="70dp"
 		    android:layout_height="70dp"
 			android:layout_marginTop="30dp"
@@ -18,107 +17,24 @@
 		    android:layout_centerInParent="false"
 		    android:layout_gravity="center"
 		    android:adjustViewBounds="true"
-		    android:background="@drawable/photo_default"
+		    android:background="@drawable/user_photo_null"
 		    android:padding="0dip" />
         <TextView
-            android:id="@+id/user_label_name"
+            android:id="@+id/user_text_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-			android:layout_below ="@+id/user_image_photo"
+			android:layout_below ="@+id/user_button_photo"
         	android:layout_marginTop="10dp"
-            android:text="柳君"
+            android:text=""
             android:textColor="#ffffffff"
             android:textSize="15sp" />
 	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/user_image_divide1"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_below="@id/user_layout_bar"
-        android:layout_marginTop="10dp"
-		android:background="@drawable/divider" />
-	<RelativeLayout
-        android:id="@+id/user_layout_about"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-       	android:layout_below ="@+id/user_image_divide1"
-		android:background="@color/white">
-        <TextView
-            android:id="@+id/user_label_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           	android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="关于我们"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-	    <ImageView
-			android:id="@+id/user_image_about_more"
-	       	android:layout_width="20dp"
-	       	android:layout_height="20dp"
-		    android:layout_centerVertical="true"
-			android:layout_alignParentRight="true"
-	       	android:layout_marginRight="20dp"
-	    	android:background="@drawable/arrow_right"
-		    android:clickable="true" 
-		    android:focusable="false" />
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/user_image_divide2"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_below="@id/user_layout_about"
-		android:background="@drawable/divider" />
-	<RelativeLayout
-        android:id="@+id/user_layout_telephone"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-       	android:layout_below ="@+id/user_image_divide2"
-		android:background="@color/white">
-        <TextView
-            android:id="@+id/user_label_telephone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           	android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="热线电话"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-	    <ImageView
-			android:id="@+id/user_image_telephone_more"
-	       	android:layout_width="20dp"
-	       	android:layout_height="20dp"
-		    android:layout_centerVertical="true"
-			android:layout_alignParentRight="true"
-	       	android:layout_marginRight="20dp"
-	    	android:background="@drawable/arrow_right"
-		    android:clickable="true" 
-		    android:focusable="false" />
-	</RelativeLayout>
-	<ImageView 
-        android:id="@+id/user_image_divide3"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_below="@id/user_layout_telephone"
-		android:background="@drawable/divider" />
-	<Button
-        android:id="@+id/user_button_exit"
-		android:layout_height="50dp"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-       	android:layout_marginLeft="40dp"
-       	android:layout_marginRight="40dp"
-		android:layout_marginBottom="20dp"
-		android:text="退出登录"
-		android:textColor="@color/white"
-		android:background="@drawable/button_green" />
-	<ImageView 
-        android:id="@+id/user_image_divide_bottom"
-		android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-		android:background="@drawable/divider" />
+    <ListView
+        android:id="@+id/user_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below ="@+id/user_layout_header"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
 </RelativeLayout>

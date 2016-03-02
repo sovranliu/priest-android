@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+	<RelativeLayout
+        android:id="@+id/search_layout_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@color/main"
+        android:orientation="vertical">
+		<ImageButton
+            android:id="@+id/search_button_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/arrow_left" />
+		<ImageButton
+            android:id="@+id/search_button_confirm"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@color/transprant"
+            android:src="@drawable/icon_search"
+            android:scaleType="fitXY" />
+		<EditText
+            android:id="@+id/search_text_keword"
+            android:layout_width="fill_parent"
+            android:layout_height="28dp"
+            android:layout_toRightOf="@id/search_button_close"
+            android:layout_toLeftOf="@id/search_button_confirm"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/button_search_white"
+            android:text=""
+            android:hint="请输入要搜索的关键词"
+            android:textColor="@color/grey_text"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:paddingLeft="15dp" />
+	</RelativeLayout>
+    <ListView
+        android:id="@+id/search_list_hot"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_layout_bar"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
+</RelativeLayout>

@@ -2,21 +2,18 @@ package com.wehop.priest.view.form;
 
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
-import com.wehop.priest.Program;
-import com.wehop.priest.R;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 浏览器页
@@ -24,57 +21,31 @@ import android.widget.ImageView;
 @ResourceView(id = R.layout.activity_web)
 public class WebActivity extends ActivityEx {
 	/**
-	 * 引导对象
+	 * 回退
 	 */
-	@ResourceView(id = R.id.web_image_load)
-	public ImageView load = null;
+	@ResourceView(id = R.id.web_image_return)
+	public ImageView imgReturn;
+	/**
+	 * 标题
+	 */
+	@ResourceView(id = R.id.web_text_caption)
+	public TextView labTitle;
+	/**
+	 * 关闭
+	 */
+	@ResourceView(id = R.id.web_label_close)
+	public TextView labClose;
 	/**
 	 * 浏览器对象
 	 */
 	@ResourceView(id = R.id.web_browser)
-	public WebView browser = null;
-	/**
-	 * 加载的URL
-	 */
-	public String url = null;
+	public WebView browser;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//
-		prepare();
-		load();
-        //
-        Program.register(this);
-	}
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        //
-        Program.unregister(this);
-    }
-    
-	/**
-	 * 准备
-	 */
-	public void prepare() {
-		prepareData();
-		prepareBrowser();
-	}
-
-	/**
-	 * 准备数据
-	 */
-	public void prepareData() {
-		this.url = this.getIntent().getStringExtra("url");
-	}
-
-	/**
-	 * 准备浏览器
-	 */
-	public void prepareBrowser() {
+		browser = (WebView) this.findViewById(R.id.web_browser);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.requestFocus();
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
@@ -87,6 +58,11 @@ public class WebActivity extends ActivityEx {
 	                browser.pauseTimers();
 	                return false;
 	            }
+				else if(url.startsWith("local://")) {
+					Toast.makeText(WebActivity.this, "暂不支持", Toast.LENGTH_LONG).show();
+	                browser.pauseTimers();
+	                return false;
+				}
 				browser.loadUrl(url);
 	            return true;
 			}
@@ -97,7 +73,13 @@ public class WebActivity extends ActivityEx {
 				if(100 == newProgress) {
 					view.setVisibility(View.VISIBLE);
 				}
-			}
+			} 
+            @Override  
+            public void onReceivedTitle(WebView view, String title) {  
+                super.onReceivedTitle(view, title);  
+                TextView textView = (TextView) WebActivity.this.findViewById(R.id.web_text_caption);
+				textView.setText(title);
+            }
 		});
 		browser.setDownloadListener(new DownloadListener() {
 			@Override  
@@ -107,21 +89,34 @@ public class WebActivity extends ActivityEx {
 	            startActivity(intent);  
 	        }
 		});
+		imgReturn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				browser.goBack();
+			}
+		});
+		labClose.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				WebActivity.this.finish();
+			}
+		});
 	}
 
-	/**
-	 * 加载
-	 */
-	public void load() {
+	@Override
+	public void onStart() {
+		super.onStart();
+		String url = this.getIntent().getStringExtra("url");
 		if(null == url) {
 			return;
 		}
-		Animation animation = AnimationUtils.loadAnimation(this, R.anim.ratote);  
-		animation.setInterpolator(new LinearInterpolator());
-		load.setVisibility(View.VISIBLE);
-		load.startAnimation(animation);
-		//
-		browser.setVisibility(View.INVISIBLE);
+		browser.loadUrl("about:blank");
 		browser.loadUrl(url);
+	}
+
+	@Override
+	public void onStop() {
+		browser.loadUrl("about:blank");
+		super.onStop();
 	}
 }
