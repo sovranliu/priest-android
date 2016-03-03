@@ -131,7 +131,7 @@
     	</RelativeLayout>
 	</LinearLayout>
 	<TextView
-		android:id="@+id/conversation_label_family"
+		android:id="@+id/conversation_label_caption"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:paddingLeft="6dp"
@@ -142,10 +142,19 @@
 		android:textColor="@color/grey_text"
 		android:textSize="15sp" />
     <ListView
-        android:id="@+id/conversation_list_family"
+        android:id="@+id/conversation_list_doctor"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/conversation_label_family"
+        android:layout_below="@id/conversation_label_caption"
         android:background="@color/white"
-        android:divider="@drawable/divider" />
+        android:divider="@drawable/divider"
+        android:visibility="gone" />
+	<ListView
+        android:id="@+id/conversation_list_patient"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/conversation_label_caption"
+        android:background="@color/white"
+        android:divider="@drawable/divider"
+        android:visibility="gone" />
 </LinearLayout>

@@ -125,7 +125,22 @@ user-platform-web/rest/hotKeyword
         ]]>
         </mock>
     </protocol>
-    
+    <protocol name="add">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/user/add#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
+        ]]>
+        </path>
+		<mock>
+        <!-- code=1表示对方是医生，2表示对方是患者 -->
+        <![CDATA[
+{
+    "code": 1,
+    "data": null
+}
+        ]]>
+        </mock>
+    </protocol>
     
     
     

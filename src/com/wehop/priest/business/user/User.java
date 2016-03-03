@@ -41,6 +41,10 @@ public class User implements Serializable {
 	 * 通信ID
 	 */
 	public String imId;
+	/**
+	 * 关系名
+	 */
+	public String relation;
 
 
 	/**
