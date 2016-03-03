@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.wehop.priest.Program;
 import com.wehop.priest.R;
+import com.wehop.priest.business.Me;
 import com.wehop.priest.business.core.IMeListener;
 import com.wehop.priest.framework.Storage;
 import com.wehop.priest.view.control.ScrollWebView;
@@ -271,6 +272,17 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		listNews.addHeaderView(viewHead);
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
+		btnBell.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					return;
+				}
+				Intent intent = new Intent();
+				intent.setClass(HomeActivity.this.getActivity(), MyMessagesActivity.class);
+				HomeActivity.this.getActivity().startActivity(intent);
+			}
+		});
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
 		imgLeft = (ImageView) viewHead.findViewById(R.id.home_image_left);
 		imgRight = (ImageView) viewHead.findViewById(R.id.home_image_right);

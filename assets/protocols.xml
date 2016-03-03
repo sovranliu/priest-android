@@ -128,7 +128,7 @@ user-platform-web/rest/hotKeyword
     <protocol name="add">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/add#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
+doctor-platform-web/rest/user/addFriend#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
         ]]>
         </path>
 		<mock>
@@ -141,84 +141,179 @@ doctor-platform-web/rest/user/add#token=[1]&userGlobalId=[2]&mode=[3]&relation=[
         ]]>
         </mock>
     </protocol>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    <protocol name="load" >
+    <protocol name="remove">
         <path>
-<![CDATA[
-app/ajax/load#version=[1]
-		]]>
+        <![CDATA[
+doctor-platform-web/rest/user/removeFriend#token=[1]&userGlobalId=[2]
+        ]]>
         </path>
-
-        <mock>
-<![CDATA[
+    <mock>
+        <![CDATA[
 {
-	"code":1
+    "code": 1,
+    "data": null
 }
-	    ]]>
+        ]]>
         </mock>
     </protocol>
-    <protocol name="config" >
+	<!-- 获取医生好友列表 -->
+    <protocol name="doctorList">
         <path>
-<![CDATA[
-app/ajax/config#version=[1]
-		]]>
+        <![CDATA[
+doctor-platform-web/rest/user/doctorList#token=[1]
+        ]]>
         </path>
-
-        <mock>
-<![CDATA[
+		<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "userGlobalId": "医生ID-1",
+            "nickname": "医生-1昵称",
+            "photo": "https://www.baidu.com/img/bd_logo1.png",
+            "imUsername": "环信ID-1",
+            "title": "医生头衔",
+            "department": "医生科室",
+            "resume": "简历",
+            "description": "自我简介"
+        },
+        {
+            "userGlobalId": "医生ID-2",
+            "nickname": "医生-2昵称",
+            "photo": "https://www.baidu.com/img/bd_logo1.png",
+            "imUsername": "环信ID-2",
+            "title": "医生头衔",
+            "department": "医生科室",
+            "resume": "简历",
+            "description": "自我简介"
+        },
+        {
+            "userGlobalId": "医生ID-3",
+            "nickname": "医生-3昵称",
+            "photo": "https://www.baidu.com/img/bd_logo1.png",
+            "imUsername": "环信ID-3",
+            "title": "医生头衔",
+            "department": "医生科室",
+            "resume": "简历",
+            "description": "自我简介"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+	<!-- 获取病人列表 -->
+    <protocol name="patientList">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/user/patientList#token=[1]
+        ]]>
+        </path>
+		<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "userGlobalId": "病人ID-1",
+            "nickname": "病人-1昵称",
+            "photo": "https://www.baidu.com/img/bd_logo1.png",
+            "imUsername": "环信ID-1",
+            "birthday": "1986-01-19",
+            "gender":1
+        },
+        {
+            "userGlobalId": "病人ID-2",
+            "nickname": "病人-2昵称",
+            "photo": "https://www.baidu.com/img/bd_logo1.png",
+            "imUsername": "环信ID-2",
+            "birthday": "1986-11-25",
+            "gender":2
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+	<!-- 登录 -->
+    <protocol name="login">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/login#phone=[1]&password=[2]
+        ]]>
+        </path>
+		<mock>
+        <![CDATA[
 {
     "code": 1,
     "data": {
-        "version": "2",
-        "changeList": [
+        "userGlobalId": "医生ID-3",
+        "nickname": "医生-3昵称",
+        "photo": "https://www.baidu.com/img/bd_logo1.png",
+        "imUsername": "appuser_1853",
+        "title": "医生头衔",
+        "department": "医生科室",
+        "resume": "简历",
+        "description": "自我简介",
+        "username": "15000000000",
+        "token": "登录口令",
+        "doctorList": [
             {
-                "name": "load.png",
-                "url": "http://attach.bbs.miui.com/forum/201309/30/195608b55816g1e3q4sh3z.jpg"
+                "userGlobalId": "医生ID-1",
+                "nickname": "医生-1昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-1",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
             },
             {
-                "name": "config.xml",
-                "url": "http://attach.bbs.miui.com/forum/201309/30/195608b55816g1e3q4sh3z.jpg"
+                "userGlobalId": "医生ID-2",
+                "nickname": "医生-2昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-2",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
+            },
+            {
+                "userGlobalId": "医生ID-3",
+                "nickname": "医生-3昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-3",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
+            }
+        ],
+        "patientList": [
+            {
+                "userGlobalId": "病人ID-1",
+                "nickname": "病人-1昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-1",
+                "birthday": "1986-01-19",
+                "gender": 1
+            },
+            {
+                "userGlobalId": "病人ID-2",
+                "nickname": "病人-2昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-2",
+                "birthday": "1986-11-25",
+                "gender": 2
             }
         ]
     }
 }
-	    ]]>
+        ]]>
         </mock>
     </protocol>
-
-    <protocol name="login" >
-        <path>
-<![CDATA[
-doctor-platform-web/rest/login#username=[1]&password=[2]
-		]]>
-        </path>
-
-        <mock>
-<![CDATA[
-{
-    "code": 1.0,
-    "msg": null,
-    "data": {
-        "username":"13829711984",
-        "imUsername":"appdoctor_1",
-        "userGlobalId":"b197e518-fdd9-4c8e-b386-ecc4925ca6f3",
-        "photo":"http://cdn.make.oss.wehop-resources.wehop.cnportrait/170460f5-77bf-4357-be83-f423f594584c@50h_50w_0e",
-        "token":"17a0323c-fb87-4efe-8d9b-7d132d34741b",
-        "name":"黄新"
-    },
-}
-
-	    ]]>
-        </mock>
-    </protocol>
+	<!-- 自动登录校验口令 返回用户个人信息 -->
 	<protocol name="check">
 	    <path>
 		<![CDATA[
@@ -229,64 +324,70 @@ doctor-platform-web/rest/validateToken#username=[1]&token=[2]
         <![CDATA[
 {
     "code": 1,
-    "msg": null
+    "data": {
+        "userGlobalId": "医生ID-3",
+        "nickname": "医生-3昵称",
+        "photo": "https://www.baidu.com/img/bd_logo1.png",
+        "imUsername": "环信ID-3",
+        "title": "医生头衔",
+        "department": "医生科室",
+        "resume": "简历",
+        "description": "自我简介",
+        "username": "15000000000",
+        "token": "登录口令",
+        "doctorList": [
+            {
+                "userGlobalId": "医生ID-1",
+                "nickname": "医生-1昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-1",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
+            },
+            {
+                "userGlobalId": "医生ID-2",
+                "nickname": "医生-2昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-2",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
+            },
+            {
+                "userGlobalId": "医生ID-3",
+                "nickname": "医生-3昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-3",
+                "title": "医生头衔",
+                "department": "医生科室",
+                "resume": "简历",
+                "description": "自我简介"
+            }
+        ],
+        "patientList": [
+            {
+                "userGlobalId": "病人ID-1",
+                "nickname": "病人-1昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-1",
+                "birthday": "1986-01-19",
+                "gender": 1
+            },
+            {
+                "userGlobalId": "病人ID-2",
+                "nickname": "病人-2昵称",
+                "photo": "https://www.baidu.com/img/bd_logo1.png",
+                "imUsername": "环信ID-2",
+                "birthday": "1986-11-25",
+                "gender": 2
+            }
+        ]
+    }
 }
 	    ]]>
 	    </mock>
 	</protocol>
-    <protocol name="sessions" >
-        <path>
-<![CDATA[
-doctor-platform-web/rest/doctor/queryTopic?page=[1]&pageSize=[2]&status=[3]&token=[4]
-                ]]>
-        </path>
-
-        <mock>
-<![CDATA[
-{ 
-	"code": 1, 
-	"msg": null, 
-	"data": { 
-		"recordCount": 11, 
-        "pageCount": 1, 
-		"pageSize": 20, 
-		"page": 1, 
-        "sortField": null, 
-        "sortAsc": true, 
-        "nextStart": 12 ,
-		"records": [ 
-			{ 
-				"id": 6458, 
-				"topic": "每天全线涨停2", 
-				"groupId": "140369198034452992",
-				"user": "f6ca022a-48c3-4731-a5aa-265b50e71481", 
-				"userName": "曹羽墨",
-                                "userImUsername":"test",
-				"userPortrait": null, 
-				"doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3", 
-				"doctorName": "黄新", 
-				"isLastSpeakerDoctor": false, 
-				"status": 2, 
-				"time": 1450247050000 
-			},
-			{ 
-				"id": 6457, 
-				"topic": "每天全线涨停1", 
-				"groupId": "140368589411582504", 
-				"user": "3609adda-2a59-4ed2-8284-d2737fe552ac", 
-				"doctor": "b197e518-fdd9-4c8e-b386-ecc4925ca6f3", 
-				"userName": "秦岭", 
-                                "userImUsername":"test",
-				"doctorName": "黄新", 
-				"userPortrait": null, 
-				"isLastSpeakerDoctor": false, 
-				"status": 2, 
-				"time": 1450246909000 
-			} 
-		], 
-	}
-}
-            ]]>
-        </mock>
-    </protocol>
 </protocols>

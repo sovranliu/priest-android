@@ -89,23 +89,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							if(1 == content.getInteger("code")) {
-								Me.instance.refreshDoctor(AddFriendActivity.this, new IEventable<Boolean>() {
-									@Override
-									public void on(Boolean data) {
-										AddFriendActivity.this.finish();
-									}
-								});
-							}
-							else if(2 == content.getInteger("code")) {
-								Me.instance.refreshPatient(AddFriendActivity.this, new IEventable<Boolean>() {
-									@Override
-									public void on(Boolean data) {
-										AddFriendActivity.this.finish();
-									}
-								});
-							}
-							return;
+							AddFriendActivity.this.finish();
 						}
 					}
 				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtPhone.getText().toString());

@@ -75,7 +75,14 @@ public class UserActivity extends FragmentEx {
 		btnPhoto.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				if(null == Me.instance) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+					UserActivity.this.startActivity(intent);
+				}
+				else {
+					Intent intent = new Intent(UserActivity.this.getActivity(), UserInfoActivity.class);
+					UserActivity.this.startActivity(intent);
+				}
 			}
 		});
 		dealList();

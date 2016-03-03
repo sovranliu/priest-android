@@ -14,6 +14,8 @@ public class Notify implements Serializable {
 	public final static int TYPE_2 = 2;
 	// 好友拒绝通知
 	public final static int TYPE_3 = 3;
+	// 好友删除通知
+	public final static int TYPE_4 = 4;
 	/**
 	 * 消息来源类型
 	 */
@@ -26,6 +28,26 @@ public class Notify implements Serializable {
 	 */
 	public int id;
 	/**
+	 * 添加人
+	 */
+	public int name;
+	/**
+	 * 添加关系
+	 */
+	public int relation;
+	/**
+	 * 消息标题
+	 */
+	public String title;
+	/**
+	 * 消息标题
+	 */
+	public String description;
+	/**
+	 * 是否已读
+	 */
+	public boolean hasRead;
+	/**
 	 * 消息类型
 	 */
     public int type;
@@ -33,4 +55,8 @@ public class Notify implements Serializable {
 	 * 消息来源类型：doctor, patient
 	 */
     public String source;
+    /**
+     * 消息时间
+     */
+    public String time;
 }

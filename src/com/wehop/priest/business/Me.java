@@ -351,7 +351,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 			}
 		}
 		patients.clear();
-		for(JSONVisitor item : visitor.getVisitors("familyList")) {
+		for(JSONVisitor item : visitor.getVisitors("patientList")) {
 			// 病人
 			Patient patient = new Patient();
 			if(patient.parse(item)) {
