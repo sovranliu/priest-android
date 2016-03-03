@@ -56,31 +56,6 @@
 			    android:textSize="18sp" />
 		</RelativeLayout>
 		<RelativeLayout
-			android:id="@+id/config_layout_password"
-		    android:layout_width="match_parent"
-		    android:layout_height="50dp"
-	        android:orientation="horizontal"
-	        android:layout_marginTop="1px"
-			android:background="@color/white">
-			<TextView
-			    android:id="@+id/config_label_password"
-			    android:layout_width="wrap_content"
-			    android:layout_height="match_parent"
-			    android:layout_alignParentLeft="true"
-			    android:layout_marginLeft="10dp"
-			    android:gravity="center_vertical"
-			    android:text="私隐密码"
-			    android:textColor="@color/grey_text"
-			    android:textSize="18sp" />
-			<ImageView
-				android:layout_width="20dp"
-				android:layout_height="20dp"
-				android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-				android:layout_marginRight="10dp"
-				android:src="@drawable/arrow" />
-		</RelativeLayout>
-		<RelativeLayout
 			android:id="@+id/config_layout_about"
 		    android:layout_width="match_parent"
 		    android:layout_height="50dp"
@@ -103,7 +78,7 @@
 				android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
 				android:layout_marginRight="10dp"
-				android:src="@drawable/arrow" />
+				android:src="@drawable/arrow_right" />
 		</RelativeLayout>
 	</LinearLayout>
 </RelativeLayout>

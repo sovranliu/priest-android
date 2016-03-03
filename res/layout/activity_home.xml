@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
     <RelativeLayout
-		android:id="@+id/home_layout_head"
+		android:id="@+id/home_layout_header"
 		android:layout_width="match_parent"
 		android:layout_height="48dp"
 		android:layout_alignParentTop="true"
@@ -21,30 +21,18 @@
             android:src="@drawable/bell_normal" />
         <Button
             android:id="@+id/home_button_search"
-            android:layout_width="fill_parent"
+            android:layout_width="150dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/home_button_notify"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/button_search_grey"
-            android:gravity="left|center_vertical"
-            android:paddingLeft="15dp"
+            android:gravity="center"
             android:singleLine="true"
             android:text="病人/文章"
             android:textColor="@color/white"
             android:textSize="15sp" />
-        <ImageView 
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_toLeftOf="@id/home_button_notify"
-            android:layout_marginRight="47dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/icon_search"
-            android:scaleType="fitXY"
-            />
 	</RelativeLayout>
-    <ListView
+	<ListView
         android:id="@+id/home_list_news"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

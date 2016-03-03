@@ -25,6 +25,7 @@ import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Profile;
 
@@ -145,7 +146,7 @@ public class SearchActivity extends ActivityEx {
 	 * 加载数据
 	 */
 	public void load() {
-		Host.doCommand("hot", new JSONResponse(SearchActivity.this) {
+		Host.doCommand("HotKeyword", new JSONResponse(SearchActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {
@@ -158,9 +159,18 @@ public class SearchActivity extends ActivityEx {
 					hotList.add(map);
 				}
 				for(String keyword : Profile.instance().keywords) {
-					HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("text", keyword);
-					hotList.add(map);
+					boolean sentry = false;
+					for(JSONVisitor item : content.getVisitors("data")) {
+						if(item.toString().equals(keyword)) {
+							sentry = true;
+							break;
+						}
+					}
+					if(!sentry) {
+						HashMap<String, Object> map = new HashMap<String, Object>();
+						map.put("text", keyword);
+						hotList.add(map);
+					}
 				}
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("text", "清空搜索记录");
@@ -186,7 +196,7 @@ public class SearchActivity extends ActivityEx {
 				catch (IOException e) { }
 			}
 		}
-		Intent intent = new Intent(SearchActivity.this, WebActivity.class);
+		Intent intent = new Intent(SearchActivity.this, BrowserActivity.class);
 		intent.putExtra("url", Host.fetchURL("search", keyword));
 		SearchActivity.this.startActivity(intent);
 		SearchActivity.this.finish();

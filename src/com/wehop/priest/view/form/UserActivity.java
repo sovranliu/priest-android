@@ -5,6 +5,9 @@ import java.util.LinkedList;
 
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
+import com.wehop.priest.Program;
+import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
 
 import android.content.Intent;
@@ -17,7 +20,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -51,7 +53,7 @@ public class UserActivity extends FragmentEx {
 	@Override
 	public void onResume() {
 		super.onResume();
-		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_text_caption);
+		TextView txtCaption = (TextView) this.getActivity().findViewById(R.id.user_label_caption);
 		if(null == Me.instance) {
 			txtCaption.setText("点击登录");
 		}
@@ -86,36 +88,22 @@ public class UserActivity extends FragmentEx {
 		HashMap<String, Object> map = null;
 		//
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_family));
-		map.put("caption", "家庭成员");
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_history));
+		map.put("caption", "业绩回顾");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_myzone));
-		map.put("caption", "我的空间");
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_help));
+		map.put("caption", "客服中心");
 		itemList.add(map);
-		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_document));
-		map.put("caption", "健康档案");
-		itemList.add(map);
-        map = new HashMap<String, Object>();
-        map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_doctor));
-        map.put("caption", "私人医生");
-        itemList.add(map);
 		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_config));
 		map.put("caption", "系统设置");
-		itemList.add(map);
-		map = new HashMap<String, Object>();
-		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_suggest));
-		map.put("caption", "意见反馈");
 		itemList.add(map);
 		//
 		ListView listview = (ListView) this.getActivity().findViewById(R.id.user_list);
 		if(listview.getHeaderViewsCount() > 0) {
 			return;
 		}
-		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_user_head, null);
-		listview.addHeaderView(viewHead);
 		SimpleAdapter listItemAdapter = new SimpleAdapter(this.getActivity(), itemList, R.layout.listitem_user,
 			new String[]{"icon", "caption"}, 
 	        new int[]{R.id.listitem_user_image_icon, R.id.listitem_user_label_caption});
@@ -135,36 +123,21 @@ public class UserActivity extends FragmentEx {
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
-				if(1 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), FamilyActivity.class);
+				if(0 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
+					UserActivity.this.startActivity(intent);
+					return;
+				}
+				else if(1 == index) {
+					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
 					UserActivity.this.startActivity(intent);
 					return;
 				}
 				else if(2 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), MyZoneActivity.class);
-					UserActivity.this.startActivity(intent);
-					return;
-				}
-				else if(3 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), ArchiveActivity.class);
-					UserActivity.this.startActivity(intent);
-					return;
-				}
-				else if(4 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), SelectDoctorActivity.class);
-					UserActivity.this.startActivity(intent);
-					return;
-				}
-				else if(5 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), ConfigActivity.class);
 					UserActivity.this.startActivity(intent);
                     return;
-                }
-				else if(6 == index) {
-					Intent intent = new Intent(UserActivity.this.getActivity(), SuggestActivity.class);
-                    UserActivity.this.startActivity(intent);
-                    return;
-                }
+				}
             }
 		});
 	}

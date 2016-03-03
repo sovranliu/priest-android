@@ -3,17 +3,13 @@ package com.wehop.priest.business;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.ParseException;
 
 import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
-import com.slfuture.carrie.base.time.Date;
 import com.slfuture.carrie.base.type.List;
-import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
-import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.framework.Broadcaster;
 import com.slfuture.pluto.sensor.Reminder;
@@ -22,7 +18,7 @@ import com.slfuture.pretty.im.core.IReactor;
 import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import com.wehop.priest.Program;
 import com.wehop.priest.business.core.IMeListener;
-import com.wehop.priest.business.structure.IM;
+import com.wehop.priest.business.structure.Notify;
 import com.wehop.priest.business.user.Doctor;
 import com.wehop.priest.business.user.Patient;
 import com.wehop.priest.business.user.User;
@@ -444,16 +440,30 @@ public class Me extends Doctor implements Serializable, IReactor {
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
-		if(null != type && (Notify.TYPE_5 == type || Notify.TYPE_9 == type)) {
-			Me.instance.refreshMember(Program.application, new IEventable<Boolean>() {
-				@Override
-				public void on(Boolean result) {
-					if(!result) {
-						return;
+		String source = (String) data.get("source");
+		if(null != type && (Notify.TYPE_1 == type || Notify.TYPE_2 == type)) {
+			if(Notify.SOURCE_DOCTOR.equals(source)) {
+				Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {
+					@Override
+					public void on(Boolean result) {
+						if(!result) {
+							return;
+						}
+						Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 					}
-					Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
-				}
-			});
+				});
+			}
+			else if(Notify.SOURCE_PATIENT.equals(source)) {
+				Me.instance.refreshPatient(Program.application, new IEventable<Boolean>() {
+					@Override
+					public void on(Boolean result) {
+						if(!result) {
+							return;
+						}
+						Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
+					}
+				});
+			}
 			Reminder.vibrate(Program.application);
 			return;
 		}

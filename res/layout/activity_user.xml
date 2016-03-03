@@ -20,13 +20,13 @@
 		    android:background="@drawable/user_photo_null"
 		    android:padding="0dip" />
         <TextView
-            android:id="@+id/user_text_caption"
+            android:id="@+id/user_label_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
 			android:layout_below ="@+id/user_button_photo"
         	android:layout_marginTop="10dp"
-            android:text=""
+            android:text="用户姓名"
             android:textColor="#ffffffff"
             android:textSize="15sp" />
 	</RelativeLayout>

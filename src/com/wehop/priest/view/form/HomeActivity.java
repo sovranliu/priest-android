@@ -16,6 +16,7 @@ import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.slfuture.carrie.base.json.JSONArray;
 import com.slfuture.carrie.base.json.JSONNumber;
 import com.slfuture.carrie.base.json.JSONObject;
@@ -73,6 +74,16 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	@ResourceView(id = R.id.home_button_search)
 	public Button btnSearch;
 	/**
+	 * 我的患者
+	 */
+	@ResourceView(id = R.id.home_image_left)
+	public ImageView imgLeft;
+	/**
+	 * 我的日程
+	 */
+	@ResourceView(id = R.id.home_image_right)
+	public ImageView imgRight;
+	/**
 	 * 新闻列表
 	 */
 	@ResourceView(id = R.id.home_list_news)
@@ -111,6 +122,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	protected int shakeDirection = 1;
 	protected RotateAnimation animRight = null; 
 	protected RotateAnimation animLeft = null; 
+
 
 	@Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -170,7 +182,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				if(current.compareTo(server) >= 0) {
 					 return;
 				}
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", url);
 				HomeActivity.this.startActivity(intent);
 			}
@@ -260,12 +272,14 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		btnSearch.getBackground().setAlpha(200);
 		btnBell.setImageAlpha(200);
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
+		imgLeft = (ImageView) viewHead.findViewById(R.id.home_image_left);
+		imgRight = (ImageView) viewHead.findViewById(R.id.home_image_right);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		browser.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", url);
 				startActivity(intent);
 				browser.pauseTimers();
@@ -278,7 +292,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				browser.loadUrl("about:blank");
 			}
 		});
-		this.getActivity().findViewById(R.id.home_layout_head).bringToFront();
+		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();
 	}
 
 	/**
@@ -305,7 +319,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				index = index - 1;
 				HashMap<String, Object> newsMap = newsList.get(index);
-				Intent intent = new Intent(HomeActivity.this.getActivity(), WebActivity.class);
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
 				intent.putExtra("url", newsMap.get("url").toString());
 				HomeActivity.this.startActivity(intent);
             }

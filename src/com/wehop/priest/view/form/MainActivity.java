@@ -3,18 +3,13 @@ package com.wehop.priest.view.form;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnLongClickListener;
-import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.wehop.priest.R;
-import com.wehop.priest.business.Me;
 import com.wehop.priest.business.core.IMeListener;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;

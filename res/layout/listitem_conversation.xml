@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:orientation="horizontal"
+    android:background="@color/white">
+	<ImageView
+		android:id="@+id/listitem_conversation_image_photo"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:src="@drawable/icon_user_default"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:layout_margin="10dp" />
+	<TextView
+		android:id="@+id/listitem_conversation_label_name"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="姓名"
+	    android:textColor="@color/grey_text"
+		android:layout_toRightOf="@id/listitem_conversation_image_photo"
+		android:layout_centerVertical="true"
+	    android:textSize="18sp" />
+	<TextView
+		android:id="@+id/listitem_conversation_label_tip"
+	    android:layout_width="20dp"
+	    android:layout_height="20dp"
+	    android:text="0"
+	    android:textColor="@color/white"
+		android:layout_toRightOf="@id/listitem_conversation_label_name"
+		android:layout_marginLeft="5dp"
+		android:layout_centerVertical="true"
+	    android:textSize="14sp"
+	    android:gravity="center"
+	    android:background="@drawable/icon_messagecount"
+	    android:visibility="gone" />
+	<ImageView
+		android:id="@+id/listitem_conversation_image_arrow"
+		android:layout_width="20dp"
+		android:layout_height="20dp"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:layout_marginRight="10dp"
+		android:layout_marginLeft="10dp"
+		android:src="@drawable/arrow_right" />
+</RelativeLayout>

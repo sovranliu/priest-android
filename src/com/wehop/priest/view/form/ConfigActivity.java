@@ -1,8 +1,9 @@
 package com.wehop.priest.view.form;
 
-import com.qcast.tower.R;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
+
+import com.wehop.priest.R;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,8 +20,6 @@ public class ConfigActivity extends ActivityEx {
 	public ImageButton btnClose;
 	@ResourceView(id = R.id.config_layout_clear)
 	public View viewClear;
-	@ResourceView(id = R.id.config_layout_password)
-	public View viewPassword;
 	@ResourceView(id = R.id.config_layout_about)
 	public View viewAbout;
 
@@ -41,14 +40,6 @@ public class ConfigActivity extends ActivityEx {
 			@Override
 			public void onClick(View v) {
 				Toast.makeText(ConfigActivity.this, "缓存清理完毕", Toast.LENGTH_LONG).show();
-			}
-		});
-		viewPassword.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(ConfigActivity.this, PasswordActivity.class);
-				intent.putExtra("mode", PasswordActivity.MODE_MODIFY);
-				ConfigActivity.this.startActivity(intent);
 			}
 		});
 		viewAbout.setOnClickListener(new View.OnClickListener() {

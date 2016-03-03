@@ -1,15 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="service.wehop.cn" mock="false" storage="priest/image/" >
+<protocols domain="beta.service.wehop.cn" mock="true" storage="priest/image/">
     <protocol name="image" >
         <url>
-<![CDATA[
-[1]
-]]>
+		<![CDATA[
+		[1]
+		]]>
         </url>
-        <mock>
+        <mock></mock>
+    </protocol>
+    <protocol name="file" >
+        <url>
+		<![CDATA[
+		[1]
+		]]>
+        </url>
+        <mock></mock>
+    </protocol>
+	<protocol name="LoadingImage">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/startupImage
+        ]]>
+        </path>
+		<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "data": "https://www.baidu.com/img/bd_logo1.png"
+}
+        ]]>
+        </mock>
+	</protocol>
+	<protocol name="HomePage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<protocol name="readVersion">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/getCurrentAppVersion?firmType=andriod
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": {
+        "firmType": "andriod",
+        "appVersion": "1.0.4",
+        "downloadUrl": "http://cdn.oss.wehop-resources.wehop.cn/mobile/android/release/stable/v-1.1/wehop.apk"
+    }
+}
+        ]]>
         </mock>
     </protocol>
-
+    <protocol name="news">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/news?page=[1]
+        ]]>
+        </path>
+    <mock>
+		<![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
+            "title": "脚气的烦恼又开始了，袜子里放它不用再去医院",
+            "publisher": "杨飞恒大社区医院",
+            "date": "2015-08-19",
+            "url": "http://sina.cn/?from=wap"
+        },
+        {
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
+            "title": "俗话说笑一笑十年少，人多笑笑更健康",
+            "publisher": "付长江上海第一人民医院",
+            "date": "2015-08-19",
+            "url": "http://m.baidu.com"
+        },
+        {
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
+            "title": "颈椎问题，得看这里",
+            "publisher": "秦岭",
+            "date": "2015-08-11",
+            "url": "http://news.baidu.com"
+        },
+        {
+            "imageUrl": "http://www.baidu.com/img/bd_logo1.png",
+            "title": "如何预防肩周炎",
+            "publisher": "王小勇",
+            "date": "2015-08-19",
+            "url": "http://news.baidu.com"
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="HotKeyword">
+        <path>
+        <![CDATA[
+user-platform-web/rest/hotKeyword
+        ]]>
+        </path>
+		<mock>
+        <![CDATA[
+{
+    "code": 1,
+    "msg": null,
+    "data": [
+        "恐怖袭击的紧急医学应对措施",
+        "巴黎",
+        "医生",
+        "肿瘤",
+        "全世界"
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <protocol name="load" >
         <path>
 <![CDATA[
@@ -25,18 +150,6 @@ app/ajax/load#version=[1]
 	    ]]>
         </mock>
     </protocol>
-
-    <protocol name="file" >
-        <url>
-<![CDATA[
-[1]
-		]]>
-        </url>
-
-        <mock>
-        </mock>
-    </protocol>
-
     <protocol name="config" >
         <path>
 <![CDATA[

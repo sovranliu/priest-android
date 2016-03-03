@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:scaleType="center"
-        android:background="@drawable/loading" />
+        android:background="@drawable/icon_loading" />
     <WebView
         android:id="@+id/task_browser"
         android:layout_width="match_parent"

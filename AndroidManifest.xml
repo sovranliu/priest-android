@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wehop.priest"
     android:versionCode="1"
-    android:versionName="1.0.0" >
+    android:versionName="3.0.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -43,43 +43,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.wehop.priest.view.form.LoginActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
-        <activity
             android:name="com.wehop.priest.view.form.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
         <activity
-            android:name="com.wehop.priest.view.form.WebActivity"
+            android:name="com.wehop.priest.view.form.HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
         <activity
-            android:name="com.wehop.priest.view.form.ChatActivity"
+            android:name="com.wehop.priest.view.form.ConversationActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
         <activity
-            android:name="com.wehop.priest.view.form.GroupChatActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
-
-        <activity
-            android:name="com.wehop.priest.view.form.VoiceActivity"
+            android:name="com.wehop.priest.view.form.BlogActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
         <activity
-            android:name="com.wehop.priest.view.form.VideoActivity"
+            android:name="com.wehop.priest.view.form.UserActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
         <activity
-            android:name="com.wehop.priest.view.form.RingActivity"
+            android:name="com.wehop.priest.view.form.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
@@ -88,13 +77,24 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
-
+        <activity
+            android:name="com.wehop.priest.view.form.AboutActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+        <activity
+            android:name="com.wehop.priest.view.form.ConfigActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+        
         <!-- Pretty所需注册窗口 -->
         <activity android:name="com.slfuture.pretty.im.view.form.SingleChatActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.im.view.form.AudioActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.im.view.form.VideoActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.im.view.form.RingActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.general.view.form.ImageActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.slfuture.pretty.general.view.form.BrowserActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.general.view.form.TextEditActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.qcode.view.form.CaptureActivity" android:screenOrientation="landscape" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden" />
 		

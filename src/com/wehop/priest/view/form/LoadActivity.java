@@ -74,7 +74,7 @@ public class LoadActivity extends ActivityEx {
 	 * 引导启动广告
 	 */
 	private void loadPoster() {
-		Host.doCommand("startupImage", new JSONResponse(LoadActivity.this) {
+		Host.doCommand("LoadingImage", new JSONResponse(LoadActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {
