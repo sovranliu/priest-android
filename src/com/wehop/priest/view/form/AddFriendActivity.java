@@ -11,7 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
@@ -89,6 +88,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
+							Toast.makeText(AddFriendActivity.this, "添加请求已发送", Toast.LENGTH_LONG).show();
 							AddFriendActivity.this.finish();
 						}
 					}

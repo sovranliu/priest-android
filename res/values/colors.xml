@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#ff000000</color>
-    <color name="white">#ffffffff</color>
-    <color name="green">#ff00cf59</color>
-    <color name="blue">#ff4278a7</color>
-    <color name="red">#ffff0000</color>
-    
     <color name="main_tab_normal">#fff6f6f6</color>
     <color name="main_tab_selected">#ffffffff</color>
     <color name="hot_bg">#ffffffff</color>
@@ -14,7 +8,16 @@
     <color name="listview_on">#ffffffff</color>
     <color name="listview_down">#fff7f7f7</color>
     <color name="transprant">#00000000</color>
-    
+	
+    <color name="black">#ff000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="red">#ffff0000</color>
+    <color name="green">#ff00ff00</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="grey">#fff0f0f0</color>
+    <color name="grey_text">#ff777777</color>
+    <color name="grey_line">#ffe0e0e0</color>
+    <color name="grey_bg">#fff9f9f9</color>
     <color name="main">#ff00cf59</color>
     <color name="sub">#ff00cf59</color>
 </resources>

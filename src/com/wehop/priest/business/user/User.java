@@ -24,6 +24,11 @@ public class User implements Serializable {
 	public final static int GENDER_UNKNOWN = 0;
 	public final static int GENDER_MALE = 1;
 	public final static int GENDER_FEMALE = 2;
+	/**
+	 * 身份类型
+	 */
+	public final static String CATEGORY_DOCTOR = "doctor";
+	public final static String CATEGORY_PATIENT = "patient";
 
 	/**
 	 * 用户ID

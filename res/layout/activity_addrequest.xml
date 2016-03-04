@@ -49,37 +49,30 @@
             android:layout_marginTop="5dp"
             android:maxLines="2"
             android:textSize="16sp"
-            android:text="添加信息"/>
+            android:text="添加信息"
+            android:textColor="@color/grey_text" />
     </LinearLayout>
     <Button
         android:id="@+id/addrequest_button_refuse"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_alignParentRight="true"
         android:layout_below="@id/addrequest_layout_info"
         android:layout_centerVertical="true"
         android:text="拒绝"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-		android:textSize="16sp"
+		android:textSize="14sp"
         android:textColor="@color/white"
         android:background="@drawable/button_red"
         android:layout_marginRight="10dp" />
     <Button
         android:id="@+id/addrequest_button_accept"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_toLeftOf="@id/addrequest_button_refuse"
         android:layout_below="@id/addrequest_layout_info"
         android:text="接受"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
         android:layout_centerVertical="true"
-		android:textSize="16sp"
+		android:textSize="14sp"
         android:textColor="@color/white"
         android:background="@drawable/button_green"
         android:layout_marginRight="10dp" />

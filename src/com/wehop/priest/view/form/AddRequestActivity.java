@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
-import com.wehop.priest.business.structure.Notify;
+import com.wehop.priest.business.structure.notify.AddRequestNotify;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.pluto.communication.Host;
@@ -32,15 +32,14 @@ public class AddRequestActivity extends OnlyUserActivity {
 	@ResourceView(id = R.id.addrequest_button_accept)
 	public Button btnAccept;
 
-    private Notify model = null;
+    private AddRequestNotify model = null;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //
-        Bundle bundle = this.getIntent().getExtras();
-        model= (Notify) bundle.get("message");
+        model = (AddRequestNotify) this.getIntent().getSerializableExtra("message");
         if(null == model){
             finish();
             return;
@@ -51,7 +50,7 @@ public class AddRequestActivity extends OnlyUserActivity {
                 AddRequestActivity.this.finish();
             }
         });
-        labName.setText(model.name);
+        labName.setText(model.applicantNickname + "(" + model.applicantPhone + ")");
         labDescription.setText("请求添加您为：" + model.relation);
         btnRefuse.setOnClickListener(new View.OnClickListener() {
             @Override

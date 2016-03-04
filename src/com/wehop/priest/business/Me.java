@@ -18,7 +18,8 @@ import com.slfuture.pretty.im.core.IReactor;
 import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import com.wehop.priest.Program;
 import com.wehop.priest.business.core.IMeListener;
-import com.wehop.priest.business.structure.Notify;
+import com.wehop.priest.business.structure.notify.AddResponseNotify;
+import com.wehop.priest.business.structure.notify.BeRemovedNotify;
 import com.wehop.priest.business.user.Doctor;
 import com.wehop.priest.business.user.Patient;
 import com.wehop.priest.business.user.User;
@@ -441,8 +442,8 @@ public class Me extends Doctor implements Serializable, IReactor {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
 		String source = (String) data.get("source");
-		if(null != type && (Notify.TYPE_1 == type || Notify.TYPE_2 == type)) {
-			if(Notify.SOURCE_DOCTOR.equals(source)) {
+		if(null != type && (AddResponseNotify.TYPE_ADDRESPONSE == type || BeRemovedNotify.TYPE_BEREMOVE == type)) {
+			if(User.CATEGORY_DOCTOR.equals(source)) {
 				Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {
 					@Override
 					public void on(Boolean result) {
@@ -453,7 +454,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 					}
 				});
 			}
-			else if(Notify.SOURCE_PATIENT.equals(source)) {
+			else if(User.CATEGORY_PATIENT.equals(source)) {
 				Me.instance.refreshPatient(Program.application, new IEventable<Boolean>() {
 					@Override
 					public void on(Boolean result) {

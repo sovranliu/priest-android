@@ -41,6 +41,6 @@
 		android:layout_marginRight="10dp"
 		android:layout_marginTop="10dp"
         android:text="这是文本内容"
-        android:textColor="@color/grey"
+        android:textColor="@color/grey_text"
         android:textSize="18sp" />
 </RelativeLayout>

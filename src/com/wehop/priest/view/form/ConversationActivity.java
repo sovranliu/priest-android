@@ -9,9 +9,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -23,6 +26,7 @@ import android.widget.SimpleAdapter.ViewBinder;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.ImageResponse;
@@ -47,6 +51,9 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 	public ImageView imgScan;
 	@ResourceView(id = R.id.conversation_image_add)
 	public ImageView imgAdd;
+	
+	@ResourceView(id = R.id.search_text_keword)
+	public EditText txtKeyword;
 
 	@ResourceView(id = R.id.conversation_image_doctor)
 	public ImageView imgTabDoctor;
@@ -116,6 +123,13 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			public void onClick(View v) {
 				Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
 				ConversationActivity.this.getActivity().startActivity(intent);
+			}
+		});
+		txtKeyword.setOnKeyListener(new OnKeyListener() {
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				refresh();
+				return false;
 			}
 		});
 		imgTabDoctor.setOnClickListener(new OnClickListener() {
@@ -316,6 +330,18 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		}
 		this.tab = tab;
 	}
+	
+	/**
+	 * 刷新列表
+	 */
+	private void refresh() {	
+		if(TAB_DOCTOR == tab) {
+			refreshDoctor();
+		}
+		else {
+			refreshPatient();
+		}
+	}
 
 	/**
 	 * 刷新医生列表
@@ -328,6 +354,12 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		}
 		doctorList.clear();
 		for(Doctor doctor : Me.instance.doctors) {
+			String keyword = txtKeyword.getText().toString();
+			if(!Text.isBlank(keyword)) {
+				if(!doctor.nickname.equals(keyword) && !doctor.relation.equals(keyword)) {
+					continue;
+				}
+			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", doctor.id);
 			if(null == doctor.photo) {
@@ -361,6 +393,12 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		}
 		patientList.clear();
 		for(Patient patient : Me.instance.patients) {
+			String keyword = txtKeyword.getText().toString();
+			if(!Text.isBlank(keyword)) {
+				if(!patient.nickname.equals(keyword) && !patient.relation.equals(keyword)) {
+					continue;
+				}
+			}
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", patient.id);
 			if(null == patient.photo) {

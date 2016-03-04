@@ -390,4 +390,95 @@ doctor-platform-web/rest/validateToken#username=[1]&token=[2]
 	    ]]>
 	    </mock>
 	</protocol>
+    <protocol name="readMessage">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/user/readMessage#token=[1]&id=[2]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+{
+    "code": 1
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="myMessage">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/user/myMessage?token=[1]
+        ]]>
+        </path>
+    <mock>
+	<![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 1233,
+            "type": 1,
+            "hasRead": true,
+            "title": "添加申请",
+            "description": "15021819287申请添加你为父亲",
+            "time": "2015-09-09 14:12:20",
+            "info": {
+                "requestId": "1",
+                "applicantPhone": "139****0987",
+                "applicantNickname": "刘德龙",
+                "applicantCategory": "doctor",
+                "relation": "刘院长"
+            }
+        },
+        {
+            "id": 1234,
+            "type": 2,
+            "hasRead": false,
+            "title": "添加结果",
+            "description": "刘院长(15021819287)申请添加你为父亲",
+            "time": "2015-09-10 05:12:20",
+            "isRead": false,
+            "info": {
+                "targetPhone": "139****0987",
+                "targetNickname": "刘德龙",
+                "applicantCategory": "doctor",
+                "relation": "小王",
+                "result":true
+            }
+        },
+        {
+            "id": 1235,
+            "type": 3,
+            "hasRead": false,
+            "title": "好友删除",
+            "description": "刘院长(15021819287)将你删除",
+            "time": "2015-09-10 05:12:20",
+            "isRead": false,
+            "info": {
+                "targetPhone": "139****0987",
+                "targetNickname": "刘德龙",
+                "targetCategory": "doctor",
+                "relation": "小王",
+                "result":true
+            }
+        }
+    ]
+}
+        ]]>
+        </mock>
+    </protocol>
+	<protocol name="ResponseFriend">
+        <path>
+        <![CDATA[
+doctor-platform-web/rest/user/responseFriend#token=[1]&isResponse=[2]&requestId=[3]
+        ]]>
+        </path>
+    	<mock>
+        <![CDATA[
+{
+    "code": 1
+}
+        ]]>
+        </mock>
+    </protocol>
 </protocols>
