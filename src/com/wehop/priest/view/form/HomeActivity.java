@@ -382,7 +382,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 
 	@Override
 	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
-		if("notify".equals(action)) {
+		if("systemMessage".equals(action)) {
 			shakeBell();
 		}
 	}

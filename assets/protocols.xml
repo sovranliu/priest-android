@@ -16,6 +16,7 @@
         </url>
         <mock></mock>
     </protocol>
+    <!-- 预先获取启动图 -->
 	<protocol name="LoadingImage">
         <path>
         <![CDATA[
@@ -106,7 +107,7 @@ doctor-platform-web/rest/news?page=[1]
 	<protocol name="HotKeyword">
         <path>
         <![CDATA[
-user-platform-web/rest/hotKeyword
+doctor-platform-web/rest/hotKeyword
         ]]>
         </path>
 		<mock>
