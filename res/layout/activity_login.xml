@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/green">
+    android:background="@color/main">
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -11,7 +11,7 @@
         android:layout_marginTop="80dp"
         android:layout_centerHorizontal="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/login_icon">
+        android:src="@drawable/program_icon">
     </ImageView>
 	<RelativeLayout
 		android:id="@+id/login_layout_username"

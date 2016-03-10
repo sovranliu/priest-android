@@ -80,6 +80,10 @@
 				android:text="我的日程" />
     	</RelativeLayout>
 	</LinearLayout>
+	<View 
+	    android:layout_height="1dp"
+	    android:layout_width="match_parent"
+	    android:background="@color/grey_line" />
 	<TextView
 		android:id="@+id/home_label_news"
 		android:layout_width="fill_parent"

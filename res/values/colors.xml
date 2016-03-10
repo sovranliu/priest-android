@@ -18,6 +18,6 @@
     <color name="grey_text">#ff777777</color>
     <color name="grey_line">#ffe0e0e0</color>
     <color name="grey_bg">#fff9f9f9</color>
-    <color name="main">#ff00cf59</color>
-    <color name="sub">#ff00cf59</color>
+    <color name="main">#ffA0CE77</color>
+    <color name="sub">#ffA0CE77</color>
 </resources>
