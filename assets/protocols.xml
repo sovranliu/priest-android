@@ -129,7 +129,7 @@ doctor-platform-web/rest/hotKeyword
     <protocol name="add">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/addFriend#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
+doctor-platform-web/rest/doctor/addFriend#token=[1]&userGlobalId=[2]&mode=[3]&relation=[4]&phone=[5]
         ]]>
         </path>
 		<mock>
@@ -145,7 +145,7 @@ doctor-platform-web/rest/user/addFriend#token=[1]&userGlobalId=[2]&mode=[3]&rela
     <protocol name="remove">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/removeFriend#token=[1]&userGlobalId=[2]
+doctor-platform-web/rest/doctor/removeFriend#token=[1]&userGlobalId=[2]
         ]]>
         </path>
     <mock>
@@ -161,7 +161,7 @@ doctor-platform-web/rest/user/removeFriend#token=[1]&userGlobalId=[2]
     <protocol name="doctorList">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/doctorList#token=[1]
+doctor-platform-web/rest/doctor/doctorList#token=[1]
         ]]>
         </path>
 		<mock>
@@ -208,7 +208,7 @@ doctor-platform-web/rest/user/doctorList#token=[1]
     <protocol name="patientList">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/patientList#token=[1]
+doctor-platform-web/rest/doctor/patientList#token=[1]
         ]]>
         </path>
 		<mock>
@@ -394,7 +394,7 @@ doctor-platform-web/rest/validateToken#username=[1]&token=[2]
     <protocol name="readMessage">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/readMessage#token=[1]&id=[2]
+doctor-platform-web/rest/doctor/readMessage#token=[1]&id=[2]
         ]]>
         </path>
     <mock>
@@ -408,7 +408,7 @@ doctor-platform-web/rest/user/readMessage#token=[1]&id=[2]
 	<protocol name="myMessage">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/myMessage?token=[1]
+doctor-platform-web/rest/doctor/myMessage?token=[1]
         ]]>
         </path>
     <mock>
@@ -471,7 +471,7 @@ doctor-platform-web/rest/user/myMessage?token=[1]
 	<protocol name="ResponseFriend">
         <path>
         <![CDATA[
-doctor-platform-web/rest/user/responseFriend#token=[1]&isResponse=[2]&requestId=[3]
+doctor-platform-web/rest/doctor/responseFriend#token=[1]&isResponse=[2]&requestId=[3]
         ]]>
         </path>
     	<mock>
