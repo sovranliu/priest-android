@@ -4,6 +4,7 @@ import com.wehop.priest.R;
 import com.wehop.priest.base.Logger;
 import com.wehop.priest.business.Me;
 
+import com.slfuture.carrie.base.etc.Serial;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -61,7 +62,7 @@ public class LoginActivity extends ActivityEx {
 				if(Text.isBlank(phone)) {
 					return;
 				}
-				final String code = txtPassword.toString();
+				final String code = Serial.getMD5String(txtPassword.getText().toString()).substring(8, 24);
 				if(Text.isBlank(code)) {
 					return;
 				}

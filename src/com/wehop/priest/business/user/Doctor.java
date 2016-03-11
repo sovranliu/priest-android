@@ -12,18 +12,6 @@ public class Doctor extends User {
 	 * 头衔
 	 */
 	public String title;
-	/**
-	 * 科室
-	 */
-	public String department;
-	/**
-	 * 简历
-	 */
-	public String resume;
-	/**
-	 * 自我介绍
-	 */
-	public String description;
 
 
 	/**
@@ -36,9 +24,6 @@ public class Doctor extends User {
 			return false;
 		}
 		title = visitor.getString("title");
-		department = visitor.getString("department");
-		resume = visitor.getString("resume");
-		description = visitor.getString("description");
 		return true;
 	}
 }

@@ -174,30 +174,21 @@ doctor-platform-web/rest/doctor/doctorList#token=[1]
             "nickname": "医生-1昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-1",
-            "title": "医生头衔",
-            "department": "医生科室",
-            "resume": "简历",
-            "description": "自我简介"
+            "title": "医生头衔"
         },
         {
             "userGlobalId": "医生ID-2",
             "nickname": "医生-2昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-2",
-            "title": "医生头衔",
-            "department": "医生科室",
-            "resume": "简历",
-            "description": "自我简介"
+            "title": "医生头衔"
         },
         {
             "userGlobalId": "医生ID-3",
             "nickname": "医生-3昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-3",
-            "title": "医生头衔",
-            "department": "医生科室",
-            "resume": "简历",
-            "description": "自我简介"
+            "title": "医生头衔"
         }
     ]
 }
@@ -241,7 +232,7 @@ doctor-platform-web/rest/doctor/patientList#token=[1]
     <protocol name="login">
         <path>
         <![CDATA[
-doctor-platform-web/rest/login#phone=[1]&password=[2]
+doctor-platform-web/rest/login#username=[1]&password=[2]
         ]]>
         </path>
 		<mock>
@@ -254,9 +245,6 @@ doctor-platform-web/rest/login#phone=[1]&password=[2]
         "photo": "https://www.baidu.com/img/bd_logo1.png",
         "imUsername": "appuser_1853",
         "title": "医生头衔",
-        "department": "医生科室",
-        "resume": "简历",
-        "description": "自我简介",
         "username": "15000000000",
         "token": "登录口令",
         "doctorList": [
@@ -265,30 +253,21 @@ doctor-platform-web/rest/login#phone=[1]&password=[2]
                 "nickname": "医生-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-2",
                 "nickname": "医生-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-3",
                 "nickname": "医生-3昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-3",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             }
         ],
         "patientList": [
@@ -331,9 +310,6 @@ doctor-platform-web/rest/validateToken#username=[1]&token=[2]
         "photo": "https://www.baidu.com/img/bd_logo1.png",
         "imUsername": "环信ID-3",
         "title": "医生头衔",
-        "department": "医生科室",
-        "resume": "简历",
-        "description": "自我简介",
         "username": "15000000000",
         "token": "登录口令",
         "doctorList": [
@@ -342,30 +318,21 @@ doctor-platform-web/rest/validateToken#username=[1]&token=[2]
                 "nickname": "医生-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-2",
                 "nickname": "医生-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-3",
                 "nickname": "医生-3昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-3",
-                "title": "医生头衔",
-                "department": "医生科室",
-                "resume": "简历",
-                "description": "自我简介"
+                "title": "医生头衔"
             }
         ],
         "patientList": [
