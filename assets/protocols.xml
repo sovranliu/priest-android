@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="true" storage="priest/image/">
+<protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/">
     <protocol name="image" >
         <url>
 		<![CDATA[
@@ -8,7 +8,7 @@
         </url>
         <mock></mock>
     </protocol>
-    <protocol name="file" >
+    <protocol name="file">
         <url>
 		<![CDATA[
 		[1]
