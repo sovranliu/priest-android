@@ -297,7 +297,7 @@ doctor-platform-web/rest/login#username=[1]&password=[2]
 	<protocol name="check">
 	    <path>
 		<![CDATA[
-doctor-platform-web/rest/validateToken#username=[1]&token=[2]
+doctor-platform-web/rest/doctor/validateToken#username=[1]&token=[2]
 		]]>
         </path>
 	    <mock>
