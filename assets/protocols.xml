@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/">
+    <!-- 首页顶部H5页面 -->
+	<protocol name="HomePage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/index.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<!-- 我的日程H5页面 -->
+	<protocol name="CalendarPage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/calendar.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<!-- 圈子H5页面 -->
+	<protocol name="BlogPage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/friends.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<!-- 业绩回顾H5页面 -->
+	<protocol name="HistoryPage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/performance.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<protocol name="Hit">
+		<url>
+		<![CDATA[
+http://beta.service.wehop.cn/counting-platform-web/rest/appHit#[1]
+		]]>
+		</url>
+		<mock></mock>
+	</protocol>
     <protocol name="image" >
         <url>
 <![CDATA[
@@ -32,14 +76,6 @@ doctor-platform-web/rest/startupImage
         ]]>
         </mock>
 	</protocol>
-	<protocol name="HomePage">
-        <url>
-        <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/user/appv2/sites/v-1/banner-index.html?token=[1]
-       ]]>
-        </url>
-    	<mock></mock>
-    </protocol>
 	<protocol name="readVersion">
         <path>
         <![CDATA[
@@ -426,8 +462,7 @@ doctor-platform-web/rest/doctor/myMessage?token=[1]
                 "targetPhone": "139****0987",
                 "targetNickname": "刘德龙",
                 "targetCategory": "doctor",
-                "relation": "小王",
-                "result":true
+                "relation": "小王"
             }
         }
     ]

@@ -94,6 +94,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 */
 	protected int page = 1;
 	/**
+	 * 当前用户手机号码
+	 */
+	private String phone = "";
+	/**
 	 * 动画
 	 */
 	private AnimationListener listener = new AnimationListener() {
@@ -150,6 +154,28 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		else {
 			stopBell();
 		}
+    	boolean sentry = false;
+    	if(null == phone) {
+    		if(null == Me.instance) {
+    			sentry = true;
+    		}
+    	}
+    	else {
+    		if(null != Me.instance) {
+        		sentry = phone.equals(Me.instance.phone);
+    		}
+    	}
+    	if(!sentry) {
+    		if(null != Me.instance) {
+    			browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token));
+    		}
+    		if(null == Me.instance) {
+        		phone = null;
+    		}
+    		else {
+        		phone = Me.instance.phone;
+    		}
+    	}
 	}
 
 	@Override
@@ -286,6 +312,26 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
 		imgLeft = (ImageView) viewHead.findViewById(R.id.home_image_left);
 		imgRight = (ImageView) viewHead.findViewById(R.id.home_image_right);
+		imgLeft.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					return;
+				}
+				((MainActivity) HomeActivity.this.getActivity()).goPatient();
+			}
+		});
+		imgRight.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(null == Me.instance) {
+					return;
+				}
+				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
+				intent.putExtra("url", Host.fetchURL("CalendarPage", Me.instance.token));
+				HomeActivity.this.getActivity().startActivity(intent);
+			}
+		});
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		browser.setWebViewClient(new WebViewClient() {

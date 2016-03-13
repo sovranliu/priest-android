@@ -132,6 +132,7 @@ public class UserActivity extends FragmentEx {
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				if(0 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
+					intent.putExtra("HistoryPage", Me.instance.token);
 					UserActivity.this.startActivity(intent);
 					return;
 				}

@@ -5,10 +5,14 @@ import java.io.IOException;
 import java.io.Serializable;
 
 import com.slfuture.carrie.base.etc.Serial;
+import com.slfuture.carrie.base.json.JSONNumber;
+import com.slfuture.carrie.base.json.JSONObject;
+import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.framework.Broadcaster;
@@ -442,6 +446,18 @@ public class Me extends Doctor implements Serializable, IReactor {
 		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
 		String source = (String) data.get("source");
+		if("send".equals(action)) {
+			JSONObject object = new JSONObject();
+			object.put("action", new JSONString("send"));
+			object.put("from", new JSONString(from));
+			object.put("to", new JSONString((String) data.get("to")));
+			object.put("type", new JSONNumber((Integer) data.get("type")));
+			Host.doCommand("Hit", new CommonResponse<String>() {
+				@Override
+				public void onFinished(String content) { }
+			}, "user_input_content=" + object.toString());
+			return;
+		}
 		if(null != type && (AddResponseNotify.TYPE_ADDRESPONSE == type || BeRemovedNotify.TYPE_BEREMOVE == type)) {
 			if(User.CATEGORY_DOCTOR.equals(source)) {
 				Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {

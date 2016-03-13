@@ -88,4 +88,12 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
 		
 	}
+
+	/**
+	 * 前往病人列表页
+	 */
+	public void goPatient() {
+		((ConversationActivity) this.getFragmentManager().findFragmentById(R.id.main_fragment_conversation)).selectTab(ConversationActivity.TAB_PATIENT);
+        tabhost.setCurrentTabByTag("main_tab_conversation");
+	}
 }
