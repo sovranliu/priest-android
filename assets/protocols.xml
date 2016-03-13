@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="true" storage="priest/image/">
+<protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/">
     <protocol name="image" >
         <url>
-		<![CDATA[
-		[1]
-		]]>
+<![CDATA[
+[1]
+]]>
         </url>
         <mock></mock>
     </protocol>
@@ -63,7 +63,7 @@ doctor-platform-web/rest/getCurrentAppVersion?firmType=andriod
     <protocol name="news">
         <path>
         <![CDATA[
-doctor-platform-web/rest/news?page=[1]
+user-platform-web/rest/news?page=[1]
         ]]>
         </path>
     <mock>
@@ -171,21 +171,21 @@ doctor-platform-web/rest/doctor/doctorList#token=[1]
     "data": [
         {
             "userGlobalId": "医生ID-1",
-            "nickname": "医生-1昵称",
+            "nickName": "医生-1昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-1",
             "title": "医生头衔"
         },
         {
             "userGlobalId": "医生ID-2",
-            "nickname": "医生-2昵称",
+            "nickName": "医生-2昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-2",
             "title": "医生头衔"
         },
         {
             "userGlobalId": "医生ID-3",
-            "nickname": "医生-3昵称",
+            "nickName": "医生-3昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-3",
             "title": "医生头衔"
@@ -209,7 +209,7 @@ doctor-platform-web/rest/doctor/patientList#token=[1]
     "data": [
         {
             "userGlobalId": "病人ID-1",
-            "nickname": "病人-1昵称",
+            "nickName": "病人-1昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-1",
             "birthday": "1986-01-19",
@@ -217,7 +217,7 @@ doctor-platform-web/rest/doctor/patientList#token=[1]
         },
         {
             "userGlobalId": "病人ID-2",
-            "nickname": "病人-2昵称",
+            "nickName": "病人-2昵称",
             "photo": "https://www.baidu.com/img/bd_logo1.png",
             "imUsername": "环信ID-2",
             "birthday": "1986-11-25",
@@ -241,7 +241,7 @@ doctor-platform-web/rest/login#username=[1]&password=[2]
     "code": 1,
     "data": {
         "userGlobalId": "医生ID-3",
-        "nickname": "医生-3昵称",
+        "nickName": "医生-3昵称",
         "photo": "https://www.baidu.com/img/bd_logo1.png",
         "imUsername": "appuser_1853",
         "title": "医生头衔",
@@ -250,21 +250,21 @@ doctor-platform-web/rest/login#username=[1]&password=[2]
         "doctorList": [
             {
                 "userGlobalId": "医生ID-1",
-                "nickname": "医生-1昵称",
+                "nickName": "医生-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
                 "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-2",
-                "nickname": "医生-2昵称",
+                "nickName": "医生-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
                 "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-3",
-                "nickname": "医生-3昵称",
+                "nickName": "医生-3昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-3",
                 "title": "医生头衔"
@@ -273,7 +273,7 @@ doctor-platform-web/rest/login#username=[1]&password=[2]
         "patientList": [
             {
                 "userGlobalId": "病人ID-1",
-                "nickname": "病人-1昵称",
+                "nickName": "病人-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
                 "birthday": "1986-01-19",
@@ -281,7 +281,7 @@ doctor-platform-web/rest/login#username=[1]&password=[2]
             },
             {
                 "userGlobalId": "病人ID-2",
-                "nickname": "病人-2昵称",
+                "nickName": "病人-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
                 "birthday": "1986-11-25",
@@ -306,7 +306,7 @@ doctor-platform-web/rest/doctor/validateToken#username=[1]&token=[2]
     "code": 1,
     "data": {
         "userGlobalId": "医生ID-3",
-        "nickname": "医生-3昵称",
+        "nickName": "医生-3昵称",
         "photo": "https://www.baidu.com/img/bd_logo1.png",
         "imUsername": "环信ID-3",
         "title": "医生头衔",
@@ -315,21 +315,21 @@ doctor-platform-web/rest/doctor/validateToken#username=[1]&token=[2]
         "doctorList": [
             {
                 "userGlobalId": "医生ID-1",
-                "nickname": "医生-1昵称",
+                "nickName": "医生-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
                 "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-2",
-                "nickname": "医生-2昵称",
+                "nickName": "医生-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
                 "title": "医生头衔"
             },
             {
                 "userGlobalId": "医生ID-3",
-                "nickname": "医生-3昵称",
+                "nickName": "医生-3昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-3",
                 "title": "医生头衔"
@@ -338,7 +338,7 @@ doctor-platform-web/rest/doctor/validateToken#username=[1]&token=[2]
         "patientList": [
             {
                 "userGlobalId": "病人ID-1",
-                "nickname": "病人-1昵称",
+                "nickName": "病人-1昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-1",
                 "birthday": "1986-01-19",
@@ -346,7 +346,7 @@ doctor-platform-web/rest/doctor/validateToken#username=[1]&token=[2]
             },
             {
                 "userGlobalId": "病人ID-2",
-                "nickname": "病人-2昵称",
+                "nickName": "病人-2昵称",
                 "photo": "https://www.baidu.com/img/bd_logo1.png",
                 "imUsername": "环信ID-2",
                 "birthday": "1986-11-25",

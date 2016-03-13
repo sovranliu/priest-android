@@ -66,7 +66,7 @@ public class Notify implements Serializable {
     	}
     	description = data.getString("description");
     	if(null == description) {
-    		return false;
+    		description = "";
     	}
     	hasRead = data.getBoolean("hasRead", true);
     	if(null != data.getString("time")) {

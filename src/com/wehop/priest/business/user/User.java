@@ -89,7 +89,7 @@ public class User implements Serializable {
 	 */
 	public boolean parse(JSONVisitor visitor) {
 		id = visitor.getString("userGlobalId");
-		nickname = visitor.getString("nickname");
+		nickname = visitor.getString("nickName");
 		photo = visitor.getString("photo");
 		imId = visitor.getString("imUsername");
 		return true;
