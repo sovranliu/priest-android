@@ -34,6 +34,7 @@ import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleAdapter.ViewBinder;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 用户界面
@@ -147,6 +148,12 @@ public class UserActivity extends FragmentEx {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				if(0 == index) {
+					if(null == Me.instance) {
+						Intent intent = new Intent(UserActivity.this.getActivity(), LoginActivity.class);
+						UserActivity.this.startActivity(intent);
+						Toast.makeText(UserActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
+						return;
+					}
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
 					intent.putExtra("url", Host.fetchURL("HistoryPage", Me.instance.token));
 					UserActivity.this.startActivity(intent);

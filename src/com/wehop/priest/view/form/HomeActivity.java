@@ -311,6 +311,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
 				Intent intent = new Intent();
@@ -325,6 +328,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
 				((MainActivity) HomeActivity.this.getActivity()).goPatient();
@@ -334,6 +340,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onClick(View v) {
 				if(null == Me.instance) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), LoginActivity.class);
+					HomeActivity.this.startActivity(intent);
+					Toast.makeText(HomeActivity.this.getActivity(), "请先登录账号", Toast.LENGTH_LONG).show();
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
