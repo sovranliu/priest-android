@@ -169,6 +169,9 @@ public class HomeActivity extends FragmentEx implements IMeListener {
     		if(null != Me.instance) {
     			browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token));
     		}
+    		else {
+    			browser.loadUrl(Host.fetchURL("HomePage", ""));
+    		}
     		if(null == Me.instance) {
         		phone = null;
     		}
