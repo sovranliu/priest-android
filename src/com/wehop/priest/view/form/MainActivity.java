@@ -93,7 +93,7 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 	 * 前往病人列表页
 	 */
 	public void goPatient() {
+		group.check(R.id.main_tab_conversation);
 		((ConversationActivity) this.getFragmentManager().findFragmentById(R.id.main_fragment_conversation)).selectTab(ConversationActivity.TAB_PATIENT);
-        tabhost.setCurrentTabByTag("main_tab_conversation");
 	}
 }

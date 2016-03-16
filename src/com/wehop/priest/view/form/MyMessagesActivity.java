@@ -73,20 +73,20 @@ public class MyMessagesActivity extends ActivityEx {
                 	break;
                 case AddAcceptNotify.TYPE_ADDACCEPT:
                 	Intent intent2 = new Intent(MyMessagesActivity.this, TextActivity.class);
-                	intent2.putExtra("title", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")");
-                	intent2.putExtra("content", "接受了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
+                	intent2.putExtra("title", "通知");
+                	intent2.putExtra("content", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")接受了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
                 	MyMessagesActivity.this.startActivity(intent2);
                 	break;
                 case AddRefuseNotify.TYPE_ADDREFUSE:
                 	Intent intent3 = new Intent(MyMessagesActivity.this, TextActivity.class);
-                	intent3.putExtra("title", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")");
-                	intent3.putExtra("content", "拒绝了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
+                	intent3.putExtra("title", "通知");
+                	intent3.putExtra("content", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")拒绝了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
                 	MyMessagesActivity.this.startActivity(intent3);
                 	break;
                 case BeRemovedNotify.TYPE_BEREMOVE:
                 	Intent intent9 = new Intent(MyMessagesActivity.this, TextActivity.class);
-                	intent9.putExtra("title", ((BeRemovedNotify) notify).targetNickname + "(" + ((BeRemovedNotify) notify).targetPhone + ")");
-                	intent9.putExtra("content", "把你从好友列表中删除");
+                	intent9.putExtra("title", "通知");
+                	intent9.putExtra("content", ((BeRemovedNotify) notify).targetNickname + "(" + ((BeRemovedNotify) notify).targetPhone + ")把你从好友列表中删除");
                     MyMessagesActivity.this.startActivity(intent9);
                 	break;
                 }

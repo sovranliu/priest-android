@@ -88,7 +88,6 @@ public class AddFriendActivity extends OnlyUserActivity {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							Toast.makeText(AddFriendActivity.this, "添加请求已发送", Toast.LENGTH_LONG).show();
 							AddFriendActivity.this.finish();
 						}
 					}

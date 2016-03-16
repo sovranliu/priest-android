@@ -127,24 +127,16 @@
                 android:text="姓  名"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
-			<ImageView
-				android:id="@+id/userinfo_image_nickname"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
 			<TextView
 			    android:id="@+id/userinfo_text_nickname"
 			    android:layout_width="wrap_content"
 			    android:layout_height="40dp"
 			    android:layout_centerVertical="true"
 			    android:layout_marginRight="10dp"
-			    android:layout_toLeftOf="@id/userinfo_image_nickname"
 			    android:gravity="right|center"
 			    android:text="一个用户"
 			    android:textColor="@color/grey_text"
+			    android:layout_alignParentRight="true"
 			    android:textSize="16sp" />
 		</RelativeLayout>
 		<ImageView
@@ -172,21 +164,13 @@
                 android:text="头  衔"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
-			<ImageView
-				android:id="@+id/userinfo_image_title"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-				android:layout_centerVertical="true"
-                android:layout_marginRight="6dp"
-				android:background="@drawable/arrow_right" />
 			<TextView
 			    android:id="@+id/userinfo_text_title"
 			    android:layout_width="wrap_content"
 			    android:layout_height="40dp"
 			    android:layout_centerVertical="true"
 			    android:layout_marginRight="10dp"
-			    android:layout_toLeftOf="@id/userinfo_image_title"
+			    android:layout_alignParentRight="true"
 			    android:gravity="right|center"
 			    android:text="头衔"
 			    android:textColor="@color/grey_text"

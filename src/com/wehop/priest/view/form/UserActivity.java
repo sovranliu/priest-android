@@ -68,7 +68,7 @@ public class UserActivity extends FragmentEx {
 		if(null == Me.instance) {
 			btnPhoto.setImageResource(R.drawable.user_photo_null);
 		}
-		else if(!Text.isBlank(Me.instance.phone)) {
+		else if(!Text.isBlank(Me.instance.photo)) {
             Host.doImage("image", new ImageResponse(Me.instance.photo) {
 				@Override
 				public void onFinished(Bitmap content) {

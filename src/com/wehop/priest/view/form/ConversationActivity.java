@@ -5,15 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -126,11 +128,14 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				ConversationActivity.this.getActivity().startActivity(intent);
 			}
 		});
-		txtKeyword.setOnKeyListener(new OnKeyListener() {
+		txtKeyword.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) { }
+			@Override
+			public void afterTextChanged(Editable s) {
 				refresh();
-				return false;
 			}
 		});
 		imgTabDoctor.setOnClickListener(new OnClickListener() {
@@ -193,23 +198,33 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 						}
 						else if(1 == index) {
 							if(TAB_DOCTOR == tab) {
-								Host.doCommand("remove", new JSONResponse(ConversationActivity.this.getActivity()) {
-									@Override
-									public void onFinished(JSONVisitor content) {
-										if(null == content || content.getInteger("code", 0) <= 0) {
-											return;
-										}
-										Me.instance.refreshDoctor(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
-											@Override
-											public void on(Boolean result) {
-												if(!result) {
-													return;
+								new AlertDialog.Builder(ConversationActivity.this.getActivity()).setTitle("确认删除吗？")  
+								.setIcon(android.R.drawable.ic_dialog_info)  
+								.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+										@Override  
+										public void onClick(DialogInterface dialog, int which) {
+											Host.doCommand("remove", new JSONResponse(ConversationActivity.this.getActivity()) {
+												@Override
+												public void onFinished(JSONVisitor content) {
+													if(null == content || content.getInteger("code", 0) <= 0) {
+														return;
+													}
+													Me.instance.refreshDoctor(ConversationActivity.this.getActivity(),  new IEventable<Boolean>() {
+														@Override
+														public void on(Boolean result) {
+															if(!result) {
+																return;
+															}
+															ConversationActivity.this.refreshDoctor();
+														}
+													});
 												}
-												ConversationActivity.this.refreshDoctor();
-											}
-										});
-									}
-								}, Me.instance.token, Me.instance.doctors.get(position).id);
+											}, Me.instance.token, Me.instance.doctors.get(position).id);
+										}  
+								}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+							        @Override  
+							        public void onClick(DialogInterface dialog, int which) {}  
+								}).show();
 							}
 							else if(TAB_PATIENT == tab) {
 								Host.doCommand("remove", new JSONResponse(ConversationActivity.this.getActivity()) {
@@ -360,7 +375,14 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		for(Doctor doctor : Me.instance.doctors) {
 			String keyword = txtKeyword.getText().toString();
 			if(!Text.isBlank(keyword)) {
-				if(!keyword.equals(doctor.name) && !keyword.equals(doctor.relation)) {
+				boolean sentry = false;
+				if(null != doctor.name && doctor.name.contains(keyword)) {
+					sentry = true;
+				}
+				if(null != doctor.relation && doctor.relation.contains(keyword)) {
+					sentry = true;
+				}
+				if(!sentry) {
 					continue;
 				}
 			}
