@@ -6,13 +6,13 @@ import com.wehop.priest.business.user.User;
 /**
  * 好友添加反馈通知
  */
-public class AddResponseNotify extends Notify {
+public class AddAcceptNotify extends Notify {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 通知类型
 	 */
-	public final static int TYPE_ADDRESPONSE = 2;
+	public final static int TYPE_ADDACCEPT = 5;
 
 	/**
 	 * 反馈者手机号码
@@ -30,10 +30,6 @@ public class AddResponseNotify extends Notify {
 	 * 请求者欲添加的关系
 	 */
 	public String relation;
-	/**
-	 * 反馈者是否接受添加
-	 */
-	public boolean result;
 
 
 	/**
@@ -43,7 +39,7 @@ public class AddResponseNotify extends Notify {
 	 */
 	@Override
 	public int type() {
-		return TYPE_ADDRESPONSE;
+		return TYPE_ADDACCEPT;
 	}
 
     /**
@@ -73,7 +69,6 @@ public class AddResponseNotify extends Notify {
     	if(null == relation) {
     		relation = "";
     	}
-    	result = data.getBoolean("result", false);
     	return true;
     }
 }

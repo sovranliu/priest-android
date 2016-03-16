@@ -44,6 +44,11 @@ public class AddRequestActivity extends OnlyUserActivity {
             finish();
             return;
         }
+        if(model.hasRead) {
+        	btnRefuse.setText("已处理");
+        	btnRefuse.setEnabled(false);
+        	btnAccept.setVisibility(View.GONE);
+        }
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +68,7 @@ public class AddRequestActivity extends OnlyUserActivity {
 						}
 						AddRequestActivity.this.finish();
 					}
-                }, Me.instance.token, false, model.id);
+                }, Me.instance.token, false, model.requestId);
             }
         });
         btnAccept.setOnClickListener(new View.OnClickListener() {
@@ -73,25 +78,21 @@ public class AddRequestActivity extends OnlyUserActivity {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							if(1 == content.getInteger("code")) {
-								Me.instance.refreshDoctor(AddRequestActivity.this, new IEventable<Boolean>() {
-									@Override
-									public void on(Boolean data) {
-										AddRequestActivity.this.finish();
-									}
-								});
-							}
-							else if(2 == content.getInteger("code")) {
-								Me.instance.refreshPatient(AddRequestActivity.this, new IEventable<Boolean>() {
-									@Override
-									public void on(Boolean data) {
-										AddRequestActivity.this.finish();
-									}
-								});
-							}
+							Me.instance.refreshDoctor(AddRequestActivity.this, new IEventable<Boolean>() {
+								@Override
+								public void on(Boolean data) {
+									AddRequestActivity.this.finish();
+								}
+							});
+//							Me.instance.refreshPatient(AddRequestActivity.this, new IEventable<Boolean>() {
+//								@Override
+//								public void on(Boolean data) {
+//									AddRequestActivity.this.finish();
+//								}
+//							});
 						}
 					}
-                }, Me.instance.token, true, model.id);
+                }, Me.instance.token, true, model.requestId);
             }
         });
     }

@@ -18,7 +18,8 @@
 		    android:layout_gravity="center"
 		    android:adjustViewBounds="true"
 		    android:background="@drawable/user_photo_null"
-		    android:padding="0dip" />
+		    android:padding="0dip"
+		    android:scaleType="fitXY" />
         <TextView
             android:id="@+id/user_label_caption"
             android:layout_width="wrap_content"

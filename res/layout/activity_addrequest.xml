@@ -79,7 +79,7 @@
 	<ImageView
 		android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_below="@id/addrequest_button_accept"
+        android:layout_below="@id/addrequest_button_refuse"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
 		android:background="@drawable/divider" />

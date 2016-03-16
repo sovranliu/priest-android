@@ -12,10 +12,10 @@
         android:focusable="true">
 		<ImageView
 		    android:id="@+id/conversation_image_scan"
-			android:layout_width="30dp"
-			android:layout_height="30dp"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
 			android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="0dp"
 			android:layout_centerVertical="true"
 			android:scaleType="centerInside"
 			android:src="@drawable/icon_scan" />
@@ -30,13 +30,15 @@
 			android:textSize="18sp" />
 		<ImageView
 		    android:id="@+id/conversation_image_add"
-			android:layout_width="20dp"
-			android:layout_height="20dp"
+			android:layout_width="40dp"
+			android:layout_height="40dp"
 			android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="0dp"
 			android:layout_centerVertical="true"
 			android:scaleType="fitXY"
-			android:src="@drawable/add" />
+			android:src="@drawable/add"
+			android:focusable="true"
+			android:focusableInTouchMode="true" />
     </RelativeLayout>
 	<RelativeLayout
         android:id="@+id/conversation_layout_search"

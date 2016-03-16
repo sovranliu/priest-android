@@ -88,13 +88,13 @@
 	<Button
 		android:id="@+id/login_button_login"
         android:layout_width="match_parent"
-		android:layout_height="60dp"
+		android:layout_height="50dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
 		android:layout_below="@id/login_layout_password"
 		android:text="登  录"
-		android:textColor="@color/green"
+		android:textColor="@color/grey_text"
 		android:background="@drawable/button_white">
 	</Button>
 </RelativeLayout>

@@ -1,35 +1,22 @@
 package com.wehop.priest.business.structure.notify;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
-import com.wehop.priest.business.user.User;
 
 /**
  * 好友删除反馈通知
  */
-public class BeRemovedNotify extends Notify {
+public class BeSelectedNotify extends Notify {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 通知类型
 	 */
-	public final static int TYPE_BEREMOVE = 9;
+	public final static int TYPE_BESELECTED = 10;
 
 	/**
 	 * 反馈者手机号码
 	 */
 	public String targetPhone = null;
-	/**
-	 * 反馈者昵称
-	 */
-	public String targetNickname = null;
-	/**
-	 * 反馈者身份类型
-	 */
-	public String targetCategory = null;
-	/**
-	 * 反馈者在接收者里的关系
-	 */
-	public String relation;
 
 
 	/**
@@ -39,7 +26,7 @@ public class BeRemovedNotify extends Notify {
 	 */
 	@Override
 	public int type() {
-		return TYPE_BEREMOVE;
+		return TYPE_BESELECTED;
 	}
 
     /**
@@ -56,18 +43,6 @@ public class BeRemovedNotify extends Notify {
     	targetPhone = data.getString("targetPhone");
     	if(null == targetPhone) {
     		targetPhone = "";
-    	}
-    	targetNickname = data.getString("targetNickname");
-    	if(null == targetNickname) {
-    		targetNickname = "";
-    	}
-    	targetCategory = data.getString("targetCategory");
-    	if(null == targetCategory) {
-    		targetCategory = User.CATEGORY_DOCTOR;
-    	}
-    	relation = data.getString("relation");
-    	if(null == relation) {
-    		relation = "";
     	}
     	return true;
     }

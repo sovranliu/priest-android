@@ -35,6 +35,6 @@
 		    android:layout_centerVertical="true"
 			android:layout_alignParentRight="true"
         	android:layout_marginRight="20dp"
-		    android:src="@drawable/arrow_right" />
+		    android:src="@drawable/arrow_right_grey_wide" />
 	</RelativeLayout>
 </RelativeLayout>

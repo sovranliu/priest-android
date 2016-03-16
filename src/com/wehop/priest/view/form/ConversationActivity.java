@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -172,6 +173,9 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		OnItemLongClickListener longClickListener = new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+				if(TAB_PATIENT == tab) {
+					return true;
+				}
 				GeneralHelper.showSelector(ConversationActivity.this.getActivity(), new IEventable<Integer>() {
 					@Override
 					public void on(Integer index) {
@@ -356,7 +360,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		for(Doctor doctor : Me.instance.doctors) {
 			String keyword = txtKeyword.getText().toString();
 			if(!Text.isBlank(keyword)) {
-				if(!doctor.nickname.equals(keyword) && !doctor.relation.equals(keyword)) {
+				if(!keyword.equals(doctor.name) && !keyword.equals(doctor.relation)) {
 					continue;
 				}
 			}
@@ -370,12 +374,13 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(Bitmap content) {
+						content = GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4);
 						((Map<String, Object>) tag).put("photo", content);
 						((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
 					}
 				}, doctor.photo);
 			}
-			map.put("name", doctor.nickname);
+			map.put("name", doctor.name);
 			map.put("tip", doctor.unreadMessageCount());
 			doctorList.add(map);
 		}
@@ -409,6 +414,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(Bitmap content) {
+						content = GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4);
 						((Map<String, Object>) tag).put("photo", content);
 						((SimpleAdapter) listPatient.getAdapter()).notifyDataSetChanged();
 					}

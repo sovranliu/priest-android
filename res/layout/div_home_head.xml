@@ -6,7 +6,7 @@
     <com.wehop.priest.view.control.ScrollWebView
         android:id="@+id/home_browser"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="300dp"
         android:layout_alignParentLeft="true"
 		android:layout_alignParentTop="true"
 		android:scrollbars="none" />

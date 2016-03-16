@@ -4,8 +4,8 @@ import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.slfuture.pluto.etc.Version;
 import com.slfuture.pluto.view.annotation.ResourceView;
+import com.slfuture.pluto.view.component.ActivityEx;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,7 +15,7 @@ import android.widget.TextView;
  * 关于界面
  */
 @ResourceView(id = R.layout.activity_about)
-public class AboutActivity extends Activity {
+public class AboutActivity extends ActivityEx {
 	@ResourceView(id = R.id.about_image_close)
 	public ImageView imgClose;
 	@ResourceView(id = R.id.about_label_version)

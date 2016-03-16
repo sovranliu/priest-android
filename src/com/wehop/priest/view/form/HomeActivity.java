@@ -294,6 +294,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		if(listNews.getHeaderViewsCount() > 0) {
 			return;
 		}
+		animRight = new RotateAnimation(-30, 30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animRight.setDuration(1000);
+        animRight.setAnimationListener(listener);
+		animLeft = new RotateAnimation(30f, -30f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f); 
+		animLeft.setDuration(1000);
+		animLeft.setAnimationListener(listener);
 		View viewHead = LayoutInflater.from(this.getActivity()).inflate(R.layout.div_home_head, null);
 		listNews.addHeaderView(viewHead);
 		btnSearch.getBackground().setAlpha(200);

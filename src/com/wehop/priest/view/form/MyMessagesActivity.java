@@ -14,8 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
+import com.wehop.priest.business.structure.notify.AddRefuseNotify;
 import com.wehop.priest.business.structure.notify.AddRequestNotify;
-import com.wehop.priest.business.structure.notify.AddResponseNotify;
+import com.wehop.priest.business.structure.notify.AddAcceptNotify;
 import com.wehop.priest.business.structure.notify.BeRemovedNotify;
 import com.wehop.priest.business.structure.notify.Notify;
 import com.slfuture.pluto.communication.Host;
@@ -70,16 +71,17 @@ public class MyMessagesActivity extends ActivityEx {
                 	intent1.putExtra("message", notify);
                     MyMessagesActivity.this.startActivity(intent1);
                 	break;
-                case AddResponseNotify.TYPE_ADDRESPONSE:
+                case AddAcceptNotify.TYPE_ADDACCEPT:
                 	Intent intent2 = new Intent(MyMessagesActivity.this, TextActivity.class);
-                	intent2.putExtra("title", ((AddResponseNotify) notify).targetNickname + "(" + ((AddResponseNotify) notify).targetPhone + ")");
-                	if(((AddResponseNotify) notify).result) {
-                		intent2.putExtra("content", "接受了您的添加为 " + ((AddResponseNotify) notify).relation + " 的请求");
-                    }
-                	else {
-                		intent2.putExtra("content", "拒绝了您的添加为 " + ((AddResponseNotify) notify).relation + " 的请求");
-                    }
+                	intent2.putExtra("title", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")");
+                	intent2.putExtra("content", "接受了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
                 	MyMessagesActivity.this.startActivity(intent2);
+                	break;
+                case AddRefuseNotify.TYPE_ADDREFUSE:
+                	Intent intent3 = new Intent(MyMessagesActivity.this, TextActivity.class);
+                	intent3.putExtra("title", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")");
+                	intent3.putExtra("content", "拒绝了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
+                	MyMessagesActivity.this.startActivity(intent3);
                 	break;
                 case BeRemovedNotify.TYPE_BEREMOVE:
                 	Intent intent9 = new Intent(MyMessagesActivity.this, TextActivity.class);
@@ -114,8 +116,8 @@ public class MyMessagesActivity extends ActivityEx {
 		            		dataList.add(notify);
 	            		}
 	            	}
-	            	else if(AddResponseNotify.TYPE_ADDRESPONSE == item.getInteger("type", 0)) {
-	            		AddResponseNotify notify = new AddResponseNotify();
+	            	else if(AddAcceptNotify.TYPE_ADDACCEPT == item.getInteger("type", 0)) {
+	            		AddAcceptNotify notify = new AddAcceptNotify();
 	            		if(notify.parse(item)) {
 		            		dataList.add(notify);
 	            		}
@@ -186,7 +188,7 @@ public class MyMessagesActivity extends ActivityEx {
             if(AddRequestNotify.TYPE_ADDREQUEST == model.type()) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_1);
             }
-            else if(AddResponseNotify.TYPE_ADDRESPONSE == model.type()) {
+            else if(AddAcceptNotify.TYPE_ADDACCEPT == model.type()) {
             	viewHolder.imgIcon.setImageResource(R.drawable.icon_notify_2);
             }
 			else if(BeRemovedNotify.TYPE_BEREMOVE == model.type()) {

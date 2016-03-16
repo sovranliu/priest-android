@@ -42,6 +42,7 @@
     		android:layout_height="wrap_content"
     		android:gravity="bottom"
     		android:layout_gravity="bottom"
+    		android:paddingTop="5dp"
     		android:background="@color/grey_bg">
     		<RadioButton 
     			android:id="@+id/main_tab_home"
@@ -53,7 +54,7 @@
     			style="@style/main_tab" />
     		<RadioButton
     			android:id="@+id/main_tab_conversation"
-				android:text="通信录"
+				android:text="通讯录"
 				android:textColor="@color/grey_text"
     			android:layout_marginTop="0dip"
     			android:background="@color/grey_bg"

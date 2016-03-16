@@ -11,6 +11,7 @@ import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.List;
+import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
@@ -22,8 +23,9 @@ import com.slfuture.pretty.im.core.IReactor;
 import com.slfuture.pretty.im.view.form.SingleChatActivity;
 import com.wehop.priest.Program;
 import com.wehop.priest.business.core.IMeListener;
-import com.wehop.priest.business.structure.notify.AddResponseNotify;
+import com.wehop.priest.business.structure.notify.AddAcceptNotify;
 import com.wehop.priest.business.structure.notify.BeRemovedNotify;
+import com.wehop.priest.business.structure.notify.BeSelectedNotify;
 import com.wehop.priest.business.user.Doctor;
 import com.wehop.priest.business.user.Patient;
 import com.wehop.priest.business.user.User;
@@ -53,10 +55,6 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 */
 	public String token = null;
 	/**
-	 * 姓名
-	 */
-	public String name = null;
-	/**
 	 * 医生列表
 	 */
 	public List<Doctor> doctors = new List<Doctor>();
@@ -64,6 +62,10 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * 病人列表
 	 */
 	public List<Patient> patients = new List<Patient>();
+	/**
+	 * 最近联系人
+	 */
+	public Table<String, Bitmap> contacts = new Table<String, Bitmap>();
 
 	/**
 	 * 实例
@@ -292,6 +294,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * 保存
 	 */
 	public void save() throws IOException {
+		contacts = new Table<String, Bitmap>();
 		Serial.restore(this, file());
 	}
 
@@ -402,24 +405,37 @@ public class Me extends Doctor implements Serializable, IReactor {
 
 	@Override
 	public Bitmap getPhoto(String userId) {
-		if(id.equals(userId)) {
-			return photo();
+		if(null == contacts) {
+			contacts = new Table<String, Bitmap>();
 		}
-		User user = fetchUserById(userId);
-		if(null == user) {
-			return null;
+		Bitmap cache = contacts.get(userId);
+		if(null != cache) {
+			return cache;
 		}
-		return user.photo();
+		if(this.imId.equals(userId)) {
+			cache = photo();
+		}
+		User user = fetchUserByIM(userId);
+		if(null != user) {
+			cache = user.photo();
+		}
+		if(null != cache) {
+			contacts.put(userId, cache);
+		}
+		return cache;
 	}
 
 	@Override
 	public String getName(String userId) {
-		if(id.equals(userId)) {
+		if(imId.equals(userId)) {
 			return nickname;
 		}
-		User user = fetchUserById(userId);
+		User user = fetchUserByIM(userId);
 		if(null == user) {
 			return null;
+		}
+		if(null != user.name) {
+			return user.name;
 		}
 		return user.nickname;
 	}
@@ -443,10 +459,12 @@ public class Me extends Doctor implements Serializable, IReactor {
 
 	@Override
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
-		Reminder.ringtone(Program.application);
 		Integer type = (Integer) data.get("type");
 		String source = (String) data.get("source");
-		if("send".equals(action)) {
+		if("systemMessage".equals(action)) {
+			Runtime.hasUnreadMessage = true;
+		}
+		else if("send".equals(action)) {
 			JSONObject object = new JSONObject();
 			object.put("action", new JSONString("send"));
 			object.put("from", new JSONString(from));
@@ -455,10 +473,23 @@ public class Me extends Doctor implements Serializable, IReactor {
 			Host.doCommand("Hit", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) { }
-			}, "user_input_content=" + object.toString());
+			}, "doctor-platform-onlineDiag", object.toString());
 			return;
 		}
-		if(null != type && (AddResponseNotify.TYPE_ADDRESPONSE == type || BeRemovedNotify.TYPE_BEREMOVE == type)) {
+		if(null != type && BeSelectedNotify.TYPE_BESELECTED == type) {
+			Me.instance.refreshPatient(Program.application, new IEventable<Boolean>() {
+				@Override
+				public void on(Boolean result) {
+					if(!result) {
+						return;
+					}
+					Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
+				}
+			});
+			Reminder.vibrate(Program.application);
+			return;
+		}
+		if(null != type && (AddAcceptNotify.TYPE_ADDACCEPT == type || BeRemovedNotify.TYPE_BEREMOVE == type)) {
 			if(User.CATEGORY_DOCTOR.equals(source)) {
 				Me.instance.refreshDoctor(Program.application, new IEventable<Boolean>() {
 					@Override
@@ -484,6 +515,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 			Reminder.vibrate(Program.application);
 			return;
 		}
+		Reminder.ringtone(Program.application);
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
 	}
 }

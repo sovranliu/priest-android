@@ -39,7 +39,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/performance.html?token
 	<protocol name="Hit">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/counting-platform-web/rest/appHit#[1]
+http://beta.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -197,7 +197,7 @@ doctor-platform-web/rest/doctor/removeFriend#token=[1]&userGlobalId=[2]
     <protocol name="doctorList">
         <path>
         <![CDATA[
-doctor-platform-web/rest/doctor/doctorList#token=[1]
+doctor-platform-web/rest/doctor/doctorList?token=[1]
         ]]>
         </path>
 		<mock>
@@ -235,7 +235,7 @@ doctor-platform-web/rest/doctor/doctorList#token=[1]
     <protocol name="patientList">
         <path>
         <![CDATA[
-doctor-platform-web/rest/doctor/patientList#token=[1]
+doctor-platform-web/rest/doctor/patientList?token=[1]
         ]]>
         </path>
 		<mock>
@@ -436,23 +436,37 @@ doctor-platform-web/rest/doctor/myMessage?token=[1]
         },
         {
             "id": 1234,
-            "type": 2,
+            "type": 5,
             "hasRead": false,
             "title": "添加结果",
-            "description": "刘院长(15021819287)申请添加你为父亲",
+            "description": "刘院长(15021819287)同意添加你为父亲",
             "time": "2015-09-10 05:12:20",
             "isRead": false,
             "info": {
                 "targetPhone": "139****0987",
                 "targetNickname": "刘德龙",
                 "applicantCategory": "doctor",
-                "relation": "小王",
-                "result":true
+                "relation": "小王"
+            }
+        },
+        {
+            "id": 1236,
+            "type": 6,
+            "hasRead": false,
+            "title": "添加结果",
+            "description": "刘院长(15021819287)拒绝添加你为父亲",
+            "time": "2015-09-10 05:12:20",
+            "isRead": false,
+            "info": {
+                "targetPhone": "139****0987",
+                "targetNickname": "刘德龙",
+                "applicantCategory": "doctor",
+                "relation": "小王"
             }
         },
         {
             "id": 1235,
-            "type": 3,
+            "type": 9,
             "hasRead": false,
             "title": "好友删除",
             "description": "刘院长(15021819287)将你删除",

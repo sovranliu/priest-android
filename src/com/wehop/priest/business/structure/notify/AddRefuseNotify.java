@@ -4,15 +4,15 @@ import com.slfuture.carrie.base.json.JSONVisitor;
 import com.wehop.priest.business.user.User;
 
 /**
- * 好友删除反馈通知
+ * 好友添加反馈通知
  */
-public class BeRemovedNotify extends Notify {
+public class AddRefuseNotify extends Notify {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 通知类型
 	 */
-	public final static int TYPE_BEREMOVE = 9;
+	public final static int TYPE_ADDREFUSE = 6;
 
 	/**
 	 * 反馈者手机号码
@@ -27,7 +27,7 @@ public class BeRemovedNotify extends Notify {
 	 */
 	public String targetCategory = null;
 	/**
-	 * 反馈者在接收者里的关系
+	 * 请求者欲添加的关系
 	 */
 	public String relation;
 
@@ -39,7 +39,7 @@ public class BeRemovedNotify extends Notify {
 	 */
 	@Override
 	public int type() {
-		return TYPE_BEREMOVE;
+		return TYPE_ADDREFUSE;
 	}
 
     /**

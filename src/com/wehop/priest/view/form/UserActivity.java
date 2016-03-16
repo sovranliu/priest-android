@@ -3,6 +3,10 @@ package com.wehop.priest.view.form;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import com.slfuture.carrie.base.text.Text;
+import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.response.ImageResponse;
+import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
 import com.slfuture.pretty.general.view.form.BrowserActivity;
@@ -15,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
@@ -58,13 +63,24 @@ public class UserActivity extends FragmentEx {
 			txtCaption.setText("点击登录");
 		}
 		else {
-			txtCaption.setText(Me.instance.phone);
+			txtCaption.setText(Me.instance.name);
 		}
 		if(null == Me.instance) {
-			btnPhoto.setBackgroundResource(R.drawable.user_photo_null);
+			btnPhoto.setImageResource(R.drawable.user_photo_null);
+		}
+		else if(!Text.isBlank(Me.instance.phone)) {
+            Host.doImage("image", new ImageResponse(Me.instance.photo) {
+				@Override
+				public void onFinished(Bitmap content) {
+					if(null == content) {
+						return;
+					}
+					btnPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(content, 200, 200), Color.WHITE, 4));
+				}
+            }, Me.instance.photo);
 		}
 		else {
-			btnPhoto.setBackgroundResource(R.drawable.user_photo_default);
+			btnPhoto.setImageResource(R.drawable.user_photo_default);
 		}
 	}
 
@@ -132,7 +148,7 @@ public class UserActivity extends FragmentEx {
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				if(0 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
-					intent.putExtra("HistoryPage", Me.instance.token);
+					intent.putExtra("url", Host.fetchURL("HistoryPage", Me.instance.token));
 					UserActivity.this.startActivity(intent);
 					return;
 				}

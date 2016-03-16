@@ -45,7 +45,7 @@ public class UserInfoActivity extends ActivityEx {
 	public TextView labNickname;
 	@ResourceView(id = R.id.userinfo_layout_title)
 	public View viewTitle;
-	@ResourceView(id = R.id.userinfo_label_title)
+	@ResourceView(id = R.id.userinfo_text_title)
 	public TextView labTitle;
 	@ResourceView(id = R.id.userinfo_image_qcode)
 	public ImageView imgQCode;
@@ -99,7 +99,7 @@ public class UserInfoActivity extends ActivityEx {
             }, Me.instance.photo);
 		}
 		labPhone.setText(Me.instance.phone);
-		labNickname.setText(Me.instance.nickname);
+		labNickname.setText(Me.instance.name);
 		labTitle.setText(Me.instance.title);
 		imgQCode.setOnClickListener(new View.OnClickListener() {
 			@Override

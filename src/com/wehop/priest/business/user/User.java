@@ -50,6 +50,10 @@ public class User implements Serializable {
 	 * 关系名
 	 */
 	public String relation;
+	/**
+	 * 真实姓名
+	 */
+	public String name;
 
 
 	/**
@@ -63,7 +67,7 @@ public class User implements Serializable {
 		}
 		File file = new File(Host.storage + Host.parseFileNameWithURL(photo));
 		if(file.exists()) {
-			return GraphicsHelper.decodeFile(file);
+			return GraphicsHelper.makeCycleImage(GraphicsHelper.decodeFile(file), 200, 200);
 		}
 		return null;
 	}
@@ -92,6 +96,7 @@ public class User implements Serializable {
 		nickname = visitor.getString("nickName");
 		photo = visitor.getString("photo");
 		imId = visitor.getString("imUsername");
+		name = visitor.getString("name");
 		return true;
 	}
 
