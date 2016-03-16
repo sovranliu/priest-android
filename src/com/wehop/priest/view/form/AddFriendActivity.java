@@ -77,7 +77,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 				int mode = 1;
 				if(Text.isBlank(userId)) {
 					mode = 0;
-					Pattern pattern = Pattern.compile("^[1][358][0-9]{9}$");
+					Pattern pattern = Pattern.compile("^[1][34578][0-9]{9}$");
 					Matcher matcher = pattern.matcher(txtPhone.getText().toString());
 					if(!matcher.matches()) {
 						Toast.makeText(AddFriendActivity.this, "手机号码格式不正确", Toast.LENGTH_LONG).show();

@@ -422,7 +422,14 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 		for(Patient patient : Me.instance.patients) {
 			String keyword = txtKeyword.getText().toString();
 			if(!Text.isBlank(keyword)) {
-				if(!patient.nickname.equals(keyword) && !patient.relation.equals(keyword)) {
+				boolean sentry = false;
+				if(null != patient.nickname && patient.nickname.contains(keyword)) {
+					sentry = true;
+				}
+				if(null != patient.relation && patient.relation.contains(keyword)) {
+					sentry = true;
+				}
+				if(!sentry) {
 					continue;
 				}
 			}
