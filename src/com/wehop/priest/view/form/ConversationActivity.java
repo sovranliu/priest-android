@@ -58,6 +58,10 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 	@ResourceView(id = R.id.search_text_keword)
 	public EditText txtKeyword;
 
+	@ResourceView(id = R.id.conversation_layout_doctor)
+	public View viewTabDoctor;
+	@ResourceView(id = R.id.conversation_layout_patient)
+	public View viewTabPatient;
 	@ResourceView(id = R.id.conversation_image_doctor)
 	public ImageView imgTabDoctor;
 	@ResourceView(id = R.id.conversation_image_patient)
@@ -140,13 +144,13 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				refresh();
 			}
 		});
-		imgTabDoctor.setOnClickListener(new OnClickListener() {
+		viewTabDoctor.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				selectTab(TAB_DOCTOR);
 			}
 		});
-		imgTabPatient.setOnClickListener(new OnClickListener() {
+		viewTabPatient.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				selectTab(TAB_PATIENT);

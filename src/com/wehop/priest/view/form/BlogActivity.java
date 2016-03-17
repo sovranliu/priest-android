@@ -9,6 +9,7 @@ import com.wehop.priest.business.Me;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 /**
  * 圈子界面
@@ -28,6 +29,12 @@ public class BlogActivity extends FragmentEx {
     	super.onViewCreated(view, savedInstanceState);
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+		browser.setWebViewClient(new WebViewClient() {
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {  
+				view.loadUrl(url);  
+				return true;  
+			}
+        }); 
     }
 
 	/**

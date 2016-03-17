@@ -5,8 +5,8 @@
     android:orientation="horizontal">  
     <ImageView
         android:id="@+id/listitem_user_image_icon"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginBottom="6dp"
