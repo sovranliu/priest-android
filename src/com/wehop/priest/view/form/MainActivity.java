@@ -1,16 +1,15 @@
 package com.wehop.priest.view.form;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TabHost;
 
 import com.wehop.priest.R;
 import com.wehop.priest.business.core.IMeListener;
+import com.slfuture.pluto.etc.Controller;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentActivityEx;
 
@@ -69,19 +68,18 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 
 	@Override
 	public void onConflict() {
-		AlertDialog.Builder builder = new Builder(MainActivity.this);
-		builder.setMessage("帐号在其他设备登录");
-		builder.setTitle("提示");
-		builder.setPositiveButton("确认", new OnClickListener() {
+		Toast.makeText(MainActivity.this, "账号在其他设备上登录，程序即将退出", Toast.LENGTH_LONG).show();
+		Controller.doDelay(new Runnable() {
 			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.cancel();
+			public void run() {
 				MainActivity.this.finish();
+				Intent intenn = new Intent();  
+				intenn.setAction("android.intent.action.MAIN");  
+				intenn.addCategory("android.intent.category.HOME");  
+				MainActivity.this.startActivity(intenn);
 				android.os.Process.killProcess(android.os.Process.myPid());
-				System.exit(0);
-		   }
-		});
-		builder.show();
+			}
+		}, 3000);
 	}
 
 	@Override

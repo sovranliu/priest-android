@@ -69,11 +69,8 @@ public class Notify implements Serializable {
     		description = "";
     	}
     	hasRead = data.getBoolean("hasRead", true);
-    	if(null != data.getString("time")) {
-    		try {
-    			time = DateTime.parse(data.getString("time"));
-    		}
-        	catch (ParseException e) { }
+    	if(0 != data.getLong("time", 0)) {
+    		time = DateTime.parse(data.getLong("time", 0));
     	}
     	if(null == time) {
     		time = DateTime.now();

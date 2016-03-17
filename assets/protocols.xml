@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<protocols domain="beta.service.wehop.cn" mock="false" storage="priest/image/">
+<protocols domain="ppe.service.wehop.cn" mock="false" storage="priest/image/">
     <!-- 首页顶部H5页面 -->
 	<protocol name="HomePage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/index.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/doctor/html5/index.html?token=[1]
        ]]>
         </url>
     	<mock></mock>
@@ -13,7 +13,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/index.html?token=[1]
 	<protocol name="CalendarPage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/calendar.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/doctor/html5/calendar.html?token=[1]
        ]]>
         </url>
     	<mock></mock>
@@ -22,7 +22,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/calendar.html?token=[1
 	<protocol name="BlogPage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/friends.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/doctor/html5/friends.html?token=[1]
        ]]>
         </url>
     	<mock></mock>
@@ -31,7 +31,16 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/friends.html?token=[1]
 	<protocol name="HistoryPage">
         <url>
         <![CDATA[
-http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/performance.html?token=[1]
+http://cdn.oss.wehop-resources-ppe.wehop.cn/doctor/html5/performance.html?token=[1]
+       ]]>
+        </url>
+    	<mock></mock>
+    </protocol>
+	<!-- 客户服务 -->
+	<protocol name="CustomerPage">
+        <url>
+        <![CDATA[
+http://cdn.oss.wehop-resources-ppe.wehop.cn/doctor/html5/customer.html?token=[1]
        ]]>
         </url>
     	<mock></mock>
@@ -39,7 +48,7 @@ http://cdn.oss.wehop-resources-beta.wehop.cn/doctor/html5/performance.html?token
 	<protocol name="Hit">
 		<url>
 		<![CDATA[
-http://beta.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
+http://ppe.service.wehop.cn/counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>
 		</url>
 		<mock></mock>
@@ -495,6 +504,18 @@ doctor-platform-web/rest/doctor/responseFriend#token=[1]&isResponse=[2]&requestI
 {
     "code": 1
 }
+        ]]>
+        </mock>
+    </protocol>
+    <protocol name="search">
+        <path>
+        <![CDATA[
+user-platform-web/rest/contentSearch?keyword=[1]
+        ]]>
+        </path>
+    <mock>
+        <![CDATA[
+
         ]]>
         </mock>
     </protocol>

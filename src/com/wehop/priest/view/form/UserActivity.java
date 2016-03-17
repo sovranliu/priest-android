@@ -161,6 +161,7 @@ public class UserActivity extends FragmentEx {
 				}
 				else if(1 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
+					intent.putExtra("url", Host.fetchURL("CustomerPage", Me.instance.token));
 					UserActivity.this.startActivity(intent);
 					return;
 				}

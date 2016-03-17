@@ -29,6 +29,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.SimpleAdapter.ViewBinder;
 
 /**
@@ -322,6 +324,11 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			}
 		});
 		browser = (ScrollWebView) viewHead.findViewById(R.id.home_browser);
+		DisplayMetrics metrics = new DisplayMetrics();
+		this.getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+		LayoutParams lp = (LayoutParams) browser.getLayoutParams();
+		lp.height = metrics.widthPixels * 17 / 20;
+		browser.setLayoutParams(lp);
 		imgLeft = (ImageView) viewHead.findViewById(R.id.home_image_left);
 		imgRight = (ImageView) viewHead.findViewById(R.id.home_image_right);
 		imgLeft.setOnClickListener(new View.OnClickListener() {

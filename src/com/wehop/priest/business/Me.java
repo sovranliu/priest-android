@@ -464,6 +464,20 @@ public class Me extends Doctor implements Serializable, IReactor {
 		if("systemMessage".equals(action)) {
 			Runtime.hasUnreadMessage = true;
 		}
+		else if("message".equals(action)) {
+			boolean sentry = false;
+			for(Patient patient : patients) {
+				if(from.equals(patient.imId)) {
+					sentry = true;
+				}
+			}
+			if(!sentry) {
+				refreshPatient(Program.application, new IEventable<Boolean>() {
+					@Override
+					public void on(Boolean event) { }
+				});
+			}
+		}
 		else if("send".equals(action)) {
 			JSONObject object = new JSONObject();
 			object.put("action", new JSONString("send"));
