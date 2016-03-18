@@ -47,10 +47,6 @@ public class User implements Serializable {
 	 */
 	public String imId;
 	/**
-	 * 关系名
-	 */
-	public String relation;
-	/**
 	 * 真实姓名
 	 */
 	public String name;

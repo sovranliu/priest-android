@@ -10,6 +10,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Host;
@@ -433,6 +434,13 @@ public class Me extends Doctor implements Serializable, IReactor {
 		User user = fetchUserByIM(userId);
 		if(null == user) {
 			return null;
+		}
+		if(user instanceof Doctor) {
+			Doctor doctor = (Doctor) user;
+			if(!Text.isBlank(doctor.relation)) {
+				return doctor.relation;
+			}
+			return doctor.name;
 		}
 		if(null != user.name) {
 			return user.name;

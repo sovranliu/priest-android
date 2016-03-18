@@ -12,6 +12,10 @@ public class Doctor extends User {
 	 * 头衔
 	 */
 	public String title;
+	/**
+	 * 关系名
+	 */
+	public String relation;
 
 
 	/**
@@ -24,6 +28,10 @@ public class Doctor extends User {
 			return false;
 		}
 		title = visitor.getString("title");
+		relation = visitor.getString("relation");
+		if(null == relation) {
+			relation = "";
+		}
 		return true;
 	}
 }

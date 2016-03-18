@@ -122,6 +122,12 @@ public class MyMessagesActivity extends ActivityEx {
 		            		dataList.add(notify);
 	            		}
 	            	}
+	            	else if(AddRefuseNotify.TYPE_ADDREFUSE == item.getInteger("type", 0)) {
+	            		AddRefuseNotify notify = new AddRefuseNotify();
+	            		if(notify.parse(item)) {
+		            		dataList.add(notify);
+	            		}
+	            	}
 	            	else if(BeRemovedNotify.TYPE_BEREMOVE == item.getInteger("type", 0)) {
 	            		BeRemovedNotify notify = new BeRemovedNotify();
 	            		if(notify.parse(item)) {

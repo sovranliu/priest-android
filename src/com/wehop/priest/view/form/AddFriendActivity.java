@@ -11,12 +11,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Host;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
+import com.wehop.priest.business.user.Doctor;
 import com.wehop.priest.business.user.User;
 
 /**
@@ -61,8 +63,11 @@ public class AddFriendActivity extends OnlyUserActivity {
 			}
 			txtPhone.setText("●●●●●●●●●●●");
 			txtPhone.setEnabled(false);
-			if(null != user.relation) {
-				txtRelation.setText(user.relation);
+			if(user instanceof Doctor) {
+				Doctor doctor = (Doctor) user;
+				if(null != doctor.relation) {
+					txtRelation.setText(doctor.relation);
+				}
 			}
 		}
 		btnClose.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +93,15 @@ public class AddFriendActivity extends OnlyUserActivity {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {
-							AddFriendActivity.this.finish();
+							Me.instance.refreshDoctor(AddFriendActivity.this, new IEventable<Boolean>() {
+								@Override
+								public void on(Boolean event) {
+									if(!event) {
+										return;
+									}
+									AddFriendActivity.this.finish();
+								}
+							});
 						}
 					}
 				}, Me.instance.token, userId, mode, txtRelation.getText().toString(), txtPhone.getText().toString());
