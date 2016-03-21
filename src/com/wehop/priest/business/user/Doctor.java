@@ -1,6 +1,7 @@
 package com.wehop.priest.business.user;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.text.Text;
 
 /**
  * 医生信息
@@ -17,6 +18,19 @@ public class Doctor extends User {
 	 */
 	public String relation;
 
+	
+	/**
+	 * 获取合适称呼
+	 * 
+	 * @return 合适称呼
+	 */
+	@Override
+	public String nickname() {
+		if(!Text.isBlank(relation)) {
+			return relation;
+		}
+		return super.nickname();
+	}
 
 	/**
 	 * 构建医生

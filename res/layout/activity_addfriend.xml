@@ -113,7 +113,8 @@
 			    android:inputType="text"
 			    android:singleLine="true"
 			    android:textColor="@color/black"
-			    android:textSize="18sp" />
+			    android:textSize="18sp"
+			    android:maxLength="8" />
 		</RelativeLayout>
 		<ImageView 
 	        android:id="@+id/addfriend_divide2"

@@ -404,12 +404,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					}
 				}, doctor.photo);
 			}
-			if(Text.isBlank(doctor.relation)) {
-				map.put("name", doctor.name);
-			}
-			else {
-				map.put("name", doctor.relation);
-			}
+			map.put("name", doctor.nickname());
 			map.put("tip", doctor.unreadMessageCount());
 			doctorList.add(map);
 		}
@@ -456,12 +451,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 					}
 				}, patient.photo);
 			}
-			if(Text.isBlank(patient.nickname)) {
-				map.put("name", patient.name);
-			}
-			else {
-				map.put("name", patient.nickname);
-			}
+			map.put("name", patient.nickname());
 			map.put("tip", patient.unreadMessageCount());
 			patientList.add(map);
 		}

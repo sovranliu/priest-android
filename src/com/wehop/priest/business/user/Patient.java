@@ -20,7 +20,7 @@ public class Patient extends User {
 	 */
 	public int gender = GENDER_UNKNOWN;
 	
-	
+
 	/**
 	 * 解析数据生成用户对象
 	 * 

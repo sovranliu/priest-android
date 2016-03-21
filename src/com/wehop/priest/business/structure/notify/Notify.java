@@ -1,7 +1,6 @@
 package com.wehop.priest.business.structure.notify;
 
 import java.io.Serializable;
-import java.text.ParseException;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.time.DateTime;

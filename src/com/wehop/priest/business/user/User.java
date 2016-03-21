@@ -53,6 +53,21 @@ public class User implements Serializable {
 
 
 	/**
+	 * 获取合适称呼
+	 * 
+	 * @return 合适称呼
+	 */
+	public String nickname() {
+		if(!Text.isBlank(nickname)) {
+			return nickname;
+		}
+		if(!Text.isBlank(name)) {
+			return name;
+		}
+		return "未知";
+	}
+
+	/**
 	 * 获取头像位图
 	 * 
 	 * @return 头像位图
