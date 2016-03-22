@@ -11,7 +11,7 @@ import com.wehop.priest.business.Me;
 import com.wehop.priest.business.structure.notify.AddRequestNotify;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 
@@ -60,7 +60,7 @@ public class AddRequestActivity extends OnlyUserActivity {
         btnRefuse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Host.doCommand("ResponseFriend", new JSONResponse(AddRequestActivity.this) {
+                Networking.doCommand("ResponseFriend", new JSONResponse(AddRequestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {
@@ -74,7 +74,7 @@ public class AddRequestActivity extends OnlyUserActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Host.doCommand("ResponseFriend", new JSONResponse(AddRequestActivity.this) {
+                Networking.doCommand("ResponseFriend", new JSONResponse(AddRequestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {

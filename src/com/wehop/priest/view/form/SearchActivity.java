@@ -21,7 +21,7 @@ import android.widget.SimpleAdapter.ViewBinder;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
@@ -146,7 +146,7 @@ public class SearchActivity extends ActivityEx {
 	 * 加载数据
 	 */
 	public void load() {
-		Host.doCommand("HotKeyword", new JSONResponse(SearchActivity.this) {
+		Networking.doCommand("HotKeyword", new JSONResponse(SearchActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {
@@ -197,7 +197,7 @@ public class SearchActivity extends ActivityEx {
 			}
 		}
 		Intent intent = new Intent(SearchActivity.this, BrowserActivity.class);
-		intent.putExtra("url", Host.fetchURL("search", keyword));
+		intent.putExtra("url", Networking.fetchURL("search", keyword));
 		SearchActivity.this.startActivity(intent);
 		SearchActivity.this.finish();
 	}

@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.wehop.priest.R;
@@ -89,7 +89,7 @@ public class AddFriendActivity extends OnlyUserActivity {
 						return;
 					}
 				}
-				Host.doCommand("add", new JSONResponse(AddFriendActivity.this) {
+				Networking.doCommand("add", new JSONResponse(AddFriendActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null != content && content.getInteger("code") > 0) {

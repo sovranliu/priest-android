@@ -9,7 +9,7 @@ import com.wehop.priest.business.Me;
 import com.wehop.priest.business.core.IMeListener;
 import com.wehop.priest.framework.Storage;
 import com.wehop.priest.view.control.ScrollWebView;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.Response;
@@ -169,10 +169,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
     	}
     	if(!sentry) {
     		if(null != Me.instance) {
-    			browser.loadUrl(Host.fetchURL("HomePage", Me.instance.token));
+    			browser.loadUrl(Networking.fetchURL("HomePage", Me.instance.token));
     		}
     		else {
-    			browser.loadUrl(Host.fetchURL("HomePage", ""));
+    			browser.loadUrl(Networking.fetchURL("HomePage", ""));
     		}
     		if(null == Me.instance) {
         		phone = null;
@@ -193,7 +193,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 加载版本准备升级
 	 */
 	private void loadVersion() {
-		Host.doCommand("readVersion", new CommonResponse<String>() {
+		Networking.doCommand("readVersion", new CommonResponse<String>() {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -225,7 +225,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	 * 加载资讯列表
 	 */
 	private void loadNews() {
-		Host.doCommand("news", new CommonResponse<String>(page) {
+		Networking.doCommand("news", new CommonResponse<String>(page) {
 			@Override
 			public void onFinished(String content) {
 				if(Response.CODE_SUCCESS != code()) {
@@ -260,7 +260,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		            	continue;
 		            }
 		            // 加载图片
-		            Host.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
+		            Networking.doImage("image", new ImageResponse(photoName, newsList.size() - 1) {
 						@Override
 						public void onFinished(Bitmap content) {
 							HashMap<String, Object> map = newsList.get((Integer) tag);
@@ -353,7 +353,7 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 					return;
 				}
 				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
-				intent.putExtra("url", Host.fetchURL("CalendarPage", Me.instance.token));
+				intent.putExtra("url", Networking.fetchURL("CalendarPage", Me.instance.token));
 				HomeActivity.this.getActivity().startActivity(intent);
 			}
 		});

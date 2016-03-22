@@ -19,7 +19,7 @@ import com.wehop.priest.business.structure.notify.AddRequestNotify;
 import com.wehop.priest.business.structure.notify.AddAcceptNotify;
 import com.wehop.priest.business.structure.notify.BeRemovedNotify;
 import com.wehop.priest.business.structure.notify.Notify;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -60,7 +60,7 @@ public class MyMessagesActivity extends ActivityEx {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Notify notify = dataList.get(position);
                 if(!notify.hasRead) {
-                    Host.doCommand("readMessage", new CommonResponse<String>() {
+                    Networking.doCommand("readMessage", new CommonResponse<String>() {
                         @Override
                         public void onFinished(String content) { }
                     }, Me.instance.token, notify.id);
@@ -101,7 +101,7 @@ public class MyMessagesActivity extends ActivityEx {
     }
 
     private void loadData() {
-        Host.doCommand("myMessage", new JSONResponse(MyMessagesActivity.this) {
+        Networking.doCommand("myMessage", new JSONResponse(MyMessagesActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code", 0) <= 0) {

@@ -12,7 +12,7 @@ import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.CommonResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.Version;
@@ -82,7 +82,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * @param callback 回调函数
 	 */
 	public static void login(Context context, String phone, String code, IEventable<Boolean> callback) {
-		Host.doCommand("login", new JSONResponse(context, callback) {
+		Networking.doCommand("login", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -150,7 +150,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 			}
 			else {
 				instance = me;
-				Host.doCommand("check", new JSONResponse(context, callback) {
+				Networking.doCommand("check", new JSONResponse(context, callback) {
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onFinished(JSONVisitor content) {
@@ -212,7 +212,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * @param callback 结果
 	 */
 	public void refreshDoctor(Context context, IEventable<Boolean> callback) {
-		Host.doCommand("doctorList", new JSONResponse(context, callback) {
+		Networking.doCommand("doctorList", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -247,7 +247,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * @param callback 结果
 	 */
 	public void refreshPatient(Context context, IEventable<Boolean> callback) {
-		Host.doCommand("patientList", new JSONResponse(context, callback) {
+		Networking.doCommand("patientList", new JSONResponse(context, callback) {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onFinished(JSONVisitor content) {
@@ -450,7 +450,6 @@ public class Me extends Doctor implements Serializable, IReactor {
 	@Override
 	public void onConflict() {
 		logout();
-		Toast.makeText(Program.application, "账号在其他设备上登录", Toast.LENGTH_LONG).show();
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onConflict();
 	}
 
@@ -481,7 +480,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 			object.put("from", new JSONString(from));
 			object.put("to", new JSONString((String) data.get("to")));
 			object.put("type", new JSONNumber((Integer) data.get("type")));
-			Host.doCommand("Hit", new CommonResponse<String>() {
+			Networking.doCommand("Hit", new CommonResponse<String>() {
 				@Override
 				public void onFinished(String content) { }
 			}, "doctor-platform-onlineDiag", object.toString());

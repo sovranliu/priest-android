@@ -8,7 +8,7 @@ import com.wehop.priest.business.Me;
 import com.wehop.priest.business.Profile;
 import com.wehop.priest.framework.Storage;
 
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.Controller;
@@ -74,7 +74,7 @@ public class LoadActivity extends ActivityEx {
 	 * 引导启动广告
 	 */
 	private void loadPoster() {
-		Host.doCommand("LoadingImage", new JSONResponse(LoadActivity.this) {
+		Networking.doCommand("LoadingImage", new JSONResponse(LoadActivity.this) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content) {
@@ -87,12 +87,12 @@ public class LoadActivity extends ActivityEx {
 				if(null == url) {
 					return;
 				}
-				String fileName = Host.parseFileNameWithURL(url);
+				String fileName = Networking.parseFileNameWithURL(url);
 				File file = new File(Storage.imagePath(fileName));
 				if(file.exists()) {
 					return;
 				}
-				Host.doImage("image", new ImageResponse(file, fileName) {
+				Networking.doImage("image", new ImageResponse(file, fileName) {
 					@Override
 					public void onFinished(Bitmap content) {
 						try {

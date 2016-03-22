@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -14,6 +14,8 @@ import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.pretty.general.view.form.ImageActivity;
 import com.slfuture.pretty.qcode.Module;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -79,8 +81,18 @@ public class UserInfoActivity extends ActivityEx {
 		labLogout.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Me.instance.logout();
-				UserInfoActivity.this.finish();
+				new AlertDialog.Builder(UserInfoActivity.this).setTitle("确认注销吗？")  
+				.setIcon(android.R.drawable.ic_dialog_info)  
+				.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Me.instance.logout();
+							UserInfoActivity.this.finish();
+						}  
+				}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
+			        @Override  
+			        public void onClick(DialogInterface dialog, int which) {}  
+				}).show();
 			}
 		});
 		final ImageView imgPhoto = (ImageView) this.findViewById(R.id.userinfo_image_photo);
@@ -88,7 +100,7 @@ public class UserInfoActivity extends ActivityEx {
 			imgPhoto.setImageBitmap(GraphicsHelper.makeImageRing(GraphicsHelper.makeCycleImage(BitmapFactory.decodeResource(this.getResources(), R.drawable.user_photo_default), 200, 200), Color.WHITE, 4));
 		}
 		else {
-            Host.doImage("image", new ImageResponse(Me.instance.photo) {
+            Networking.doImage("image", new ImageResponse(Me.instance.photo) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {

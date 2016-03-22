@@ -2,6 +2,7 @@ package com.wehop.priest.view.form;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -81,6 +82,15 @@ public class MainActivity extends FragmentActivityEx implements IMeListener {
 			}
 		}, 3000);
 	}
+	
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(false);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 	@Override
 	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {

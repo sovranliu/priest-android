@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.ITargetEventable;
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pretty.im.Module;
 
@@ -76,7 +76,7 @@ public class User implements Serializable {
 		if(Text.isBlank(photo)) {
 			return null;
 		}
-		File file = new File(Host.storage + Host.parseFileNameWithURL(photo));
+		File file = new File(Networking.cache + Networking.parseFileNameWithURL(photo));
 		if(file.exists()) {
 			return GraphicsHelper.makeCycleImage(GraphicsHelper.decodeFile(file), 200, 200);
 		}
@@ -93,7 +93,7 @@ public class User implements Serializable {
 			event.on(tatget, null);
 			return;
 		}
-		Host.doImage("image", tatget, event, photo);
+		Networking.doImage("image", tatget, event, photo);
 	}
 
 	/**

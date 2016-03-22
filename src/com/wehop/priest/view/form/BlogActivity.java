@@ -1,9 +1,10 @@
 package com.wehop.priest.view.form;
 
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.storage.Storage;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.FragmentEx;
+import com.slfuture.pretty.general.view.form.BrowserActivity;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
 
@@ -39,9 +40,38 @@ public class BlogActivity extends FragmentEx {
 		browser.getSettings().setJavaScriptEnabled(true);
 		browser.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
 		browser.setWebViewClient(new WebViewClient() {
+			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
+				if(url.startsWith("mailto:") || url.startsWith("geo:") ||url.startsWith("tel:")) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+	                startActivity(intent);
+	                browser.pauseTimers();
+	                browser.resumeTimers();
+	                return false;
+	            }
+				else if(url.startsWith("new://")) {
+					Intent intent = new Intent(BlogActivity.this.getActivity(), BrowserActivity.class);
+					intent.putExtra("url", url.substring("new://".length()));
+					Bundle bundle = BlogActivity.this.getActivity().getIntent().getBundleExtra("handler");
+					if(null != bundle) {
+						intent.putExtra("handler", bundle);
+					}
+					startActivity(intent);
+	                browser.pauseTimers();
+	                browser.resumeTimers();
+	                return false;
+				}
+	            return super.shouldOverrideUrlLoading(view, url);
+			}
+			@Override
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+				super.onReceivedError(view, errorCode, description, failingUrl);
+				browser.loadUrl("about:blank");
+			}
+			@Override 
+	        public void onPageFinished(WebView view, String url) { 
+				super.onPageFinished(view, url);
+				view.loadUrl("javascript: var allLinks = document.getElementsByTagName('a'); if (allLinks) {var i;for (i=0; i<allLinks.length; i++) {var link = allLinks[i];var target = link.getAttribute('target'); if (target && target == '_blank') {link.setAttribute('target','_self');link.href = 'new://'+link.href;}}}"); 
 			}
         });
 		browser.setWebChromeClient(new WebChromeClient() {
@@ -81,7 +111,7 @@ public class BlogActivity extends FragmentEx {
     	}
     	if(!sentry) {
     		if(null != Me.instance) {
-    			browser.loadUrl(Host.fetchURL("BlogPage", Me.instance.token));
+    			browser.loadUrl(Networking.fetchURL("BlogPage", Me.instance.token));
     		}
     		else {
     			browser.loadUrl("about:blank");

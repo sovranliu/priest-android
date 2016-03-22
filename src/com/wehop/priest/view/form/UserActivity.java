@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.slfuture.carrie.base.text.Text;
-import com.slfuture.pluto.communication.Host;
+import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.ImageResponse;
 import com.slfuture.pluto.etc.GraphicsHelper;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -70,7 +70,7 @@ public class UserActivity extends FragmentEx {
 			btnPhoto.setImageResource(R.drawable.user_photo_null);
 		}
 		else if(!Text.isBlank(Me.instance.photo)) {
-            Host.doImage("image", new ImageResponse(Me.instance.photo) {
+            Networking.doImage("image", new ImageResponse(Me.instance.photo) {
 				@Override
 				public void onFinished(Bitmap content) {
 					if(null == content) {
@@ -155,13 +155,13 @@ public class UserActivity extends FragmentEx {
 						return;
 					}
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
-					intent.putExtra("url", Host.fetchURL("HistoryPage", Me.instance.token));
+					intent.putExtra("url", Networking.fetchURL("HistoryPage", Me.instance.token));
 					UserActivity.this.startActivity(intent);
 					return;
 				}
 				else if(1 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
-					intent.putExtra("url", Host.fetchURL("CustomerPage", Me.instance.token));
+					intent.putExtra("url", Networking.fetchURL("CustomerPage", Me.instance.token));
 					UserActivity.this.startActivity(intent);
 					return;
 				}
