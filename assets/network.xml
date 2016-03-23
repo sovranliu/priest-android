@@ -66,19 +66,19 @@ counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		<mock></mock>
 	</protocol>
     <protocol name="image" >
-        <path>
+        <url>
 <![CDATA[
 [1]
 ]]>
-        </path>
+        </url>
         <mock></mock>
     </protocol>
     <protocol name="file">
-        <path>
+        <url>
 		<![CDATA[
 [1]
 		]]>
-        </path>
+        </url>
         <mock></mock>
     </protocol>
     <!-- 预先获取启动图 -->

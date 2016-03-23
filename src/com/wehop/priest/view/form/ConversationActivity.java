@@ -172,10 +172,10 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				if(TAB_DOCTOR == tab) {
-					Me.instance.doChat(ConversationActivity.this.getActivity(), null, Me.instance.doctors.get(position).imId);
+					Me.instance.doChat(ConversationActivity.this.getActivity(), null, (String) doctorList.get(position).get("imId"));
 				}
 				else if(TAB_PATIENT == tab) {
-					Me.instance.doChat(ConversationActivity.this.getActivity(), null, Me.instance.patients.get(position).imId);
+					Me.instance.doChat(ConversationActivity.this.getActivity(), null, (String) patientList.get(position).get("imId"));
 				}
 			}
 		};
@@ -193,12 +193,12 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 						if(0 == index) {
 							if(TAB_DOCTOR == tab) {
 								Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
-								intent.putExtra("userId", Me.instance.doctors.get(position).id);
+								intent.putExtra("userId", (String) doctorList.get(position).get("id"));
 								ConversationActivity.this.getActivity().startActivity(intent);
 							}
 							else if(TAB_PATIENT == tab) {
 								Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
-								intent.putExtra("userId", Me.instance.patients.get(position).id);
+								intent.putExtra("userId", (String) patientList.get(position).get("id"));
 								ConversationActivity.this.getActivity().startActivity(intent);
 							}
 						}
@@ -225,7 +225,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 														}
 													});
 												}
-											}, Me.instance.token, Me.instance.doctors.get(position).id);
+											}, Me.instance.token, (String) doctorList.get(position).get("id"));
 										}  
 								}).setNegativeButton("返回", new DialogInterface.OnClickListener() {
 							        @Override  
@@ -249,7 +249,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 											}
 										});
 									}
-								}, Me.instance.token, Me.instance.patients.get(position).id);
+								}, Me.instance.token, (String) patientList.get(position).get("id"));
 							}
 						}
 					}
@@ -405,6 +405,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				}, doctor.photo);
 			}
 			map.put("name", doctor.nickname());
+			map.put("imId", doctor.imId);
 			map.put("tip", doctor.unreadMessageCount());
 			if(doctor.unreadMessageCount() > 0) {
 				doctorList.add(0, map);
@@ -457,6 +458,7 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				}, patient.photo);
 			}
 			map.put("name", patient.nickname());
+			map.put("imId", patient.imId);
 			map.put("tip", patient.unreadMessageCount());
 			if(patient.unreadMessageCount() > 0) {
 				patientList.add(0, map);
