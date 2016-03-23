@@ -10,6 +10,7 @@ import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.view.annotation.ResourceView;
 import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.pretty.general.utility.GeneralHelper;
+import com.slfuture.pretty.general.view.form.EnvironmentActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -17,12 +18,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 /**
  * 登录页
  */
 @ResourceView(id = R.layout.activity_login)
 public class LoginActivity extends ActivityEx {
+    @ResourceView(id = R.id.login_image_icon)
+    public ImageView imgIcon;
     @ResourceView(id = R.id.login_text_username)
     public EditText txtUsername;
     @ResourceView(id = R.id.login_text_password)
@@ -55,6 +59,14 @@ public class LoginActivity extends ActivityEx {
      * 界面启动预处理
      */
     public void prepare() {
+    	imgIcon.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent(LoginActivity.this, EnvironmentActivity.class);
+				LoginActivity.this.startActivity(intent);
+				return true;
+			}
+		});
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

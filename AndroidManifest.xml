@@ -124,6 +124,8 @@
 		<activity android:name="com.slfuture.pretty.general.view.form.BrowserActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.general.view.form.TextEditActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		<activity android:name="com.slfuture.pretty.qcode.view.form.CaptureActivity" android:screenOrientation="landscape" android:configChanges="orientation|keyboardHidden" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateAlwaysHidden" />
+		<activity android:name="com.slfuture.pretty.general.view.form.RadioActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+		<activity android:name="com.slfuture.pretty.general.view.form.EnvironmentActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Holo.Light.NoActionBar" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 		
         <!-- 设置环信应用 -->
     	<meta-data android:name="EASEMOB_APPKEY"  android:value="wehopim#wehoptest" />

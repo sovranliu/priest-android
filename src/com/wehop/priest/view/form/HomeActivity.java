@@ -7,6 +7,7 @@ import com.wehop.priest.Program;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
 import com.wehop.priest.business.core.IMeListener;
+import com.wehop.priest.business.structure.notify.BeSelectedNotify;
 import com.wehop.priest.framework.Storage;
 import com.wehop.priest.view.control.ScrollWebView;
 import com.slfuture.pluto.communication.Networking;
@@ -454,7 +455,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 	@Override
 	public void onCommand(String from, String action, com.slfuture.carrie.base.type.Table<String, Object> data) {
 		if("systemMessage".equals(action)) {
-			shakeBell();
+			Integer type = (Integer) data.get("type");
+			if(BeSelectedNotify.TYPE_BESELECTED != type) {
+				shakeBell();
+			}
 		}
 	}
 }

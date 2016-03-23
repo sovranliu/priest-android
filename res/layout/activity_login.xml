@@ -5,6 +5,7 @@
     android:layout_gravity="center"
     android:background="@color/main">
     <ImageView
+		android:id="@+id/login_image_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"

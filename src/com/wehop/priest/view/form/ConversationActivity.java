@@ -406,7 +406,12 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			}
 			map.put("name", doctor.nickname());
 			map.put("tip", doctor.unreadMessageCount());
-			doctorList.add(map);
+			if(doctor.unreadMessageCount() > 0) {
+				doctorList.add(0, map);
+			}
+			else {
+				doctorList.add(map);
+			}
 		}
 		((SimpleAdapter) listDoctor.getAdapter()).notifyDataSetChanged();
 	}
@@ -453,7 +458,12 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 			}
 			map.put("name", patient.nickname());
 			map.put("tip", patient.unreadMessageCount());
-			patientList.add(map);
+			if(patient.unreadMessageCount() > 0) {
+				patientList.add(0, map);
+			}
+			else {
+				patientList.add(map);
+			}
 		}
 		((SimpleAdapter) listPatient.getAdapter()).notifyDataSetChanged();
 	}

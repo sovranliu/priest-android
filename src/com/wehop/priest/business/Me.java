@@ -34,7 +34,6 @@ import com.wehop.priest.framework.Storage;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.widget.Toast;
 
 /**
  * 当前登录用户类
@@ -458,7 +457,9 @@ public class Me extends Doctor implements Serializable, IReactor {
 		Integer type = (Integer) data.get("type");
 		String source = (String) data.get("source");
 		if("systemMessage".equals(action)) {
-			Runtime.hasUnreadMessage = true;
+			if(BeSelectedNotify.TYPE_BESELECTED != type) {
+				Runtime.hasUnreadMessage = true;
+			}
 		}
 		else if("message".equals(action)) {
 			boolean sentry = false;

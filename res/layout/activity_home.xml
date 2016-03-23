@@ -30,7 +30,8 @@
             android:singleLine="true"
             android:text="病人/文章"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="invisible" />
 	</RelativeLayout>
 	<ListView
         android:id="@+id/home_list_news"
