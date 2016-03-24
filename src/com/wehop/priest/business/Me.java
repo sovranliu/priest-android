@@ -115,6 +115,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 					throw new RuntimeException("存储用户信息失败", e);
 				}
 				Module.reactor = instance;
+				Runtime.hasUnreadMessage = false;
 				Module.login(new IEventable<Boolean>() {
 					@Override
 					public void on(Boolean arg0) {
@@ -169,6 +170,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 									}
 								}
 								Module.reactor = instance;
+								Runtime.hasUnreadMessage = false;
 								Module.login(new IEventable<Boolean>() {
 									@Override
 									public void on(Boolean arg0) {
