@@ -58,7 +58,7 @@ doctor/html5/customer.html?token=[1]
     	<mock></mock>
     </protocol>
 	<protocol name="Hit">
-		<path host="cdn">
+		<path>
 		<![CDATA[
 counting-platform-web/rest/appHit#title=[1]&user_input_content=[2]
 		]]>

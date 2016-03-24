@@ -12,5 +12,6 @@
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentTop="true"
 	    android:scaleType="centerCrop"
-	    android:src="@drawable/load_logo" />
+	    android:src="@drawable/load_logo"
+    	android:background="@color/white" />
 </RelativeLayout>
