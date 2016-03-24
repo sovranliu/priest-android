@@ -114,7 +114,7 @@ public class BlogActivity extends FragmentEx {
     			browser.loadUrl(Networking.fetchURL("BlogPage", Me.instance.token));
     		}
     		else {
-    			browser.loadUrl("about:blank");
+    			browser.loadUrl(Networking.fetchURL("BlogPage", ""));
     		}
     		if(null == Me.instance) {
         		phone = null;

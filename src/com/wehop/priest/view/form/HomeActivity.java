@@ -249,7 +249,10 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 				for(IJSON item : result) {
 					JSONObject newJSONObject = (JSONObject) item;
 					HashMap<String, Object> newsMap = new HashMap<String, Object>();
-					String photoURL = ((JSONString) newJSONObject.get("imageUrl")).getValue();
+					String photoURL = "";
+					if(null != newJSONObject.get("imageUrl")) {
+						photoURL = ((JSONString) newJSONObject.get("imageUrl")).getValue();
+					}
 					String photoName = Storage.getImageName(photoURL);
 					newsMap.put("photo", photoName);
 					newsMap.put("title", ((JSONString) newJSONObject.get("title")).getValue());
