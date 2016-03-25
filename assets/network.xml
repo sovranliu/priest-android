@@ -3,14 +3,17 @@
     <environment name="product">
     	<host name="server" domain="service.wehop.cn" />
     	<host name="cdn" domain="cdn.oss.wehop-resources.wehop.cn" />
+    	<parameter name="imkey" value="wehopim#wehop" />
     </environment>
     <environment name="ppe">
     	<host name="server" domain="ppe.service.wehop.cn" />
     	<host name="cdn" domain="cdn.oss.wehop-resources-ppe.wehop.cn" />
+    	<parameter name="imkey" value="wehopim#wehoptest" />
     </environment>
     <environment name="beta">
     	<host name="server" domain="beta.service.wehop.cn" />
     	<host name="cdn" domain="cdn.oss.wehop-resources-beta.wehop.cn" />
+    	<parameter name="imkey" value="wehopim#wehoptest" />
     </environment>
     <!-- 首页顶部H5页面 -->
 	<protocol name="HomePage">

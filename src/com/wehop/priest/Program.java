@@ -31,11 +31,11 @@ public class Program extends Application {
 		application = this;
 		// 初始化配置系统
 		Configuration.initialize(application);
+		// 初始化网络
+		Networking.initialize(application);
 		// 初始化IM组件
 		Module.context = this;
 		Module.initialize();
-		// 初始化网络
-		Networking.initialize(application);
     }
 
 	/**
