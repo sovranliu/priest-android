@@ -160,8 +160,12 @@ public class UserActivity extends FragmentEx {
 					return;
 				}
 				else if(1 == index) {
+					String token = "";
+					if(null != Me.instance) {
+						token = Me.instance.token;
+					}
 					Intent intent = new Intent(UserActivity.this.getActivity(), BrowserActivity.class);
-					intent.putExtra("url", Networking.fetchURL("CustomerPage", Me.instance.token));
+					intent.putExtra("url", Networking.fetchURL("CustomerPage", token));
 					UserActivity.this.startActivity(intent);
 					return;
 				}

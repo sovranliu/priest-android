@@ -80,7 +80,7 @@ public class MyMessagesActivity extends ActivityEx {
                 case AddRefuseNotify.TYPE_ADDREFUSE:
                 	Intent intent3 = new Intent(MyMessagesActivity.this, TextActivity.class);
                 	intent3.putExtra("title", "通知");
-                	intent3.putExtra("content", ((AddAcceptNotify) notify).targetNickname + "(" + ((AddAcceptNotify) notify).targetPhone + ")拒绝了您的添加为 " + ((AddAcceptNotify) notify).relation + " 的请求");
+                	intent3.putExtra("content", ((AddRefuseNotify) notify).targetNickname + "(" + ((AddRefuseNotify) notify).targetPhone + ")拒绝了您的添加为 " + ((AddRefuseNotify) notify).relation + " 的请求");
                 	MyMessagesActivity.this.startActivity(intent3);
                 	break;
                 case BeRemovedNotify.TYPE_BEREMOVE:
