@@ -366,17 +366,26 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 		browser.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
-				intent.putExtra("url", url);
-				startActivity(intent);
-				browser.pauseTimers();
-				browser.resumeTimers();
+				if(url.startsWith("new://")) {
+					Intent intent = new Intent(HomeActivity.this.getActivity(), BrowserActivity.class);
+					intent.putExtra("url", url.substring("new://".length()));
+					startActivity(intent);
+					browser.pauseTimers();
+					browser.resumeTimers();
+				}
+				else {
+					view.loadUrl(url);
+				}
                 return true;
 			}
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
 				super.onReceivedError(view, errorCode, description, failingUrl);
-				browser.loadUrl("about:blank");
+				// browser.loadUrl("about:blank");
+			}
+			@Override
+	        public void onPageFinished(WebView view, String url) {
+				view.loadUrl("javascript: var allLinks = document.getElementsByTagName('a'); if (allLinks) {var i;for (i=0; i<allLinks.length; i++) {var link = allLinks[i];var target = link.getAttribute('target'); if (target && target == '_blank') {link.setAttribute('target','_self');link.href = 'new://'+link.href;}}}"); 
 			}
 		});
 		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();

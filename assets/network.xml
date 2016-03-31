@@ -123,7 +123,7 @@ doctor-platform-web/rest/getCurrentAppVersion?firmType=andriod
     <protocol name="news">
         <path>
         <![CDATA[
-user-platform-web/rest/news?page=[1]
+doctor-platform-web/rest/news?page=[1]
         ]]>
         </path>
     <mock>
