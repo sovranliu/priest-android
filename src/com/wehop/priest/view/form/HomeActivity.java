@@ -385,7 +385,12 @@ public class HomeActivity extends FragmentEx implements IMeListener {
 			}
 			@Override
 	        public void onPageFinished(WebView view, String url) {
-				view.loadUrl("javascript: var allLinks = document.getElementsByTagName('a'); if (allLinks) {var i;for (i=0; i<allLinks.length; i++) {var link = allLinks[i];var target = link.getAttribute('target'); if (target && target == '_blank') {link.setAttribute('target','_self');link.href = 'new://'+link.href;}}}"); 
+				Controller.doDelay(new Runnable() {
+					@Override
+					public void run() {
+						browser.loadUrl("javascript: var allLinks = document.getElementsByTagName('a'); if (allLinks) {var i;for (i=0; i<allLinks.length; i++) {var link = allLinks[i];var target = link.getAttribute('target'); if (target && target == '_blank') {link.setAttribute('target','_self');link.href = 'new://'+link.href;}}}");
+					}
+				}, 1000);
 			}
 		});
 		this.getActivity().findViewById(R.id.home_layout_header).bringToFront();
