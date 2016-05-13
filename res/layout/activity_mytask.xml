@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+	android:background="@color/white" >
+    <RelativeLayout
+		android:id="@+id/mytask_layout_header"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:layout_alignParentTop="true" 
+		android:background="@color/main" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageView
+            android:id="@+id/mytask_image_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/arrow_left" />
+        <TextView
+            android:id="@+id/mytask_label_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="任务列表"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/mytask_label_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="刷新"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <ListView
+        android:id="@+id/mytask_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below ="@+id/mytask_layout_header"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
+</RelativeLayout>

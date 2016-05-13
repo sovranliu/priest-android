@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:background="@color/white">
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:layout_alignParentTop="true"
+	    android:background="@color/white">
+	    <TextView
+	        android:id="@+id/listitem_task_label_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:ellipsize="end"
+	        android:maxLines="1"
+	        android:text="用户姓名"
+	        android:layout_marginRight="10dp"
+	        android:textColor="@color/black"
+	        android:textSize="14sp" />
+	    <TextView
+	        android:id="@+id/listitem_task_label_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginRight="10dp"
+	        android:text="2016-06-01"
+        	android:textSize="12sp"
+        	android:textColor="@color/grey_text" />
+	</RelativeLayout>
+    <TextView
+        android:id="@+id/listitem_task_label_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:maxLines="1"
+        android:text="这一行是消息的内容简述文字，内容仅仅一行"
+        android:layout_marginRight="10dp"
+        android:textColor="@color/grey_text"
+        android:textSize="13sp" />
+</LinearLayout>

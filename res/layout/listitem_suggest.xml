@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:padding="10dp">
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:background="@drawable/edittext1">
+	    <RelativeLayout
+			android:id="@+id/listitem_suggest_layout_title"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
+			android:layout_alignParentTop="true">
+		    <TextView
+		        android:id="@+id/listitem_suggest_label_title"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:layout_marginTop="10dp"
+		        android:singleLine="true"
+		        android:text="请多关注血压"
+		        android:textColor="@color/black"
+		        android:textSize="15sp" />
+		</RelativeLayout>
+	    <TextView
+	        android:id="@+id/listitem_suggest_label_time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="left"
+			android:layout_marginTop="10dp"
+			android:layout_marginLeft="10dp"
+	        android:singleLine="true"
+	        android:text="6月1日"
+	        android:textColor="@color/grey_text"
+	        android:textSize="12sp" />
+	    <TextView
+	        android:id="@+id/listitem_suggest_label_content"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_gravity="left"
+			android:layout_margin="10dp"
+	        android:singleLine="true"
+	        android:text="建议内容"
+	        android:textColor="@color/grey_text"
+	        android:textSize="13sp" />
+	</LinearLayout>
+</RelativeLayout>

@@ -123,6 +123,47 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 				            startActivity(intent);  
 							return;
 						}
+						else if(data.startsWith("consume://")) {
+							data = data.replace("consume://", "");
+							String action = data.substring(0, data.indexOf("?"));
+							Table<String, String> parameters = new Table<String, String>();
+							for(String item : data.substring(1 + data.indexOf("?")).split("&")) {
+								int index = item.indexOf("=");
+								if(-1 == index) {
+									continue;
+								}
+								String key = item.substring(0, index);
+								String value = item.substring(index + 1);
+								parameters.put(key, value);
+							}
+							Networking.doCommand("Consume", new JSONResponse(ConversationActivity.this.getActivity()) {
+								@Override
+								public void onFinished(JSONVisitor content) {
+									if(null == content) {
+										return;
+									}
+									Intent intent = new Intent(ConversationActivity.this.getActivity(), TextActivity.class);
+									intent.putExtra("title", "扫码结果");
+									if(1 == content.getInteger("code")) {
+										intent.putExtra("content", "减扣成功");
+									}
+									else if(-1 == content.getInteger("code")) {
+										intent.putExtra("content", "重复减扣");
+									}
+									else if(1-2 == content.getInteger("code")) {
+										intent.putExtra("content", "无效二维码");
+									}
+									else {
+										intent.putExtra("content", "未知异常");
+									}
+									ConversationActivity.this.getActivity().startActivity(intent);
+								}
+							}, Me.instance.token, action, parameters.get("id"));
+							Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
+							intent.putExtra("phone", data);
+							ConversationActivity.this.getActivity().startActivity(intent);
+							return;
+						}
 					}
 				});
 			}

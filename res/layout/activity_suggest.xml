@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:background="@color/white">
+    <RelativeLayout
+		android:id="@+id/suggest_layout_header"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:background="@color/main">
+		<ImageView
+            android:id="@+id/suggest_image_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/arrow_left_white_wide" />
+        <TextView
+            android:id="@+id/suggest_label_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="提交建议"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+        <TextView
+            android:id="@+id/suggest_label_commit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <EditText
+        android:id="@+id/suggest_text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+        android:layout_below="@id/suggest_layout_header"
+		android:layout_margin="10dp"
+		android:padding="4dp"
+        android:background="@drawable/edittext1"
+		android:singleLine="true"
+        android:hint="建议标题"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+    <EditText
+        android:id="@+id/suggest_text_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+		android:layout_alignParentLeft="true"
+        android:layout_below="@id/suggest_layout_header"
+		android:layout_margin="10dp"
+		android:padding="4dp"
+		android:singleLine="false"
+        android:background="@drawable/edittext1"
+        android:hint="建议内容"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+</LinearLayout>

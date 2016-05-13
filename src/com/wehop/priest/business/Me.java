@@ -30,6 +30,7 @@ import com.wehop.priest.business.user.Doctor;
 import com.wehop.priest.business.user.Patient;
 import com.wehop.priest.business.user.User;
 import com.wehop.priest.framework.Storage;
+import com.wehop.priest.view.form.CallActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -64,7 +65,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	/**
 	 * 最近联系人
 	 */
-	public Table<String, Bitmap> contacts = new Table<String, Bitmap>();
+	public Table<String, User> contacts = new Table<String, User>();
 
 	/**
 	 * 实例
@@ -295,7 +296,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 	 * 保存
 	 */
 	public void save() throws IOException {
-		contacts = new Table<String, Bitmap>();
+		contacts = new Table<String, User>();
 		Serial.restore(this, file());
 	}
 
@@ -407,9 +408,10 @@ public class Me extends Doctor implements Serializable, IReactor {
 	@Override
 	public Bitmap getPhoto(String userId) {
 		if(null == contacts) {
-			contacts = new Table<String, Bitmap>();
+			contacts = new Table<String, User>();
 		}
-		Bitmap cache = contacts.get(userId);
+		User contact = contacts.get(userId);
+		Bitmap cache = contact.photo();
 		if(null != cache) {
 			return cache;
 		}
@@ -421,7 +423,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 			cache = user.photo();
 		}
 		if(null != cache) {
-			contacts.put(userId, cache);
+			contacts.put(userId, user);
 		}
 		return cache;
 	}
@@ -488,6 +490,22 @@ public class Me extends Doctor implements Serializable, IReactor {
 				public void onFinished(String content) { }
 			}, "doctor-platform-onlineDiag", object.toString());
 			return;
+		}
+		else if("call".equals(action)) {
+			String callId = (String) data.get("callId");
+			String netstate = (String) data.get("netstate");
+			String imUsername = (String) data.get("imUsername");
+			String name = (String) data.get("name");
+			String phone = (String) data.get("phone");
+			String dialType = (String) data.get("dialType");
+			Intent intent = new Intent(Program.application, CallActivity.class);
+			intent.putExtra("callId", callId);
+			intent.putExtra("netstate", netstate);
+			intent.putExtra("imUsername", imUsername);
+			intent.putExtra("name", name);
+			intent.putExtra("phone", phone);
+			intent.putExtra("dialType", dialType);
+			Program.application.startActivity(intent);
 		}
 		if(null != type && BeSelectedNotify.TYPE_BESELECTED == type) {
 			Me.instance.refreshPatient(Program.application, new IEventable<Boolean>() {

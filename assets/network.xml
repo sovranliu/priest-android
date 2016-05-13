@@ -534,4 +534,194 @@ user-platform-web/rest/contentSearch?keyword=[1]
         ]]>
         </mock>
     </protocol>
+	<!-- VIP版本支持 -->
+	<!-- 接受呼叫 -->
+	<protocol name="Accept">
+		<!-- id=通过透传消息获取的呼叫ID -->
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/accept#token=[1]&id=[2]
+]]>
+		</path>
+		<!-- code，1：抢单成功，-1：订单被抢走，-2：连接已断开 -->
+		<mock>
+<![CDATA[
+{
+    "code": -1
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 扫描减扣二维码，范例：consume://massage?id=1 -->
+	<protocol name="Consume">
+		<!-- id=通过透传消息获取的呼叫ID -->
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/consume#token=[1]&type=[2]&id=[3]
+]]>
+		</path>
+		<!-- code，1：减扣成功，-1：重复减扣，-2：无效二维码 -->
+		<mock>
+<![CDATA[
+{
+    "code": -1
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 获取医嘱任务列表 -->
+	<protocol name="TaskList">
+		<!-- id=通过透传消息获取的呼叫ID -->
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/taskList#token=[1]&page=[2]
+]]>
+		</path>
+		<mock>
+<![CDATA[
+{
+    "code": 1,
+    "data":[
+    	{
+    		"id":11,
+    		"name":"患者姓名-1",
+    		"reason":"申请医生建议原因",
+    		"time":"2016-06-01"
+    	},
+    	{
+    		"id":12,
+    		"name":"患者姓名-2",
+    		"reason":"申请医生建议原因",
+    		"time":"2016-06-01"
+    	},
+    	{
+    		"id":13,
+    		"name":"患者姓名-3",
+    		"reason":"申请医生建议原因",
+    		"time":"2016-06-01"
+    	},
+    	{
+    		"id":14,
+    		"name":"患者姓名-2",
+    		"reason":"申请医生建议原因",
+    		"time":"2016-06-01"
+    	},
+    	{
+    		"id":15,
+    		"name":"患者姓名-3",
+    		"reason":"申请医生建议原因",
+    		"time":"2016-06-01"
+    	}
+    ]
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 接纳任务 -->
+	<protocol name="LoadTask">
+		<!-- id=通过透传消息获取的呼叫ID -->
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/loadTask#token=[1]&id=[2]
+]]>
+		</path>
+		<!-- code，1：加载成功，-1：任务被抢走  -->
+		<mock>
+<![CDATA[
+{
+    "code": 1,
+    "data":{
+    	"id":"用户ID",
+    	"name":"用户姓名",
+    	"gender":1,
+    	"birthday":"1986-01-19"
+    }
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 发表医生建议 -->
+	<protocol name="Suggest">
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/suggest#token=[1]&id=[2]&title=[3]&content=[4]
+]]>
+		</path>
+		<mock>
+<![CDATA[
+{
+    "code": 1
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 查询用户体检结果 -->
+	<protocol name="ExaminationList">
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/examinationList?token=[1]&id=[2]&page=[3]
+]]>
+		</path>
+		<!-- icon图标地址，url报告展示H5地址 -->
+		<mock>
+<![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": "06059527",
+            "title": "老年人专项体检",
+            "icon": "https://www.baidu.com/img/bd_logo1.png",
+            "description": "血压/血脂/肿瘤筛查",
+            "url": "https://www.baidu.com",
+            "time": "2016-06-05",
+            "hasRead": false
+        },
+        {
+            "id": "06059526",
+            "title": "高血压精细检查",
+            "icon": "https://www.baidu.com/img/bd_logo1.png",
+            "description": "血压",
+            "url": "https://www.baidu.com",
+            "time": "2016-06-01",
+            "hasRead": true
+        }
+    ]
+}
+]]>
+		</mock>
+	</protocol>
+	<!-- 查询用户的医生建议列表 -->
+	<protocol name="SuggestList">
+	    <!-- before整型，建议ID，表示尝试获取该ID之前的倒序建议列表，0表示最新建议 -->
+		<path>
+<![CDATA[
+doctor-platform-web/rest/doctor/suggestList?token=[1]&id=[2]&before=[2]
+]]>
+		</path>
+		<!-- icon图标地址，url报告展示H5地址 -->
+		<mock>
+<![CDATA[
+{
+    "code": 1,
+    "data": [
+        {
+            "id": 9527,
+            "title": "建议标题1",
+            "content": "多喝点热水",
+            "time": "2016-06-05",
+            "hasRead": true
+        },
+        {
+            "id": 9528,
+            "title": "建议标题2",
+            "content": "加强锻炼",
+            "time": "2016-06-06",
+            "hasRead": false
+        }
+    ]
+}
+]]>
+		</mock>
+	</protocol>
 </network>

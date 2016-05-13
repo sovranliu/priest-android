@@ -1,0 +1,187 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:background="@color/white" >
+    <RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:background="@color/main" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageView
+            android:id="@+id/client_image_close"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/arrow_left" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:text="对象信息"
+            android:textColor="#ffffffff"
+            android:textSize="18sp" />
+	</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/client_layout_user"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@color/main" 
+		android:focusable="true"
+		android:focusableInTouchMode="true">
+		<ImageView
+            android:id="@+id/client_image_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/user_photo_default" />
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:background="@color/main"
+			android:layout_toRightOf="@id/client_image_photo"
+			android:layout_centerVertical="true"
+			android:orientation="vertical">
+	        <TextView
+            	android:id="@+id/client_label_name"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="用户姓名"
+	            android:textColor="#ffffffff"
+	            android:textSize="18sp" />
+			    <LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:background="@color/main"
+					android:orientation="horizontal"
+					android:layout_marginTop="2dp">
+					<ImageView
+			            android:id="@+id/client_image_gender"
+			            android:layout_width="20dp"
+			            android:layout_height="20dp"
+			            android:layout_gravity="center_vertical"
+			            android:src="@drawable/icon_gender_male" />
+			        <TextView
+		            	android:id="@+id/client_label_birthday"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center_vertical"
+			            android:text="1986-01-19"
+			            android:layout_marginLeft="10dp"
+			            android:textColor="@color/grey_line"
+			            android:textSize="16sp" />
+				</LinearLayout>
+		</LinearLayout>
+		<ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="20dp"
+            android:src="@drawable/arrow_right" />
+	</RelativeLayout>
+    <LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@color/main">
+	    <LinearLayout
+	        android:id="@+id/client_layout_tab1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="center"
+			android:padding="5dp">
+			<ImageView
+	            android:layout_width="20dp"
+	            android:layout_height="20dp"
+	            android:layout_gravity="center_vertical"
+	            android:src="@drawable/icon_client_1" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="2dp"
+	            android:text="体检信息"
+	            android:textColor="@color/white"
+	            android:textSize="14sp" />
+	    </LinearLayout>
+	    <View 
+            android:layout_height="match_parent"
+	        android:layout_width="1px"
+	        android:layout_marginTop="2dp"
+	        android:layout_marginBottom="2dp"
+	        android:background="@color/white" />
+	    <LinearLayout
+	        android:id="@+id/client_layout_tab2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="center"
+			android:padding="5dp">
+			<ImageView
+	            android:layout_width="20dp"
+	            android:layout_height="20dp"
+	            android:layout_gravity="center_vertical"
+	            android:src="@drawable/icon_notify_2" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="2dp"
+	            android:text="历史建议"
+	            android:textColor="@color/white"
+	            android:textSize="14sp" />
+	    </LinearLayout>
+	    <View 
+            android:layout_height="match_parent"
+	        android:layout_width="1px"
+	        android:layout_marginTop="2dp"
+	        android:layout_marginBottom="2dp"
+	        android:background="@color/white" />
+	    <LinearLayout
+	        android:id="@+id/client_layout_tab3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:gravity="center"
+			android:padding="5dp">
+			<ImageView
+	            android:layout_width="20dp"
+	            android:layout_height="20dp"
+	            android:layout_gravity="center_vertical"
+	            android:src="@drawable/icon_client_3" />
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="2dp"
+	            android:text="监测数据"
+	            android:textColor="@color/white"
+	            android:textSize="14sp" />
+	    </LinearLayout>
+	</LinearLayout>
+	<ListView
+		android:id="@+id/client_list1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/divider" />
+	<ListView
+		android:id="@+id/client_list2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/divider"
+        android:visibility="gone" />
+	<ListView
+		android:id="@+id/client_list3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/divider"
+        android:visibility="gone" />
+</LinearLayout>

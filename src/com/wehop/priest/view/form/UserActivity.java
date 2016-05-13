@@ -120,6 +120,10 @@ public class UserActivity extends FragmentEx {
 		map.put("caption", "客服中心");
 		itemList.add(map);
 		map = new HashMap<String, Object>();
+		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_notify_3));
+		map.put("caption", "医嘱任务");
+		itemList.add(map);
+		map = new HashMap<String, Object>();
 		map.put("icon", BitmapFactory.decodeResource(Program.application.getResources(), R.drawable.icon_user_config));
 		map.put("caption", "系统设置");
 		itemList.add(map);
@@ -169,8 +173,16 @@ public class UserActivity extends FragmentEx {
 					UserActivity.this.startActivity(intent);
 					return;
 				}
-				else if(2 == index) {
+				else if(3 == index) {
 					Intent intent = new Intent(UserActivity.this.getActivity(), ConfigActivity.class);
+					UserActivity.this.startActivity(intent);
+                    return;
+				}
+				else if(2 == index) {
+					if(null == Me.instance) {
+						return;
+					}
+					Intent intent = new Intent(UserActivity.this.getActivity(), MyTaskActivity.class);
 					UserActivity.this.startActivity(intent);
                     return;
 				}
