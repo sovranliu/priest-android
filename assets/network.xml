@@ -574,7 +574,7 @@ doctor-platform-web/rest/doctor/consume#token=[1]&type=[2]&id=[3]
 		<!-- id=通过透传消息获取的呼叫ID -->
 		<path>
 <![CDATA[
-doctor-platform-web/rest/doctor/taskList#token=[1]&page=[2]
+doctor-platform-web/rest/doctor/taskList?token=[1]&page=[2]
 ]]>
 		</path>
 		<mock>
@@ -622,7 +622,7 @@ doctor-platform-web/rest/doctor/taskList#token=[1]&page=[2]
 		<!-- id=通过透传消息获取的呼叫ID -->
 		<path>
 <![CDATA[
-doctor-platform-web/rest/doctor/loadTask#token=[1]&id=[2]
+doctor-platform-web/rest/doctor/loadTask?token=[1]&id=[2]
 ]]>
 		</path>
 		<!-- code，1：加载成功，-1：任务被抢走  -->
@@ -696,7 +696,7 @@ doctor-platform-web/rest/doctor/examinationList?token=[1]&id=[2]&page=[3]
 	    <!-- before整型，建议ID，表示尝试获取该ID之前的倒序建议列表，0表示最新建议 -->
 		<path>
 <![CDATA[
-doctor-platform-web/rest/doctor/suggestList?token=[1]&id=[2]&before=[2]
+doctor-platform-web/rest/doctor/suggestList?token=[1]&id=[2]&before=[3]
 ]]>
 		</path>
 		<!-- icon图标地址，url报告展示H5地址 -->

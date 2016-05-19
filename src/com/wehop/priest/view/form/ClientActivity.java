@@ -60,7 +60,8 @@ public class ClientActivity extends ActivityEx {
 	/**
 	 * 客户ID
 	 */
-	private String clientId;
+	private int clientId = 0;
+	private int userId = 0;
 	/**
 	 * 体检报告列表
 	 */
@@ -102,7 +103,8 @@ public class ClientActivity extends ActivityEx {
 				ClientActivity.this.finish();
 			}
 		});
-		clientId = this.getIntent().getStringExtra("id");
+		clientId = this.getIntent().getIntExtra("id", 0);
+		userId = this.getIntent().getIntExtra("userId", 0);
 		labName.setText(this.getIntent().getStringExtra("name"));
 		switch(this.getIntent().getIntExtra("gender", 0)) {
 		case 1:
@@ -282,7 +284,7 @@ public class ClientActivity extends ActivityEx {
 				SimpleAdapter adapter = (SimpleAdapter) list1.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
-		}, Me.instance.token, clientId, examinationPageId);
+		}, Me.instance.token, userId, examinationPageId);
 	}
 
 	/**
@@ -308,7 +310,7 @@ public class ClientActivity extends ActivityEx {
 				SimpleAdapter adapter = (SimpleAdapter) list2.getAdapter();
 				adapter.notifyDataSetChanged();
 			}
-		}, Me.instance.token, clientId, suggestLastId);
+		}, Me.instance.token, userId, suggestLastId);
 	}
 	
 	/**

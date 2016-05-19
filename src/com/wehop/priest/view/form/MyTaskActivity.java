@@ -105,12 +105,13 @@ public class MyTaskActivity extends ActivityEx {
 							Toast.makeText(MyTaskActivity.this, "该任务已经被其他人领走", Toast.LENGTH_LONG).show();
 							return;
 						}
-						if(content.getInteger("code") < 0) {
+						if(content.getInteger("code") <= 0) {
 							return;
 						}
 						content = content.getVisitor("data");
 						Intent intent = new Intent(MyTaskActivity.this, ClientActivity.class);
-						intent.putExtra("id", content.getString("id"));
+						intent.putExtra("id", content.getInteger("id", 0));
+						intent.putExtra("userId", content.getInteger("id", 0));
 						intent.putExtra("name", content.getString("name"));
 						intent.putExtra("gender", content.getInteger("gender", 0));
 						intent.putExtra("birthday", content.getString("birthday"));
@@ -155,6 +156,8 @@ public class MyTaskActivity extends ActivityEx {
 				}
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
+					map.put("id", item.getInteger("id", 0));
+					map.put("userId", item.getInteger("userId", 0));
 					map.put("name", item.getString("name"));
 					map.put("time", item.getString("time"));
 					map.put("reason", item.getString("reason"));
