@@ -1,6 +1,7 @@
 package com.wehop.priest.view.form;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.type.Table;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.etc.Controller;
@@ -9,6 +10,7 @@ import com.slfuture.pluto.view.component.ActivityEx;
 import com.slfuture.pretty.im.view.form.AudioActivity;
 import com.slfuture.pretty.im.view.form.VideoActivity;
 import com.wehop.priest.business.Me;
+import com.wehop.priest.business.core.IMeListener;
 import com.wehop.priest.business.user.User;
 import com.wehop.priest.R;
 
@@ -17,8 +19,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
@@ -30,7 +30,7 @@ import android.widget.Toast;
  * 响铃界面
  */
 @ResourceView(id=R.layout.activity_call)
-public class CallActivity extends ActivityEx {
+public class CallActivity extends ActivityEx implements IMeListener {
 	@ResourceView(id=R.id.call_image_photo)
 	public ImageView imgPhoto;
 	@ResourceView(id=R.id.call_label_name)
@@ -55,7 +55,7 @@ public class CallActivity extends ActivityEx {
 	/**
 	 * 呼叫ID
 	 */
-	private String callId = null;
+	private int callId = 0;
 	/**
 	 * 呼叫者环信ID
 	 */
@@ -116,7 +116,7 @@ public class CallActivity extends ActivityEx {
 	 */
 	@SuppressWarnings("deprecation")
 	public void prepareData() {
-		callId = this.getIntent().getStringExtra("callId");
+		callId = this.getIntent().getIntExtra("callId", 0);
 		imUsername = this.getIntent().getStringExtra("imUsername");
 		dialType = this.getIntent().getStringExtra("dialType");
 		soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
@@ -202,5 +202,19 @@ public class CallActivity extends ActivityEx {
 				}, Me.instance.token, callId);
 			}
 		});
+	}
+
+	@Override
+	public void onConflict() {
+		
+	}
+
+	@Override
+	public void onCommand(String from, String action, Table<String, Object> data) {
+		if("handupMessage".equals(action)) {
+			Toast.makeText(CallActivity.this, "对方已经挂断", Toast.LENGTH_LONG).show();
+			labDescription.setText("对方已经挂断");
+			this.finish();
+		}
 	}
 }

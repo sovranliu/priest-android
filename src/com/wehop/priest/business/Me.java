@@ -458,7 +458,10 @@ public class Me extends Doctor implements Serializable, IReactor {
 
 	@Override
 	public void onCommand(final String from, final String action, final com.slfuture.carrie.base.type.Table<String, Object> data) {
-		Integer type = (Integer) data.get("type");
+		Integer type = 0;
+		if(data.get("type") instanceof Integer) {
+			type = (Integer) data.get("type");
+		}
 		String source = (String) data.get("source");
 		if("systemMessage".equals(action)) {
 			if(BeSelectedNotify.TYPE_BESELECTED != type) {
@@ -491,8 +494,8 @@ public class Me extends Doctor implements Serializable, IReactor {
 			}, "doctor-platform-onlineDiag", object.toString());
 			return;
 		}
-		else if("call".equals(action)) {
-			String callId = (String) data.get("callId");
+		else if("callMessage".equals(action)) {
+			int callId = (Integer) data.get("callId");
 			String netstate = (String) data.get("netstate");
 			String imUsername = (String) data.get("imUsername");
 			String name = (String) data.get("name");
@@ -505,7 +508,11 @@ public class Me extends Doctor implements Serializable, IReactor {
 			intent.putExtra("name", name);
 			intent.putExtra("phone", phone);
 			intent.putExtra("dialType", dialType);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); 
 			Program.application.startActivity(intent);
+		}
+		else if("handupMessage".equals(action)) {
+			
 		}
 		if(null != type && BeSelectedNotify.TYPE_BESELECTED == type) {
 			Me.instance.refreshPatient(Program.application, new IEventable<Boolean>() {
@@ -548,5 +555,10 @@ public class Me extends Doctor implements Serializable, IReactor {
 		}
 		Reminder.ringtone(Program.application);
 		Broadcaster.<IMeListener>broadcast(Program.application, IMeListener.class).onCommand(from, action, data);
+	}
+
+	@Override
+	public boolean onDial(int type) {
+		return true;
 	}
 }
