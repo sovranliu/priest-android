@@ -500,7 +500,7 @@ public class Me extends Doctor implements Serializable, IReactor {
 				return;
 			}
 			long tick = DateTime.now().toLong();
-			Long endTick = (Long) data.get("addTime");
+			Long endTick = (Long) data.get("callTime");
 			if(null == endTick || endTick < tick - 30 * 1000) {
 				return;
 			}
