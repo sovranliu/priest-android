@@ -10,6 +10,7 @@ import com.slfuture.carrie.base.json.JSONObject;
 import com.slfuture.carrie.base.json.JSONString;
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.IEventable;
+import com.slfuture.carrie.base.time.DateTime;
 import com.slfuture.carrie.base.type.List;
 import com.slfuture.carrie.base.type.safe.Table;
 import com.slfuture.pluto.communication.Networking;
@@ -495,6 +496,14 @@ public class Me extends Doctor implements Serializable, IReactor {
 			return;
 		}
 		else if("callMessage".equals(action)) {
+			if(com.wehop.priest.business.Runtime.isCalling) {
+				return;
+			}
+			long tick = DateTime.now().toLong();
+			Long endTick = (Long) data.get("addTime");
+			if(null == endTick || endTick < tick - 30 * 1000) {
+				return;
+			}
 			int callId = (Integer) data.get("callId");
 			String netstate = (String) data.get("netstate");
 			String imUsername = (String) data.get("imUsername");

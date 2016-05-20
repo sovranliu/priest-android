@@ -13,4 +13,8 @@ public class Runtime {
 	 * 是否有未读消息
 	 */
 	public static boolean hasUnreadMessage = false;
+	/**
+	 * 是否正在响铃
+	 */
+	public static boolean isCalling = false;
 }

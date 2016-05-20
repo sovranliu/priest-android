@@ -70,6 +70,8 @@ public class CallActivity extends ActivityEx implements IMeListener {
 		super.onCreate(savedInstanceState);
 		// 界面处理
 		prepare();
+		//
+		com.wehop.priest.business.Runtime.isCalling = true;
 	}
 
 	@Override
@@ -80,6 +82,7 @@ public class CallActivity extends ActivityEx implements IMeListener {
 			soundPool.release();
 			soundPool = null;
 		}
+		com.wehop.priest.business.Runtime.isCalling = false;
     }
 
 	@SuppressWarnings("deprecation")
