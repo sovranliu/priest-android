@@ -31,7 +31,7 @@ public class SuggestActivity extends ActivityEx {
 	/**
 	 * 评价ID
 	 */
-	private String id;
+	private int id = 0;
 
 	/**
 	 * 界面创建
@@ -39,7 +39,7 @@ public class SuggestActivity extends ActivityEx {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		id = this.getIntent().getStringExtra("id");
+		id = this.getIntent().getIntExtra("id", 0);
 		imgClose.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

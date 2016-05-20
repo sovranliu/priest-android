@@ -291,13 +291,15 @@ public class ClientActivity extends ActivityEx {
 	 * 加载医生建议数据
 	 */
 	private void loadSuggest() {
-		Networking.doCommand("SuggestList", new JSONResponse(ClientActivity.this) {
+		Networking.doCommand("SuggestList", new JSONResponse(ClientActivity.this, suggestLastId) {
 			@Override
 			public void onFinished(JSONVisitor content) {
 				if(null == content || content.getInteger("code") <= 0) {
 					return;
 				}
-				suggestList.clear();
+				if((Integer) tag != suggestLastId) {
+					return;
+				}
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("id", item.getInteger("id", 0));

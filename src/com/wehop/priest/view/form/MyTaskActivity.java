@@ -143,7 +143,6 @@ public class MyTaskActivity extends ActivityEx {
      * 刷新列表
      */
     public void load() {
-    	taskList.clear();
     	Networking.doCommand("TaskList", new JSONResponse(MyTaskActivity.this, pageId) {
 			@Override
 			public void onFinished(JSONVisitor content) {
