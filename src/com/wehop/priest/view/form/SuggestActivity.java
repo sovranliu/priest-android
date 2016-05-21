@@ -3,6 +3,7 @@ package com.wehop.priest.view.form;
 import com.wehop.priest.R;
 import com.wehop.priest.business.Me;
 import com.slfuture.carrie.base.json.JSONVisitor;
+import com.slfuture.carrie.base.text.Text;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -49,6 +50,12 @@ public class SuggestActivity extends ActivityEx {
 		labSubmit.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(Text.isBlank(labTitle.getText().toString())) {
+					return;
+				}
+				if(Text.isBlank(labContent.getText().toString())) {
+					return;
+				}
 				Networking.doCommand("Suggest", new JSONResponse(SuggestActivity.this) {
 					@Override
 					public void onFinished(JSONVisitor content) {

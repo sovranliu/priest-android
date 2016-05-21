@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.slfuture.carrie.base.json.JSONVisitor;
 import com.slfuture.carrie.base.model.core.ITargetEventable;
+import com.slfuture.carrie.base.time.DateTime;
 import com.slfuture.pluto.communication.Networking;
 import com.slfuture.pluto.communication.response.JSONResponse;
 import com.slfuture.pluto.view.annotation.ResourceView;
@@ -158,7 +159,7 @@ public class ClientActivity extends ActivityEx {
 				ClientActivity.this.startActivity(intent);
 			}
 		});
-		list1.setOnScrollListener(new OnScrollListener() {    
+		list1.setOnScrollListener(new OnScrollListener() {
 	        boolean isLastRow = false;
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -272,12 +273,12 @@ public class ClientActivity extends ActivityEx {
 				examinationList.clear();
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
-					map.put("id", "报告编号：" + item.getString("id"));
+					map.put("id", "报告编号：" + item.getInteger("id", 0));
 					map.put("status", item.getBoolean("hasRead"));
 					map.put("icon", item.getString("icon"));
 					map.put("title", "项目：" + item.getString("title"));
 					map.put("description", "简介：" + item.getString("description"));
-					map.put("time", item.getString("time"));
+					map.put("time", DateTime.parse(item.getLong("addTime")).toString());
 					map.put("url", item.getString("url"));
 					examinationList.add(map);
 				}
@@ -302,6 +303,9 @@ public class ClientActivity extends ActivityEx {
 				}
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
+					if(suggestLastId > item.getInteger("id", 0)) {
+						suggestLastId = item.getInteger("id", 0);
+					}
 					map.put("id", item.getInteger("id", 0));
 					map.put("title", item.getString("title"));
 					map.put("tip", item.getBoolean("hasRead"));
