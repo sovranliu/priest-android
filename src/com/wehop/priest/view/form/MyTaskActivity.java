@@ -63,6 +63,7 @@ public class MyTaskActivity extends ActivityEx {
 			@Override
 			public void onClick(View v) {
 				pageId = 1;
+				taskList.clear();
 				load();
 			}
 		});
@@ -95,7 +96,7 @@ public class MyTaskActivity extends ActivityEx {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, int index, long arg3) {
 				HashMap<String, Object> newsMap = taskList.get(index);
-				Networking.doCommand("LoadTask", new JSONResponse(MyTaskActivity.this) {
+				Networking.doCommand("LoadTask", new JSONResponse(MyTaskActivity.this, newsMap.get("userId")) {
 					@Override
 					public void onFinished(JSONVisitor content) {
 						if(null == content) {
@@ -111,7 +112,7 @@ public class MyTaskActivity extends ActivityEx {
 						content = content.getVisitor("data");
 						Intent intent = new Intent(MyTaskActivity.this, ClientActivity.class);
 						intent.putExtra("id", content.getInteger("id", 0));
-						intent.putExtra("userId", content.getInteger("id", 0));
+						intent.putExtra("userId", (Integer) tag);
 						intent.putExtra("name", content.getString("name"));
 						intent.putExtra("gender", content.getInteger("gender", 0));
 						intent.putExtra("birthday", content.getString("birthday"));
@@ -153,6 +154,10 @@ public class MyTaskActivity extends ActivityEx {
 				if(requestPageId != pageId) {
 					return;
 				}
+				if(content.getVisitors("data").size() <= 0) {
+					return;
+				}
+				pageId++;
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("id", item.getInteger("id", 0));

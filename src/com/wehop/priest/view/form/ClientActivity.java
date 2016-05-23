@@ -94,7 +94,7 @@ public class ClientActivity extends ActivityEx {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ClientActivity.this, SuggestActivity.class);
-				intent.putExtra("id", clientId);
+				intent.putExtra("id", userId);
 				ClientActivity.this.startActivity(intent);
 			}
 		});
@@ -303,7 +303,7 @@ public class ClientActivity extends ActivityEx {
 				}
 				for(JSONVisitor item : content.getVisitors("data")) {
 					HashMap<String, Object> map = new HashMap<String, Object>();
-					if(suggestLastId > item.getInteger("id", 0)) {
+					if(0 == suggestLastId || suggestLastId > item.getInteger("id", 0)) {
 						suggestLastId = item.getInteger("id", 0);
 					}
 					map.put("id", item.getInteger("id", 0));

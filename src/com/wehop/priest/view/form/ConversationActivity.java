@@ -159,9 +159,6 @@ public class ConversationActivity extends FragmentEx implements IMeListener {
 									ConversationActivity.this.getActivity().startActivity(intent);
 								}
 							}, Me.instance.token, action, parameters.get("id"));
-							Intent intent = new Intent(ConversationActivity.this.getActivity(), AddFriendActivity.class);
-							intent.putExtra("phone", data);
-							ConversationActivity.this.getActivity().startActivity(intent);
 							return;
 						}
 					}
