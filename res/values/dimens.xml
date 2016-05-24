@@ -5,4 +5,10 @@
     <dimen name="bottom_tab_font_size">12.0dip</dimen>
     <dimen name="inquiry_top_tittle_font_size">20dp</dimen>
     <dimen name="gap_line_length">8dp</dimen>
+    
+    <dimen name="actionbar_icon_width">40dp</dimen>
+    <dimen name="actionbar_icon_height">40dp</dimen>
+    <dimen name="list_item_mid_textsize">16sp</dimen>
+    <dimen name="list_item_mid_l_textsize">18sp</dimen>
+    <dimen name="list_item_mid_s_textsize">12sp</dimen>
 </resources>

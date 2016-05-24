@@ -255,6 +255,22 @@ public class ClientActivity extends ActivityEx {
 		list3.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View v, final int index, long arg3) {
+			    switch (index) {
+                case 0: {
+                    Intent intent = new Intent(ClientActivity.this, HistoryBloodListActivity.class);
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                    break;
+                }
+                case 1: {
+                    Intent intent = new Intent(ClientActivity.this, HistoryWeightListActivity.class);
+                    intent.putExtra("userId", userId);
+                    startActivity(intent);
+                    break;
+                }
+                default:
+                    break;
+                }
 			}
 		});
 		loadHardware();
@@ -326,10 +342,10 @@ public class ClientActivity extends ActivityEx {
 		hardwareList.clear();
 		HashMap<String, Object> map = null;
 		//
-		map = new HashMap<String, Object>();
-		map.put("icon", R.drawable.icon_sb);
-		map.put("title", "智能手环");
-		hardwareList.add(map);
+//		map = new HashMap<String, Object>();
+//		map.put("icon", R.drawable.icon_sb);
+//		map.put("title", "智能手环");
+//		hardwareList.add(map);
 		//
 		map = new HashMap<String, Object>();
 		map.put("icon", R.drawable.icon_bp);

@@ -5,4 +5,6 @@
     <string name="chat_title_name">聊天</string>
     <string name="search">搜索</string>
     <string name="search_hint">搜索</string>
+    
+    <string name="history_record">历史记录</string>
 </resources>

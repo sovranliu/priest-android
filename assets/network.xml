@@ -724,4 +724,36 @@ doctor-platform-web/rest/doctor/suggestList?token=[1]&id=[2]&before=[3]
 ]]>
 		</mock>
 	</protocol>
+	<!-- 历史数据 血压 -->
+    <!-- begin=2016-05-01   end=2016-05-30  -->
+    <protocol name="queryPressureHistory">
+        <path>
+<![CDATA[
+doctor-platform-web/rest/doctor/queryPressureHistory?token=[1]&userId=[2]&begin=[3]&end=[4]
+]]>
+        </path>
+        <mock>
+<![CDATA[
+{
+    "code": 1
+}
+]]>
+        </mock>
+    </protocol> 
+    <!-- 历史数据 体重 -->
+    <!-- begin=2016-05-01   end=2016-05-30  -->
+    <protocol name="queryWeightHistory">
+        <path>
+<![CDATA[
+doctor-platform-web/rest/doctor/queryWeightHistory?token=[1]&userId=[2]&begin=[3]&end=[4]
+]]>
+        </path>
+        <mock>
+<![CDATA[
+{
+    "code": 1
+}
+]]>
+        </mock>
+    </protocol>
 </network>
